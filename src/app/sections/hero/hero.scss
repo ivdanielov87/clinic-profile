@@ -14,7 +14,6 @@
   }
 
   @include m.mobile {
-    grid-template-columns: 1fr;
     grid-template-rows: 56vw auto;
     grid-template-areas:
       'right'
@@ -26,7 +25,9 @@
 // ─── Left ─────────────────────────────────────────────────────────────────────
 
 .hero__left {
-  background: v.$color-white;
+  background:
+    radial-gradient(circle at top right, rgba(91, 159, 224, 0.1), transparent 46%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(244, 249, 255, 0.97) 100%);
   display: flex;
   align-items: center;
   padding-block: v.$space-20;
@@ -41,9 +42,7 @@
 
   @include m.mobile {
     grid-area: left;
-    background: v.$color-white;
     padding-block: v.$space-8;
-    align-items: flex-start;
   }
 }
 
@@ -65,7 +64,6 @@
     max-width: 100%;
     margin: 0;
     padding-inline: v.$space-8;
-    padding-right: v.$space-8;
     gap: v.$space-5;
   }
 
@@ -168,8 +166,8 @@
   border: none;
   transition:
     background v.$transition-fast,
-    transform   v.$transition-fast,
-    box-shadow  v.$transition-fast;
+    transform v.$transition-fast,
+    box-shadow v.$transition-fast;
 
   @include m.mobile {
     width: 100%;
@@ -177,7 +175,9 @@
     padding: 0.75rem 1.25rem;
   }
 
-  &:active { transform: translateY(0) !important; }
+  &:active {
+    transform: translateY(0) !important;
+  }
 
   &--primary {
     @include m.btn-navy;
@@ -209,8 +209,8 @@
   background:
     radial-gradient(ellipse at 30% 60%, rgba(47, 111, 191, 0.28) 0%, transparent 65%),
     radial-gradient(ellipse at 80% 20%, rgba(74, 140, 220, 0.18) 0%, transparent 55%),
-    radial-gradient(ellipse at 60% 90%, rgba(27, 46, 75, 0.40) 0%, transparent 60%),
-    linear-gradient(145deg, #1B2E4B 0%, #162540 55%, #0E1B30 100%);
+    radial-gradient(ellipse at 60% 90%, rgba(27, 46, 75, 0.4) 0%, transparent 60%),
+    linear-gradient(145deg, #1b2e4b 0%, #162540 55%, #0e1b30 100%);
   overflow: hidden;
   min-height: 480px;
 
@@ -220,31 +220,19 @@
 
   @include m.mobile {
     grid-area: right;
-    min-height: unset; // height controlled by grid-template-rows: 56vw
-
-    // Fade bottom edge into the white text section below
-    // &::after {
-    //   content: '';
-    //   position: absolute;
-    //   bottom: 0;
-    //   left: 0;
-    //   right: 0;
-    //   height: 64px;
-    //   background: linear-gradient(to bottom, transparent, #ffffff);
-    //   pointer-events: none;
-    //   z-index: 2;
-    // }
+    min-height: unset;
+    box-shadow: inset 0 -56px 72px rgba(168, 201, 233, 0.2);
   }
 
   // Eye color tokens — same on all breakpoints now
-  --eye-lid:        rgba(255, 255, 255, 0.28);
-  --eye-ambient:    rgba(255, 255, 255, 0.06);
-  --eye-iris-fill:  rgba(30,  80, 145, 0.28);
-  --eye-iris-edge:  rgba(255, 255, 255, 0.35);
-  --eye-layer:      rgba(255, 255, 255, 0.22);
-  --eye-inner:      rgba(255, 255, 255, 0.30);
-  --eye-pupil:      rgba(10,  20,  45, 0.90);
-  --eye-highlight:  rgba(255, 255, 255, 0.95);
+  --eye-lid: rgba(255, 255, 255, 0.28);
+  --eye-ambient: rgba(255, 255, 255, 0.06);
+  --eye-iris-fill: rgba(30, 80, 145, 0.28);
+  --eye-iris-edge: rgba(255, 255, 255, 0.35);
+  --eye-layer: rgba(255, 255, 255, 0.22);
+  --eye-inner: rgba(255, 255, 255, 0.3);
+  --eye-pupil: rgba(10, 20, 45, 0.9);
+  --eye-highlight: rgba(255, 255, 255, 0.95);
 }
 
 // ─── Background art ──────────────────────────────────────────────────────────
@@ -252,21 +240,21 @@
 .hero__bg-art {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  opacity: 0;
   animation: bg-art-reveal 1200ms ease 400ms both;
 
   svg {
     width: 100%;
     height: 100%;
-    display: block;
   }
 }
 
 @keyframes bg-art-reveal {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 // ─── Eye decoration ──────────────────────────────────────────────────────────
@@ -278,9 +266,10 @@
   transform: translate(-50%, -50%);
   width: 92%;
   max-width: 420px;
-  pointer-events: none;
 
-  svg { width: 100%; height: auto; display: block; }
+  svg {
+    width: 100%;
+  }
 
   @include m.mobile {
     width: 88%;
@@ -290,16 +279,61 @@
 
 // ─── Eye SVG element styles ───────────────────────────────────────────────────
 
+.eye__ambient,
+.eye__sclera,
+.eye__sclera-lines,
+.eye__iris-bg,
+.eye__iris-core,
+.eye__iris-rings,
+.eye__iris-fibers,
+.eye__layer-2,
+.eye__pupil,
+.eye__highlight {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 .eye__ambient {
   stroke: var(--eye-ambient);
   stroke-width: 1;
   fill: none;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: eye-bloom 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: eye-bloom 1200ms cubic-bezier(0.22, 1, 0.36, 1) both;
 
-  &--1 { animation-delay:   0ms; }
-  &--2 { animation-delay:  80ms; }
+  &--1 {
+    animation-delay: 80ms;
+  }
+  &--2 {
+    animation-delay: 220ms;
+  }
+}
+
+.eye__orbits {
+  path {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.12);
+    stroke-dasharray: 360;
+    stroke-dashoffset: 360;
+    animation: line-draw-wide 760ms cubic-bezier(0.22, 1, 0.36, 1) var(--piece-delay, 420ms) both;
+  }
+}
+
+.eye__markers {
+  line {
+    stroke: rgba(196, 222, 245, 0.26);
+    stroke-width: 1;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: line-draw-marker var(--piece-duration, 340ms) ease var(--piece-delay, 820ms) both;
+  }
+}
+
+.eye__focus-ring {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 0.9;
+  stroke-dasharray: 520;
+  stroke-dashoffset: 520;
+  animation: ring-draw-large 760ms cubic-bezier(0.4, 0, 0.2, 1) var(--piece-delay, 700ms) both;
 }
 
 .eye__lid {
@@ -310,27 +344,77 @@
   stroke-dasharray: 460;
   stroke-dashoffset: 460;
 
-  &--top    { animation: lid-draw 820ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 180ms both; }
-  &--bottom { animation: lid-draw 820ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 420ms both; }
+  &--top {
+    animation: lid-draw 840ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 1180ms both;
+  }
+  &--bottom {
+    animation: lid-draw 840ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 1460ms both;
+  }
+}
+
+.eye__sclera {
+  animation: iris-bloom 640ms cubic-bezier(0.34, 1.12, 0.64, 1) 1760ms both;
+}
+
+.eye__sclera-shadow {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.15);
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+  animation: line-draw 620ms cubic-bezier(0.4, 0, 0.2, 1) 1940ms both;
+}
+
+.eye__sclera-lines {
+  animation: detail-appear 520ms ease 2140ms both;
+
+  path {
+    fill: none;
+    stroke: rgba(196, 222, 245, 0.18);
+    stroke-width: 0.9;
+    stroke-linecap: round;
+  }
+}
+
+.eye__lid-shadow {
+  fill: none;
+  stroke: rgba(10, 18, 32, 0.14);
+  stroke-width: 14;
+  animation: detail-appear 520ms ease 2280ms both;
 }
 
 .eye__iris-bg {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: iris-bloom 600ms cubic-bezier(0.34, 1.2, 0.64, 1) 700ms both;
+  animation: iris-bloom 640ms cubic-bezier(0.34, 1.2, 0.64, 1) 2380ms both;
+}
+
+.eye__iris-core {
+  fill: rgba(121, 187, 241, 0.12);
+  animation:
+    iris-bloom 560ms cubic-bezier(0.34, 1.15, 0.64, 1) 2580ms both,
+    iris-pulse 9s ease-in-out 3880ms infinite;
 }
 
 .eye__iris-rings {
-  transform-box: fill-box;
-  transform-origin: center;
   animation:
-    iris-bloom 700ms cubic-bezier(0.34, 1.1, 0.64, 1) 820ms  both,
-    iris-cw    90s   linear                            1520ms infinite;
+    iris-bloom 680ms cubic-bezier(0.34, 1.1, 0.64, 1) 2760ms both,
+    iris-cw 90s linear 3900ms infinite;
 
   ellipse {
     stroke: var(--eye-layer);
     stroke-width: 0.9;
     fill: none;
+  }
+}
+
+.eye__iris-fibers {
+  animation:
+    detail-appear 580ms ease 2940ms both,
+    iris-cw 70s linear 4040ms infinite;
+
+  path {
+    fill: none;
+    stroke: rgba(226, 241, 255, 0.16);
+    stroke-width: 0.9;
+    stroke-linecap: round;
   }
 }
 
@@ -340,15 +424,13 @@
   fill: none;
   stroke-dasharray: 420;
   stroke-dashoffset: 420;
-  animation: ring-draw 700ms cubic-bezier(0.4, 0, 0.2, 1) 820ms both;
+  animation: ring-draw 660ms cubic-bezier(0.4, 0, 0.2, 1) 3140ms both;
 }
 
 .eye__layer-2 {
-  transform-box: fill-box;
-  transform-origin: center;
   animation:
-    iris-bloom 700ms cubic-bezier(0.34, 1.1, 0.64, 1) 980ms  both,
-    iris-ccw   120s  linear                            1680ms infinite;
+    iris-bloom 620ms cubic-bezier(0.34, 1.1, 0.64, 1) 3300ms both,
+    iris-ccw 120s linear 4160ms infinite;
 
   ellipse {
     stroke: var(--eye-layer);
@@ -364,64 +446,150 @@
   fill: none;
   stroke-dasharray: 210;
   stroke-dashoffset: 210;
-  animation: ring-draw 550ms cubic-bezier(0.4, 0, 0.2, 1) 1180ms both;
+  animation: ring-draw 520ms cubic-bezier(0.4, 0, 0.2, 1) 3600ms both;
 }
 
 .eye__pupil {
-  transform-box: fill-box;
-  transform-origin: center;
   animation:
-    pupil-arrive  650ms cubic-bezier(0.34, 1.3, 0.64, 1) 1380ms both,
-    pupil-breathe 6s   ease-in-out                        2030ms infinite;
+    pupil-arrive 660ms cubic-bezier(0.34, 1.3, 0.64, 1) 3820ms both,
+    pupil-breathe 6s ease-in-out 4480ms infinite;
 }
 
 .eye__highlight {
-  transform-box: fill-box;
-  transform-origin: center;
-
   &--main {
     fill: var(--eye-highlight);
-    animation: highlight-appear 400ms cubic-bezier(0.34, 1.5, 0.64, 1) 1580ms both;
+    animation: highlight-appear 360ms cubic-bezier(0.34, 1.5, 0.64, 1) 4100ms both;
   }
 
   &--sub {
     fill: var(--eye-highlight);
-    opacity: 0.45;
-    animation: highlight-appear 300ms cubic-bezier(0.34, 1.5, 0.64, 1) 1680ms both;
+    animation: highlight-appear 300ms cubic-bezier(0.34, 1.5, 0.64, 1) 4220ms both;
   }
 }
 
 // ─── Assembly keyframes ───────────────────────────────────────────────────────
 
 @keyframes eye-bloom {
-  from { transform: scale(0.3); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
+  from {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes lid-draw {
-  from { stroke-dashoffset: 460; }
-  to   { stroke-dashoffset:   0; }
+  from {
+    stroke-dashoffset: 460;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 @keyframes iris-bloom {
-  from { transform: scale(0.1); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
+  from {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes ring-draw {
-  from { stroke-dashoffset: 420; opacity: 0.3; }
-  to   { stroke-dashoffset:   0; opacity: 1;   }
+  from {
+    stroke-dashoffset: 420;
+    opacity: 0.3;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes line-draw {
+  from {
+    stroke-dashoffset: 340;
+    opacity: 0.2;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 0.5;
+  }
+}
+
+@keyframes line-draw-wide {
+  from {
+    stroke-dashoffset: 360;
+    opacity: 0.1;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes line-draw-marker {
+  from {
+    stroke-dashoffset: 48;
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes ring-draw-large {
+  from {
+    stroke-dashoffset: 520;
+    opacity: 0.15;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
 }
 
 @keyframes pupil-arrive {
-  from { transform: scale(0);    opacity: 0; }
-  70%  { transform: scale(1.12); opacity: 1; }
-  to   { transform: scale(1);    opacity: 1; }
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes highlight-appear {
-  from { transform: scale(0); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes detail-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 // ─── Scan line ───────────────────────────────────────────────────────────────
@@ -429,27 +597,60 @@
 .eye__scan {
   stroke: rgba(255, 255, 255, 0.55);
   stroke-width: 1;
-  stroke-linecap: round;
-  // Start hidden; first cycle begins after eye is fully assembled (~1.7s)
-  animation: scan-sweep 3s cubic-bezier(0.4, 0, 0.6, 1) 1800ms infinite;
+  animation: scan-sweep 3.2s cubic-bezier(0.4, 0, 0.6, 1) 4400ms infinite;
   filter: drop-shadow(0 0 3px rgba(91, 159, 224, 0.8));
 }
 
 @keyframes scan-sweep {
-  0%   { transform: translateY(-65px); opacity: 0;   }
-  8%   { opacity: 1; }
-  92%  { opacity: 1; }
-  100% { transform: translateY(65px);  opacity: 0;   }
+  0% {
+    transform: translateY(-65px);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(65px);
+    opacity: 0;
+  }
 }
 
 // ─── Continuous idle animations ───────────────────────────────────────────────
 
-@keyframes iris-cw  { to { transform: rotate(360deg);  } }
-@keyframes iris-ccw { to { transform: rotate(-360deg); } }
+@keyframes iris-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes iris-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
 
 @keyframes pupil-breathe {
-  0%, 100% { transform: scale(1);    }
-  50%       { transform: scale(1.10); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes iris-pulse {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.18;
+    transform: scale(1.04);
+  }
 }
 
 // ─── Floating cards ──────────────────────────────────────────────────────────
@@ -487,8 +688,14 @@
   color: v.$color-white;
 }
 
-.hero__card--top         { top: v.$space-8; right: v.$space-8; }
-.hero__card--bottom-left { bottom: v.$space-12; left: v.$space-8; }
+.hero__card--top {
+  top: v.$space-8;
+  right: v.$space-8;
+}
+.hero__card--bottom-left {
+  bottom: v.$space-12;
+  left: v.$space-8;
+}
 
 .hero__card--rating {
   bottom: v.$space-8;

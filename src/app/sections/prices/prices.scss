@@ -113,12 +113,15 @@
   gap: v.$space-3;
   width: 100%;
   padding: v.$space-5 v.$space-6;
-  border-bottom: 1px solid #edf2f8;
+  border-bottom: 1px solid rgba(47, 111, 191, 0.10);
   border-inline: 0;
   border-top: 0;
-  background: transparent;
+  background: linear-gradient(180deg, rgba(47, 111, 191, 0.08), rgba(47, 111, 191, 0.2));
   text-align: left;
   cursor: pointer;
+  transition:
+    background v.$transition-base,
+    border-color v.$transition-base;
 }
 
 .prices__card-icon {
@@ -249,7 +252,7 @@
 
   .prices__card-head {
     padding: v.$space-5;
-    border-bottom-color: transparent;
+    border-bottom-color: rgba(47, 111, 191, 0.05);
   }
 
   .prices__card-chevron {
@@ -258,7 +261,8 @@
 
   .prices__card--open {
     .prices__card-head {
-      border-bottom-color: #edf2f8;
+      background: linear-gradient(180deg, rgba(47, 111, 191, 0.12), rgba(47, 111, 191, 0.05));
+      border-bottom-color: rgba(47, 111, 191, 0.14);
     }
 
     .prices__card-chevron {

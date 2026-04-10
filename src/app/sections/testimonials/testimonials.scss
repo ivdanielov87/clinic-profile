@@ -108,39 +108,76 @@
 }
 
 .testimonials__carousel {
+  --carousel-gap: #{v.$space-5};
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: v.$space-5;
+  gap: v.$space-6;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 5.5rem;
+    width: clamp(1.5rem, 4vw, 3.5rem);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(90deg, rgba(235, 243, 250, 0.98), rgba(235, 243, 250, 0));
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(270deg, rgba(240, 246, 252, 0.98), rgba(240, 246, 252, 0));
+  }
+
+  @include m.below-tablet {
+    gap: v.$space-5;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
 }
 
 .testimonials__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: v.$space-5;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(calc((100% - (var(--carousel-gap) * 2)) / 3), 1fr);
+  gap: var(--carousel-gap);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  padding: 0.4rem 1px v.$space-2;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  cursor: grab;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
 
   @include m.below-desktop {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-columns: minmax(calc((100% - var(--carousel-gap)) / 2), 1fr);
   }
 
   @include m.below-tablet {
-    grid-auto-flow: column;
+    --carousel-gap: #{v.$space-4};
     grid-auto-columns: minmax(calc(100% - 3.5rem), 1fr);
-    grid-template-columns: none;
-    gap: v.$space-4;
-    overflow-x: auto;
-    overflow-y: visible;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x proximity;
     scroll-padding-inline: v.$space-1;
     padding-inline: v.$space-1;
-    padding-bottom: v.$space-2;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 
   @include m.mobile {
@@ -152,10 +189,13 @@
   display: flex;
   flex-direction: column;
   gap: v.$space-3;
+  min-height: 100%;
   padding: v.$space-6;
   background: v.$color-white;
   border: 1px solid #e4edf6;
   border-radius: 24px;
+  box-shadow: 0 16px 36px rgba(27, 46, 75, 0.07);
+  scroll-snap-align: start;
   transition: transform v.$transition-base, box-shadow v.$transition-base;
 
   &:hover {
@@ -164,8 +204,6 @@
   }
 
   @include m.below-tablet {
-    min-height: 100%;
-    scroll-snap-align: start;
     scroll-snap-stop: always;
     box-shadow: 0 12px 34px rgba(27, 46, 75, 0.08);
 
@@ -236,14 +274,33 @@
   color: v.$color-text-light;
 }
 
-.testimonials__mobile-nav {
-  display: none;
+.testimonials__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: v.$space-4;
 
   @include m.below-tablet {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
+    gap: v.$space-3;
+  }
+}
+
+.testimonials__nav {
+  display: flex;
+  align-items: center;
+  gap: v.$space-4;
+  width: fit-content;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(27, 46, 75, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 14px 34px rgba(27, 46, 75, 0.06);
+
+  @include m.below-tablet {
+    width: 100%;
     justify-content: space-between;
-    gap: v.$space-4;
   }
 }
 
@@ -300,6 +357,19 @@
   &.is-active {
     width: 1.65rem;
     background: v.$color-accent;
+  }
+}
+
+.testimonials__note {
+  margin: 0;
+  font-size: v.$font-size-xs;
+  line-height: v.$line-height-normal;
+  letter-spacing: 0.02em;
+  color: v.$color-text-light;
+  text-align: right;
+
+  @include m.below-tablet {
+    text-align: center;
   }
 }
 

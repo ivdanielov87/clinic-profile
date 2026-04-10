@@ -1,4 +1,16 @@
-import { Component, ElementRef, ViewChild, ViewChildren, QueryList, inject, OnInit, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  computed,
+  inject,
+  signal,
+  OnInit,
+} from '@angular/core';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
 import { ContentService, Testimonial } from '../../core/services/content.service';
 
@@ -9,67 +21,125 @@ import { ContentService, Testimonial } from '../../core/services/content.service
   templateUrl: './testimonials.html',
   styleUrl: './testimonials.scss',
 })
-export class Testimonials implements OnInit {
+export class Testimonials implements OnInit, AfterViewInit {
   private contentService = inject(ContentService);
 
   reviews = signal<Testimonial[]>([]);
-  currentIndex = signal(0);
+  currentSlide = signal(0);
+  cardsPerView = signal(3);
+  totalSlides = computed(() => Math.ceil(this.reviews().length / this.cardsPerView()));
+  slideIndexes = computed(() => Array.from({ length: this.totalSlides() }, (_, index) => index));
   readonly stars = [1, 2, 3, 4, 5] as const;
 
   @ViewChild('track') private trackRef?: ElementRef<HTMLDivElement>;
   @ViewChildren('cardEl') private cardRefs?: QueryList<ElementRef<HTMLElement>>;
 
   ngOnInit(): void {
-    this.contentService.getContent().subscribe(c => this.reviews.set(c.testimonials));
+    this.cardsPerView.set(this.resolveCardsPerView());
+    this.contentService.getContent().subscribe(c => {
+      this.reviews.set(c.testimonials);
+      setTimeout(() => this.goToSlide(0, 'auto'));
+    });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.syncCarouselToViewport('auto'));
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.syncCarouselToViewport('auto');
   }
 
   onTrackScroll(): void {
-    if (typeof window === 'undefined' || window.innerWidth > 768) {
-      return;
-    }
-
     const track = this.trackRef?.nativeElement;
     const cards = this.cardRefs?.toArray().map(ref => ref.nativeElement) ?? [];
+    const slideStarts = this.getSlideStartCards(cards);
 
-    if (!track || cards.length === 0) {
+    if (!track || slideStarts.length === 0) {
       return;
     }
 
-    const scrollCenter = track.scrollLeft + track.clientWidth / 2;
-    let nextIndex = 0;
+    const scrollLeft = track.scrollLeft;
+    let nextSlide = 0;
     let nearestDistance = Number.POSITIVE_INFINITY;
 
-    cards.forEach((card, index) => {
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const distance = Math.abs(cardCenter - scrollCenter);
+    slideStarts.forEach((card, index) => {
+      const distance = Math.abs(card.offsetLeft - scrollLeft);
 
       if (distance < nearestDistance) {
         nearestDistance = distance;
-        nextIndex = index;
+        nextSlide = index;
       }
     });
 
-    if (nextIndex !== this.currentIndex()) {
-      this.currentIndex.set(nextIndex);
+    if (nextSlide !== this.currentSlide()) {
+      this.currentSlide.set(nextSlide);
     }
   }
 
-  goToSlide(index: number): void {
+  goToSlide(index: number, behavior: ScrollBehavior = 'smooth'): void {
     const cards = this.cardRefs?.toArray().map(ref => ref.nativeElement) ?? [];
     const track = this.trackRef?.nativeElement;
+    const slideStarts = this.getSlideStartCards(cards);
 
-    if (!track || cards.length === 0) {
+    if (!track || slideStarts.length === 0) {
       return;
     }
 
-    const nextIndex = Math.max(0, Math.min(index, cards.length - 1));
-    const targetCard = cards[nextIndex];
+    const nextSlide = Math.max(0, Math.min(index, slideStarts.length - 1));
+    const targetCard = slideStarts[nextSlide];
 
     track.scrollTo({
       left: targetCard.offsetLeft,
-      behavior: 'smooth',
+      behavior,
     });
 
-    this.currentIndex.set(nextIndex);
+    this.currentSlide.set(nextSlide);
+  }
+
+  prevSlide(): void {
+    this.goToSlide(this.currentSlide() - 1);
+  }
+
+  nextSlide(): void {
+    this.goToSlide(this.currentSlide() + 1);
+  }
+
+  private syncCarouselToViewport(behavior: ScrollBehavior): void {
+    const previousCardsPerView = this.cardsPerView();
+    const nextCardsPerView = this.resolveCardsPerView();
+    const leadingReviewIndex = this.currentSlide() * previousCardsPerView;
+
+    this.cardsPerView.set(nextCardsPerView);
+
+    const nextSlide =
+      this.totalSlides() === 0
+        ? 0
+        : Math.min(Math.floor(leadingReviewIndex / nextCardsPerView), this.totalSlides() - 1);
+
+    this.currentSlide.set(nextSlide);
+    this.goToSlide(nextSlide, behavior);
+  }
+
+  private getSlideStartCards(cards: HTMLElement[]): HTMLElement[] {
+    const step = Math.max(1, this.cardsPerView());
+    return cards.filter((_, index) => index % step === 0);
+  }
+
+  private resolveCardsPerView(): number {
+    if (typeof window === 'undefined') {
+      return 3;
+    }
+
+    if (window.innerWidth <= 768) {
+      return 1;
+    }
+
+    if (window.innerWidth <= 1200) {
+      return 2;
+    }
+
+    return 3;
   }
 }

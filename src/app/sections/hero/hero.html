@@ -3,31 +3,31 @@
     <div class="hero__left-inner">
 
       <!-- Label -->
-      <div class="hero__label" animateOnScroll="fade-right" [animDelay]="280" [animDuration]="700">
+      <div class="hero__label" animateOnScroll="fade-right" [animDelay]="240" [animDuration]="720">
         <span class="hero__label-line"></span>
         <span class="hero__label-text">СПЕЦИАЛИЗИРАНА ОЧНА ПОМОЩ &nbsp;&middot;&nbsp; РУСЕ</span>
       </div>
 
       <!-- Heading -->
-      <h1 class="hero__heading" animateOnScroll="fade-up" [animDelay]="600" [animDuration]="800">
+      <h1 class="hero__heading" animateOnScroll="fade-up" [animDelay]="760" [animDuration]="820">
         Грижа за<br>
         вашето <em class="hero__heading-accent">зрение</em>
       </h1>
 
       <!-- Tagline -->
-      <p class="hero__tagline" animateOnScroll="fade-up" [animDelay]="860" [animDuration]="700">
-        с прецизност и модерна технология
+      <p class="hero__tagline" animateOnScroll="fade-up" [animDelay]="1260" [animDuration]="700">
+        с <span class="hero__tagline-focus">прецизна диагностика</span> и внимание към всеки детайл
       </p>
 
       <!-- Description -->
-      <p class="hero__desc" animateOnScroll="fade-up" [animDelay]="1060" [animDuration]="750">
+      <p class="hero__desc" animateOnScroll="fade-up" [animDelay]="1720" [animDuration]="760">
         Специализиран очен кабинет с апаратура от последно поколение.
         Диагностика, профилактика и лечение на широк спектър от очни
         заболявания &mdash; включително ангио-ОСТ, лазери и Фороптер.
       </p>
 
       <!-- Buttons -->
-      <div class="hero__actions" animateOnScroll="fade-up" [animDelay]="1280" [animDuration]="700">
+      <div class="hero__actions" animateOnScroll="fade-up" [animDelay]="2280" [animDuration]="740">
         <a class="hero__btn hero__btn--primary" [href]="superDocUrl()" target="_blank" rel="noopener noreferrer">
           ЗАПИШЕТЕ ЧАС
         </a>
@@ -72,6 +72,14 @@
           <clipPath id="hero-iris-clip">
             <circle cx="180" cy="120" r="65"/>
           </clipPath>
+          <clipPath id="hero-eye-core-clip">
+            <ellipse cx="180" cy="120" rx="120" ry="58"/>
+          </clipPath>
+          <radialGradient id="sclera-grad" cx="42%" cy="42%" r="78%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.42)"/>
+            <stop offset="62%" stop-color="rgba(230,239,250,0.18)"/>
+            <stop offset="100%" stop-color="rgba(173,198,226,0.06)"/>
+          </radialGradient>
           <radialGradient id="iris-grad" cx="45%" cy="42%" r="58%">
             <stop offset="0%"   stop-color="rgba(74,140,210,0.55)"/>
             <stop offset="45%"  stop-color="rgba(47,111,191,0.35)"/>
@@ -85,14 +93,50 @@
 
         <circle class="eye__ambient eye__ambient--2" cx="180" cy="120" r="100"/>
         <circle class="eye__ambient eye__ambient--1" cx="180" cy="120" r="86"/>
-        <path class="eye__lid eye__lid--top"    d="M 18,120 C 80,22 280,22 342,120"/>
+        <g class="eye__orbits">
+          <path class="eye__orbit" style="--piece-delay: 560ms;" d="M 30,120 C 84,38 276,38 330,120"/>
+          <path class="eye__orbit" style="--piece-delay: 860ms;" d="M 30,120 C 84,202 276,202 330,120"/>
+        </g>
+        <g class="eye__markers">
+          <line class="eye__marker" style="--piece-delay: 1080ms; --piece-duration: 380ms;" x1="42" y1="120" x2="84" y2="120"/>
+          <line class="eye__marker" style="--piece-delay: 1180ms; --piece-duration: 380ms;" x1="276" y1="120" x2="318" y2="120"/>
+          <line class="eye__marker" style="--piece-delay: 1280ms; --piece-duration: 340ms;" x1="180" y1="44" x2="180" y2="74"/>
+          <line class="eye__marker" style="--piece-delay: 1380ms; --piece-duration: 340ms;" x1="180" y1="166" x2="180" y2="196"/>
+        </g>
+        <ellipse class="eye__focus-ring" style="--piece-delay: 940ms;" cx="180" cy="120" rx="138" ry="70"/>
+        <ellipse class="eye__focus-ring" style="--piece-delay: 1160ms;" cx="180" cy="120" rx="128" ry="63"/>
+        <path class="eye__lid eye__lid--top" d="M 18,120 C 80,22 280,22 342,120"/>
         <path class="eye__lid eye__lid--bottom" d="M 18,120 C 80,218 280,218 342,120"/>
+        <ellipse class="eye__sclera" cx="180" cy="120" rx="120" ry="58" fill="url(#sclera-grad)"/>
+        <ellipse class="eye__sclera-shadow" cx="180" cy="122" rx="112" ry="48"/>
+        <g class="eye__sclera-lines" clip-path="url(#hero-eye-core-clip)">
+          <path d="M78 126C102 112 132 108 180 112"/>
+          <path d="M182 112C222 116 248 126 282 142"/>
+          <path d="M88 144C120 132 150 130 180 134"/>
+          <path d="M182 134C214 138 242 148 270 160"/>
+        </g>
+        <path class="eye__lid-shadow" d="M68 96C110 76 250 76 292 98" clip-path="url(#hero-eye-core-clip)"/>
         <circle class="eye__iris-bg" cx="180" cy="120" r="65" fill="url(#iris-grad)"/>
+        <circle class="eye__iris-core" cx="180" cy="120" r="48"/>
         <g class="eye__iris-rings" clip-path="url(#hero-iris-clip)">
           <ellipse cx="180" cy="120" rx="63" ry="61" transform="rotate(12,180,120)"/>
           <ellipse cx="180" cy="120" rx="55" ry="52" transform="rotate(-8,180,120)"/>
           <ellipse cx="180" cy="120" rx="47" ry="44" transform="rotate(18,180,120)"/>
           <ellipse cx="180" cy="120" rx="39" ry="37" transform="rotate(-5,180,120)"/>
+        </g>
+        <g class="eye__iris-fibers" clip-path="url(#hero-iris-clip)">
+          <path d="M180 120L180 57"/>
+          <path d="M180 120L217 67"/>
+          <path d="M180 120L238 95"/>
+          <path d="M180 120L245 120"/>
+          <path d="M180 120L236 145"/>
+          <path d="M180 120L216 173"/>
+          <path d="M180 120L180 183"/>
+          <path d="M180 120L144 173"/>
+          <path d="M180 120L124 145"/>
+          <path d="M180 120L115 120"/>
+          <path d="M180 120L123 95"/>
+          <path d="M180 120L143 67"/>
         </g>
         <circle class="eye__iris-edge" cx="180" cy="120" r="65"/>
         <g class="eye__layer-2" clip-path="url(#hero-iris-clip)">
@@ -102,28 +146,28 @@
         </g>
         <circle class="eye__inner-ring" cx="180" cy="120" r="33"/>
         <circle class="eye__pupil" cx="180" cy="120" r="20" fill="url(#pupil-grad)"/>
-        <!-- Scan line — clipped to iris -->
+        <!-- Scan line clipped to iris -->
         <line class="eye__scan" x1="115" y1="120" x2="245" y2="120" clip-path="url(#hero-iris-clip)"/>
 
         <ellipse class="eye__highlight eye__highlight--main" cx="192" cy="109" rx="6" ry="5" transform="rotate(-15,192,109)"/>
-        <circle  class="eye__highlight eye__highlight--sub"  cx="171" cy="131" r="2.5"/>
+        <circle class="eye__highlight eye__highlight--sub" cx="171" cy="131" r="2.5"/>
       </svg>
     </div>
 
     <!-- Card: Апаратура -->
-    <div class="hero__card hero__card--top" animateOnScroll="fade-left" [animDelay]="300">
+    <div class="hero__card hero__card--top" animateOnScroll="fade-left" [animDelay]="1780" [animDuration]="700">
       <span class="hero__card-label">АПАРАТУРА</span>
       <span class="hero__card-title">Лазерно лечение</span>
     </div>
 
     <!-- Card: Технология -->
-    <div class="hero__card hero__card--bottom-left" animateOnScroll="fade-right" [animDelay]="400">
+    <div class="hero__card hero__card--bottom-left" animateOnScroll="fade-right" [animDelay]="2200" [animDuration]="700">
       <span class="hero__card-label">ТЕХНОЛОГИЯ</span>
       <span class="hero__card-title">Ангио-ОСТ Скенер</span>
     </div>
 
     <!-- Card: Rating -->
-    <div class="hero__card hero__card--rating hero__card--bottom-right" animateOnScroll="fade-left" [animDelay]="480">
+    <div class="hero__card hero__card--rating hero__card--bottom-right" animateOnScroll="fade-left" [animDelay]="2720" [animDuration]="740">
       <div class="hero__card-stars">
         @for (star of [1,2,3,4,5]; track star) {
           <svg width="14" height="14" viewBox="0 0 14 14" fill="#F59E0B" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

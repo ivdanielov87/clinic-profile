@@ -10,6 +10,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 })
 export class Environment {
   openFeatureIndexes = signal<Set<number>>(new Set());
+  currentGalleryIndex = signal(0);
+  private touchStartX: number | null = null;
+  private touchStartY: number | null = null;
 
   readonly features = [
     {
@@ -69,6 +72,10 @@ export class Environment {
     },
   ];
 
+  get currentGalleryItem() {
+    return this.gallery[this.currentGalleryIndex()];
+  }
+
   toggleFeature(index: number): void {
     this.openFeatureIndexes.update(current => {
       const next = new Set(current);
@@ -85,5 +92,61 @@ export class Environment {
 
   isFeatureOpen(index: number): boolean {
     return this.openFeatureIndexes().has(index);
+  }
+
+  goToGallery(index: number): void {
+    const normalized = Math.max(0, Math.min(index, this.gallery.length - 1));
+    this.currentGalleryIndex.set(normalized);
+  }
+
+  prevGallery(): void {
+    const current = this.currentGalleryIndex();
+    this.currentGalleryIndex.set((current - 1 + this.gallery.length) % this.gallery.length);
+  }
+
+  nextGallery(): void {
+    const current = this.currentGalleryIndex();
+    this.currentGalleryIndex.set((current + 1) % this.gallery.length);
+  }
+
+  onGalleryTouchStart(event: TouchEvent): void {
+    const touch = event.touches[0];
+
+    if (!touch) {
+      return;
+    }
+
+    this.touchStartX = touch.clientX;
+    this.touchStartY = touch.clientY;
+  }
+
+  onGalleryTouchEnd(event: TouchEvent): void {
+    const touch = event.changedTouches[0];
+
+    if (!touch || this.touchStartX === null || this.touchStartY === null) {
+      this.resetTouchState();
+      return;
+    }
+
+    const deltaX = touch.clientX - this.touchStartX;
+    const deltaY = touch.clientY - this.touchStartY;
+
+    this.resetTouchState();
+
+    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY)) {
+      return;
+    }
+
+    if (deltaX < 0) {
+      this.nextGallery();
+      return;
+    }
+
+    this.prevGallery();
+  }
+
+  private resetTouchState(): void {
+    this.touchStartX = null;
+    this.touchStartY = null;
   }
 }

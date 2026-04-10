@@ -42,16 +42,87 @@
     </div>
 
     <div class="env__gallery" animateOnScroll="fade-left" [animDelay]="100">
-      @for (item of gallery; track item.area) {
-        <article class="env__img env__img--{{ item.area }}">
-          <img class="env__img-photo" [src]="item.img" [alt]="item.title" loading="lazy" />
-          <div class="env__img-content">
-            <span class="env__img-label">{{ item.label }}</span>
-            <h3 class="env__img-title">{{ item.title }}</h3>
-            <p class="env__img-desc">{{ item.desc }}</p>
+      <article
+        class="env__gallery-main"
+        (touchstart)="onGalleryTouchStart($event)"
+        (touchend)="onGalleryTouchEnd($event)"
+        (touchcancel)="onGalleryTouchEnd($event)"
+      >
+        <img
+          class="env__gallery-photo"
+          [src]="currentGalleryItem.img"
+          [alt]="currentGalleryItem.title"
+          loading="lazy"
+        />
+
+        <div class="env__gallery-topbar">
+          <span class="env__gallery-badge">{{ currentGalleryItem.label }}</span>
+
+          <div class="env__gallery-controls">
+            <button class="env__gallery-btn" type="button" (click)="prevGallery()" aria-label="Previous gallery image">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M10.75 4.5L6.25 9L10.75 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="env__gallery-btn" type="button" (click)="nextGallery()" aria-label="Next gallery image">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M7.25 4.5L11.75 9L7.25 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
           </div>
-        </article>
-      }
+        </div>
+
+        <div class="env__gallery-content">
+          <span class="env__gallery-kicker">
+            {{ currentGalleryIndex() + 1 }} / {{ gallery.length }}
+          </span>
+          <h3 class="env__gallery-title">{{ currentGalleryItem.title }}</h3>
+          <p class="env__gallery-desc">{{ currentGalleryItem.desc }}</p>
+        </div>
+      </article>
+
+      <div class="env__gallery-mobile-nav" aria-label="Gallery navigation">
+        <button class="env__gallery-mobile-btn" type="button" (click)="prevGallery()" aria-label="Previous gallery image">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M10.75 4.5L6.25 9L10.75 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <div class="env__gallery-dots" aria-label="Gallery slides">
+          @for (item of gallery; track item.area; let i = $index) {
+            <button
+              class="env__gallery-dot"
+              type="button"
+              [class.env__gallery-dot--active]="currentGalleryIndex() === i"
+              (click)="goToGallery(i)"
+              [attr.aria-label]="'Show image ' + (i + 1)"
+              [attr.aria-pressed]="currentGalleryIndex() === i"
+            ></button>
+          }
+        </div>
+
+        <button class="env__gallery-mobile-btn" type="button" (click)="nextGallery()" aria-label="Next gallery image">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M7.25 4.5L11.75 9L7.25 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="env__gallery-thumbs" aria-label="Gallery slides">
+        @for (item of gallery; track item.area; let i = $index) {
+          <button
+            class="env__thumb"
+            type="button"
+            [class.env__thumb--active]="currentGalleryIndex() === i"
+            (click)="goToGallery(i)"
+            [attr.aria-label]="'Show image ' + (i + 1)"
+            [attr.aria-pressed]="currentGalleryIndex() === i"
+          >
+            <img class="env__thumb-photo" [src]="item.img" [alt]="item.title" loading="lazy" />
+            <span class="env__thumb-label">{{ item.label }}</span>
+          </button>
+        }
+      </div>
     </div>
   </div>
 </section>

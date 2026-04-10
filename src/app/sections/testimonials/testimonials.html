@@ -55,46 +55,54 @@
         }
       </div>
 
-      @if (reviews().length > 1) {
-        <div class="testimonials__mobile-nav" aria-label="Testimonial carousel controls">
-          <button
-            class="testimonials__nav-btn"
-            type="button"
-            (click)="goToSlide(currentIndex() - 1)"
-            [disabled]="currentIndex() === 0"
-            aria-label="Previous testimonial"
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-              <path d="M10.75 4.5L6.25 9L10.75 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
+      <div class="testimonials__footer">
+        @if (totalSlides() > 1) {
+          <div class="testimonials__nav" aria-label="Testimonial carousel controls">
+            <button
+              class="testimonials__nav-btn"
+              type="button"
+              (click)="prevSlide()"
+              [disabled]="currentSlide() === 0"
+              aria-label="Previous testimonial"
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M10.75 4.5L6.25 9L10.75 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
 
-          <div class="testimonials__dots" aria-label="Testimonial pages">
-            @for (review of reviews(); track review.name; let i = $index) {
-              <button
-                class="testimonials__dot"
-                type="button"
-                [class.is-active]="currentIndex() === i"
-                [attr.aria-label]="'Go to testimonial ' + (i + 1)"
-                [attr.aria-current]="currentIndex() === i ? 'true' : null"
-                (click)="goToSlide(i)"
-              ></button>
-            }
+            <div class="testimonials__dots" aria-label="Testimonial pages">
+              @for (slide of slideIndexes(); track slide) {
+                <button
+                  class="testimonials__dot"
+                  type="button"
+                  [class.is-active]="currentSlide() === slide"
+                  [attr.aria-label]="'Go to testimonial page ' + (slide + 1)"
+                  [attr.aria-current]="currentSlide() === slide ? 'true' : null"
+                  (click)="goToSlide(slide)"
+                ></button>
+              }
+            </div>
+
+            <button
+              class="testimonials__nav-btn"
+              type="button"
+              (click)="nextSlide()"
+              [disabled]="currentSlide() === totalSlides() - 1"
+              aria-label="Next testimonial"
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M7.25 4.5L11.75 9L7.25 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
           </div>
+        }
 
-          <button
-            class="testimonials__nav-btn"
-            type="button"
-            (click)="goToSlide(currentIndex() + 1)"
-            [disabled]="currentIndex() === reviews().length - 1"
-            aria-label="Next testimonial"
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-              <path d="M7.25 4.5L11.75 9L7.25 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
-      }
+        @if (reviews().length > 0) {
+          <p class="testimonials__note">
+            Показани са последните {{ reviews().length }} отзива от SuperDoc.
+          </p>
+        }
+      </div>
     </div>
   </div>
 </section>

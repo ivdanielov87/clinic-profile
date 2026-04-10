@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <!-- Label — separate grid child so it can reorder on mobile -->
+      <!-- Label - separate grid child so it can reorder on mobile -->
       <div class="about__label" animateOnScroll="fade-left" [animDelay]="80" [animDuration]="700">
         <span class="about__label-line"></span>
         <span class="about__label-text">За лекаря</span>
@@ -55,13 +55,20 @@
         </div>
 
         <!-- Qualifications -->
-        <div class="about__quals" animateOnScroll="fade-up" [animDelay]="460" [animDuration]="700">
-          <span class="about__quals-label">Квалификации и членства</span>
-          <ul class="about__quals-list">
-            @for (q of about()!.qualifications; track q) {
-              <li class="about__quals-item">
+        <div class="about__quals">
+          <span class="about__quals-label" animateOnScroll="fade-up" [animDelay]="460" [animDuration]="620">
+            Квалификации и членства
+          </span>
+          <ul class="about__quals-list" animateOnScroll="fade-up" [animDelay]="520" [animDuration]="720">
+            @for (q of about()!.qualifications; track q; let i = $index) {
+              <li
+                class="about__quals-item"
+                animateOnScroll="fade-right"
+                [animDelay]="600 + i * 90"
+                [animDuration]="700"
+              >
                 <span class="about__quals-dot" aria-hidden="true"></span>
-                {{ q }}
+                <span class="about__quals-text">{{ q }}</span>
               </li>
             }
           </ul>

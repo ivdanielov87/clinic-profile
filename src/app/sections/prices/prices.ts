@@ -21,14 +21,15 @@ export class Prices implements OnInit {
   private contentService = inject(ContentService);
 
   priceGroups = signal<PriceGroupWithIcon[]>([]);
-  openGroupIndexes = signal<Set<number>>(new Set([0]));
+  openGroupIndexes = signal<Set<number>>(new Set());
   showBgn = this.contentService.showBgn();
 
   ngOnInit(): void {
     this.contentService.getContent().subscribe(c => {
-      this.priceGroups.set(
-        c.prices.map((g, i) => ({ ...g, icon: GROUP_ICONS[i] ?? GROUP_ICONS[0] }))
-      );
+      const groups = c.prices.map((g, i) => ({ ...g, icon: GROUP_ICONS[i] ?? GROUP_ICONS[0] }));
+
+      this.priceGroups.set(groups);
+      this.openGroupIndexes.set(new Set(groups.map((_, index) => index)));
     });
   }
 
