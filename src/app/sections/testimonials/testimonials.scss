@@ -128,14 +128,15 @@
     grid-template-columns: none;
     gap: v.$space-4;
     overflow-x: auto;
+    overflow-y: visible;
     overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     scroll-padding-inline: v.$space-1;
     padding-inline: v.$space-1;
     padding-bottom: v.$space-2;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
 
     &::-webkit-scrollbar {
       display: none;
@@ -167,6 +168,14 @@
     scroll-snap-align: start;
     scroll-snap-stop: always;
     box-shadow: 0 12px 34px rgba(27, 46, 75, 0.08);
+
+    &.animate-on-scroll,
+    &.animate-on-scroll.animated {
+      opacity: 1;
+      transform: none !important;
+      transition-property: box-shadow;
+      transition-duration: v.$transition-base;
+    }
   }
 }
 
