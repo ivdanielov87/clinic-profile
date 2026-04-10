@@ -1,0 +1,73 @@
+<section class="about" id="doctor">
+  @if (about()) {
+    <div class="about__container">
+
+      <!-- Sticky doctor card -->
+      <div class="about__card" animateOnScroll="fade-right" [animDelay]="0" [animDuration]="750">
+        <div class="about__avatar">
+          <img src="Mladenova.jpg" [alt]="about()!.name" />
+        </div>
+        <div class="about__card-info">
+          <h3 class="about__card-name">{{ about()!.name }}</h3>
+          <p class="about__card-role">{{ about()!.role }}</p>
+          <div class="about__card-rating">
+            <div class="about__card-stars">
+              @for (s of stars; track s) {
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="#F59E0B" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M7 1L8.545 4.93L12.657 5.257L9.736 7.77L10.657 11.743L7 9.5L3.343 11.743L4.264 7.77L1.343 5.257L5.455 4.93L7 1Z"/>
+                </svg>
+              }
+            </div>
+            <span class="about__card-score">{{ about()!.rating }}</span>
+            <span class="about__card-count">{{ about()!.ratingCount }} пациента</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Label — separate grid child so it can reorder on mobile -->
+      <div class="about__label" animateOnScroll="fade-left" [animDelay]="80" [animDuration]="700">
+        <span class="about__label-line"></span>
+        <span class="about__label-text">За лекаря</span>
+      </div>
+
+      <!-- Content -->
+      <div class="about__content">
+
+        <h2 class="about__title" animateOnScroll="fade-up" [animDelay]="160" [animDuration]="750">
+          Опит, последователност<br>и грижа
+        </h2>
+
+        <!-- Bio paragraphs -->
+        <div class="about__bio-block" animateOnScroll="fade-up" [animDelay]="260" [animDuration]="700">
+          @for (para of about()!.bio; track para) {
+            <p class="about__bio" [innerHTML]="para"></p>
+          }
+        </div>
+
+        <!-- Stats row -->
+        <div class="about__stats" animateOnScroll="fade-up" [animDelay]="380" [animDuration]="700">
+          @for (h of about()!.highlights; track h.label) {
+            <div class="about__stat">
+              <span class="about__stat-value">{{ h.value }}</span>
+              <span class="about__stat-label">{{ h.label }}</span>
+            </div>
+          }
+        </div>
+
+        <!-- Qualifications -->
+        <div class="about__quals" animateOnScroll="fade-up" [animDelay]="460" [animDuration]="700">
+          <span class="about__quals-label">Квалификации и членства</span>
+          <ul class="about__quals-list">
+            @for (q of about()!.qualifications; track q) {
+              <li class="about__quals-item">
+                <span class="about__quals-dot" aria-hidden="true"></span>
+                {{ q }}
+              </li>
+            }
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  }
+</section>

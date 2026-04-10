@@ -1,0 +1,186 @@
+@use 'variables' as v;
+
+// Responsive
+@mixin mobile {
+  @media (max-width: #{v.$bp-mobile - 1px}) { @content; }
+}
+
+@mixin tablet {
+  @media (min-width: #{v.$bp-mobile}) and (max-width: #{v.$bp-desktop - 1px}) { @content; }
+}
+
+@mixin tablet-up {
+  @media (min-width: #{v.$bp-tablet}) { @content; }
+}
+
+@mixin laptop-up {
+  @media (min-width: #{v.$bp-laptop}) { @content; }
+}
+
+@mixin desktop {
+  @media (min-width: #{v.$bp-desktop}) { @content; }
+}
+
+@mixin below-desktop {
+  @media (max-width: #{v.$bp-desktop - 1px}) { @content; }
+}
+
+@mixin below-tablet {
+  @media (max-width: #{v.$bp-tablet - 1px}) { @content; }
+}
+
+// Layout
+@mixin container {
+  width: 100%;
+  max-width: v.$container-max-width;
+  margin-inline: auto;
+  padding-inline: v.$space-6;
+
+  @include mobile {
+    padding-inline: v.$space-4;
+  }
+}
+
+@mixin section-padding {
+  padding-block: v.$section-padding-y;
+
+  @include below-tablet {
+    padding-block: v.$space-12;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Typography
+@mixin heading-1 {
+  font-size: v.$font-size-hero;
+  font-weight: v.$font-weight-bold;
+  line-height: v.$line-height-tight;
+}
+
+@mixin heading-2 {
+  font-size: v.$font-size-3xl;
+  font-weight: v.$font-weight-bold;
+  line-height: v.$line-height-tight;
+
+  @include below-tablet {
+    font-size: v.$font-size-2xl;
+  }
+}
+
+@mixin heading-3 {
+  font-size: v.$font-size-xl;
+  font-weight: v.$font-weight-semibold;
+  line-height: v.$line-height-snug;
+}
+
+@mixin body-text {
+  font-size: v.$font-size-base;
+  font-weight: v.$font-weight-regular;
+  line-height: v.$line-height-normal;
+}
+
+@mixin body-sm {
+  font-size: v.$font-size-sm;
+  font-weight: v.$font-weight-regular;
+  line-height: v.$line-height-normal;
+}
+
+// Components
+@mixin card {
+  background: v.$color-navy-light;
+  border-radius: v.$radius-xl;
+  padding: v.$space-8;
+  border: 1px solid v.$color-border;
+  transition: transform v.$transition-base, box-shadow v.$transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: v.$shadow-navy;
+  }
+}
+
+// Shared button radius token — change here to update all buttons
+$btn-radius: 8px;
+
+@mixin btn-navy {
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(47, 111, 191, 0.22) 0%, transparent 70%),
+    linear-gradient(135deg, #1B2E4B 0%, #243B55 60%, #162540 100%);
+
+  &:hover {
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(74, 140, 220, 0.30) 0%, transparent 70%),
+      linear-gradient(135deg, #243B55 0%, #2A4466 60%, #1B3050 100%);
+  }
+}
+
+@mixin btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: v.$space-2;
+  padding: v.$space-3 v.$space-8;
+  background: v.$color-accent;
+  color: v.$color-white;
+  border: none;
+  border-radius: v.$radius-full;
+  font-size: v.$font-size-base;
+  font-weight: v.$font-weight-semibold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background v.$transition-fast, transform v.$transition-fast, box-shadow v.$transition-fast;
+  white-space: nowrap;
+
+  &:hover {
+    background: v.$color-accent-hover;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(47, 111, 191, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@mixin btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: v.$space-2;
+  padding: v.$space-3 v.$space-8;
+  background: transparent;
+  color: v.$color-white;
+  border: 1px solid v.$color-white-60;
+  border-radius: v.$radius-full;
+  font-size: v.$font-size-base;
+  font-weight: v.$font-weight-medium;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color v.$transition-fast, background v.$transition-fast;
+
+  &:hover {
+    border-color: v.$color-white;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+@mixin section-label {
+  display: inline-block;
+  font-size: v.$font-size-sm;
+  font-weight: v.$font-weight-semibold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: v.$color-accent-light;
+  margin-bottom: v.$space-3;
+}

@@ -1,0 +1,64 @@
+<header class="navbar" [class.navbar--scrolled]="scrolled()">
+  <div class="navbar__container">
+    <a class="navbar__logo" (click)="scrollTo('hero')" role="button" aria-label="Начало">
+      <span class="navbar__logo-icon" aria-hidden="true">
+        <svg width="38" height="28" viewBox="0 0 38 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 2,14 C 9,3 29,3 36,14" stroke="#1B2E4B" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+          <path d="M 2,14 C 9,25 29,25 36,14" stroke="#1B2E4B" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+          <circle cx="19" cy="14" r="7.2" stroke="#1B2E4B" stroke-width="1.2" fill="none"/>
+          <circle cx="19" cy="14" r="3.4" fill="#1B2E4B"/>
+          <circle cx="20.8" cy="12.2" r="1.1" fill="white"/>
+        </svg>
+      </span>
+      <span class="navbar__logo-text">
+        <span class="navbar__logo-name">Д-р Магдалена Младенова</span>
+        <span class="navbar__logo-sub">ОЧЕН КАБИНЕТ &middot; РУСЕ</span>
+      </span>
+    </a>
+
+    <nav class="navbar__nav" aria-label="Основна навигация">
+      <ul class="navbar__links">
+        @for (link of navLinks; track link.anchor) {
+          <li>
+            <button class="navbar__link" (click)="scrollTo(link.anchor)">
+              {{ link.label }}
+            </button>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <button class="navbar__cta" (click)="scrollTo('booking')">
+      ЗАПИШЕТЕ СЕ
+    </button>
+
+    <button
+      class="navbar__hamburger"
+      [class.navbar__hamburger--open]="menuOpen()"
+      (click)="toggleMenu()"
+      aria-label="Меню"
+      [attr.aria-expanded]="menuOpen()"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div class="navbar__mobile" [class.navbar__mobile--open]="menuOpen()">
+    <nav>
+      <ul class="navbar__mobile-links">
+        @for (link of navLinks; track link.anchor) {
+          <li>
+            <button class="navbar__mobile-link" (click)="scrollTo(link.anchor)">
+              {{ link.label }}
+            </button>
+          </li>
+        }
+      </ul>
+    </nav>
+    <button class="navbar__mobile-cta" (click)="scrollTo('booking')">
+      ЗАПИШЕТЕ СЕ
+    </button>
+  </div>
+</header>

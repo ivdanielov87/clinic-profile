@@ -1,0 +1,9 @@
+@use '../styles/variables' as v;
+
+main {
+  padding-top: v.$navbar-height;
+
+  @media (max-width: #{v.$bp-tablet}) {
+    padding-top: v.$navbar-height-mobile;
+  }
+}

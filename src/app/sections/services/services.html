@@ -1,0 +1,32 @@
+<section class="services" id="services">
+  <div class="services__container">
+    <div class="services__header">
+      <div class="services__header-left">
+        <div class="services__label" animateOnScroll="fade-right" [animDelay]="0">
+          <span class="services__label-line"></span>
+          <span class="services__label-text">Какво предлагаме</span>
+        </div>
+        <h2 class="services__title" animateOnScroll="fade-up" [animDelay]="80">
+          Нашите услуги
+        </h2>
+      </div>
+      <p class="services__subtitle" animateOnScroll="fade-left" [animDelay]="120">
+        Пълен спектър от очни прегледи, модерна диагностика и прецизно проследяване на
+        здравето на зрението.
+      </p>
+    </div>
+
+    <div class="services__grid">
+      @for (item of items; track item.num; let i = $index) {
+        <div class="services__card" animateOnScroll="fade-up" [animDelay]="i * 70">
+          <div class="services__card-num">{{ item.num }}</div>
+          <div class="services__card-body">
+            <span class="services__card-tag">{{ item.tag }}</span>
+            <h3 class="services__card-title">{{ item.title }}</h3>
+            <p class="services__card-desc">{{ item.desc }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+<section class="env" id="environment">
+  <div class="env__container">
+    <div class="env__left">
+      <div class="env__label" animateOnScroll="fade-right" [animDelay]="0">
+        <span class="env__label-line"></span>
+        <span class="env__label-text">Нашият кабинет</span>
+      </div>
+
+      <h2 class="env__title" animateOnScroll="fade-up" [animDelay]="80">
+        Модерна среда за спокойствие и точност
+      </h2>
+
+      <p class="env__desc" animateOnScroll="fade-up" [animDelay]="140">
+        Кабинетът съчетава висок клас диагностична техника, подредена организация и спокойна
+        атмосфера, в която пациентът получава ясно обяснение и сигурност във всяка стъпка.
+      </p>
+
+      <ul class="env__features">
+        @for (f of features; track f.title; let i = $index) {
+          <li class="env__feature" animateOnScroll="fade-right" [animDelay]="200 + i * 60">
+            <span class="env__feature-dot"></span>
+            <div class="env__feature-text">
+              <span class="env__feature-title">{{ f.title }}</span>
+              <span class="env__feature-desc">{{ f.desc }}</span>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="env__gallery" animateOnScroll="fade-left" [animDelay]="100">
+      @for (item of gallery; track item.area) {
+        <article class="env__img env__img--{{ item.area }}">
+          <img class="env__img-photo" [src]="item.img" [alt]="item.title" loading="lazy" />
+          <div class="env__img-content">
+            <span class="env__img-label">{{ item.label }}</span>
+            <h3 class="env__img-title">{{ item.title }}</h3>
+            <p class="env__img-desc">{{ item.desc }}</p>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>

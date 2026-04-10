@@ -1,0 +1,227 @@
+@use '../../../styles/variables' as v;
+@use '../../../styles/mixins' as m;
+
+:host { display: block; }
+
+.env {
+  background:
+    radial-gradient(circle at top right, rgba(91, 159, 224, 0.16), transparent 30%),
+    v.$color-bg-page;
+  @include m.section-padding;
+}
+
+.env__container {
+  @include m.container;
+  display: grid;
+  grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
+  gap: clamp(v.$space-8, 5vw, v.$space-16);
+  align-items: start;
+
+  @media (max-width: #{v.$bp-laptop - 1px}) {
+    grid-template-columns: 1fr;
+    gap: v.$space-10;
+  }
+}
+
+.env__left {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(v.$space-4, 2vw, v.$space-6);
+}
+
+.env__label {
+  display: flex;
+  align-items: center;
+  gap: v.$space-3;
+}
+
+.env__label-line {
+  display: block;
+  width: 28px;
+  height: 1.5px;
+  background: v.$color-accent;
+  flex-shrink: 0;
+}
+
+.env__label-text {
+  font-size: v.$font-size-xs;
+  font-weight: v.$font-weight-semibold;
+  letter-spacing: 0.12em;
+  color: v.$color-accent;
+  text-transform: uppercase;
+}
+
+.env__title {
+  margin: 0;
+  max-width: 13ch;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: v.$font-weight-bold;
+  line-height: v.$line-height-tight;
+  color: v.$color-navy;
+}
+
+.env__desc {
+  margin: 0;
+  max-width: 58ch;
+  font-size: v.$font-size-base;
+  line-height: v.$line-height-loose;
+  color: v.$color-text-muted;
+}
+
+.env__features {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: v.$space-3;
+}
+
+.env__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: v.$space-4;
+  padding: v.$space-4 0;
+  border-bottom: 1px solid #e8eef4;
+
+  &:last-child { border-bottom: none; }
+}
+
+.env__feature-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: v.$color-accent;
+}
+
+.env__feature-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.env__feature-title {
+  font-size: v.$font-size-base;
+  font-weight: v.$font-weight-semibold;
+  line-height: v.$line-height-snug;
+  color: v.$color-navy;
+}
+
+.env__feature-desc {
+  font-size: v.$font-size-sm;
+  line-height: v.$line-height-normal;
+  color: v.$color-text-muted;
+}
+
+.env__gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 250px 250px 280px;
+  gap: v.$space-4;
+  grid-template-areas:
+    'reception ost'
+    'reception diag'
+    'waiting waiting';
+
+  @media (max-width: #{v.$bp-laptop - 1px}) {
+    grid-template-rows: 250px 250px 280px;
+  }
+
+  @include m.below-tablet {
+    grid-template-rows: 250px 250px 280px;
+  }
+
+  @include m.mobile {
+    grid-template-columns: 1fr;
+    grid-template-rows: 250px 250px 250px 250px;
+    grid-template-areas:
+      'reception'
+      'ost'
+      'diag'
+      'waiting';
+  }
+}
+
+.env__img {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+  padding: v.$space-5;
+  overflow: hidden;
+  border-radius: v.$radius-lg;
+  background: v.$color-navy;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to top,
+      rgba(10, 18, 32, 0.82) 0%,
+      rgba(10, 18, 32, 0.35) 50%,
+      rgba(10, 18, 32, 0.10) 100%
+    );
+    pointer-events: none;
+  }
+
+  &--reception { grid-area: reception; }
+  &--ost       { grid-area: ost; }
+  &--diag      { grid-area: diag; }
+  &--waiting   { grid-area: waiting; }
+}
+
+.env__img-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.env__img:hover .env__img-photo {
+  transform: scale(1.06);
+}
+
+.env__img-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+  margin-top: auto;
+}
+
+.env__img-label {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 0.55rem 0.85rem;
+  border-radius: v.$radius-full;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: v.$font-size-xs;
+  font-weight: v.$font-weight-semibold;
+  letter-spacing: 0.12em;
+  color: v.$color-white-80;
+  text-transform: uppercase;
+}
+
+.env__img-title {
+  margin: 0;
+  font-size: v.$font-size-base;
+  line-height: v.$line-height-snug;
+  color: v.$color-white;
+}
+
+.env__img-desc {
+  margin: 0;
+  font-size: v.$font-size-xs;
+  line-height: v.$line-height-normal;
+  color: v.$color-white-80;
+}

@@ -1,0 +1,49 @@
+<section class="prices" id="prices">
+  <div class="prices__container">
+    <div class="prices__header" animateOnScroll="fade-up" [animDelay]="0" [animDuration]="700">
+      <div class="prices__label">
+        <span class="prices__label-line"></span>
+        <span class="prices__label-text">Ценоразпис</span>
+      </div>
+      <h2 class="prices__title">Цени на медицинските услуги</h2>
+      <p class="prices__subtitle">
+        Всички цени са посочени в евро{{ showBgn ? ' и лева' : '' }}. При въпроси за комбинации
+        от изследвания или последващ преглед можете да се свържете с нас.
+      </p>
+    </div>
+
+    <div class="prices__grid">
+      @for (group of priceGroups(); track group.title; let i = $index) {
+        <div
+          class="prices__card"
+          animateOnScroll="fade-up"
+          [animDelay]="i * 120"
+          [animDuration]="700"
+        >
+          <div class="prices__card-head">
+            <span class="prices__card-icon" [innerHTML]="group.icon"></span>
+            <h3 class="prices__card-title">{{ group.title }}</h3>
+          </div>
+
+          <ul class="prices__list">
+            @for (item of group.items; track item.name) {
+              <li class="prices__item">
+                <span class="prices__item-name">{{ item.name }}</span>
+                <span class="prices__item-values">
+                  <span class="prices__item-eur">{{ item.eur }}</span>
+                  @if (showBgn && item.bgn) {
+                    <span class="prices__item-bgn">{{ item.bgn }}</span>
+                  }
+                </span>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+
+    <p class="prices__note" animateOnScroll="fade-up" [animDelay]="400" [animDuration]="600">
+      Цените са ориентировъчни и могат да варират според индивидуалните нужди на пациента.
+    </p>
+  </div>
+</section>

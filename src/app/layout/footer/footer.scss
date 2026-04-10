@@ -1,0 +1,55 @@
+@use '../../../styles/variables' as v;
+@use '../../../styles/mixins' as m;
+
+:host { display: block; }
+
+.footer {
+  background: v.$color-navy-dark;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-block: v.$space-5;
+}
+
+.footer__container {
+  @include m.container;
+  @include m.flex-between;
+  gap: v.$space-6;
+
+  @include m.mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: v.$space-3;
+  }
+}
+
+.footer__copy {
+  font-size: v.$font-size-xs;
+  color: v.$color-white-60;
+  margin: 0;
+  line-height: v.$line-height-normal;
+  word-break: break-word;
+}
+
+.footer__links {
+  display: flex;
+  align-items: center;
+  gap: v.$space-4;
+  flex-shrink: 0;
+}
+
+.footer__link {
+  font-size: v.$font-size-xs;
+  color: v.$color-white-60;
+  text-decoration: none;
+  transition: color v.$transition-fast;
+
+  &:hover {
+    color: v.$color-white;
+  }
+}
+
+.footer__divider {
+  display: block;
+  width: 1px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.2);
+}

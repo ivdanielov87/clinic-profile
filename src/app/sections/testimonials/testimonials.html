@@ -1,0 +1,52 @@
+<section class="testimonials" id="testimonials">
+  <div class="testimonials__container">
+    <div class="testimonials__header">
+      <div class="testimonials__header-left">
+        <div class="testimonials__label" animateOnScroll="fade-right" [animDelay]="0">
+          <span class="testimonials__label-line"></span>
+          <span class="testimonials__label-text">Мнения на пациентите</span>
+        </div>
+        <h2 class="testimonials__title" animateOnScroll="fade-up" [animDelay]="80">
+          Доверие, което личи в отзивите
+        </h2>
+      </div>
+
+      <div class="testimonials__rating" animateOnScroll="fade-left" [animDelay]="100">
+        <span class="testimonials__rating-score">4.9</span>
+        <div class="testimonials__rating-right">
+          <div class="testimonials__rating-stars">
+            @for (s of [1,2,3,4,5]; track s) {
+              <svg width="20" height="20" viewBox="0 0 14 14" fill="#F59E0B" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M7 1L8.545 4.93L12.657 5.257L9.736 7.77L10.657 11.743L7 9.5L3.343 11.743L4.264 7.77L1.343 5.257L5.455 4.93L7 1Z"/>
+              </svg>
+            }
+          </div>
+          <p class="testimonials__rating-sub">811 потвърдени оценки от SuperDoc</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonials__grid">
+      @for (review of reviews(); track review.name; let i = $index) {
+        <article class="testimonials__card" animateOnScroll="fade-up" [animDelay]="i * 80">
+          <div class="testimonials__card-top">
+            <div class="testimonials__avatar">{{ review.initials }}</div>
+            <div class="testimonials__card-meta">
+              <span class="testimonials__card-name">{{ review.name }}</span>
+              <span class="testimonials__card-date">{{ review.date }}</span>
+            </div>
+          </div>
+          <div class="testimonials__card-stars">
+            @for (s of [1,2,3,4,5]; track s) {
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="#F59E0B" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M7 1L8.545 4.93L12.657 5.257L9.736 7.77L10.657 11.743L7 9.5L3.343 11.743L4.264 7.77L1.343 5.257L5.455 4.93L7 1Z"/>
+              </svg>
+            }
+          </div>
+          <p class="testimonials__card-text">{{ review.text }}</p>
+          <span class="testimonials__card-source">SuperDoc &middot; Потвърдено посещение</span>
+        </article>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,139 @@
+<section class="hero" id="hero">
+  <div class="hero__left">
+    <div class="hero__left-inner">
+
+      <!-- Label -->
+      <div class="hero__label" animateOnScroll="fade-right" [animDelay]="280" [animDuration]="700">
+        <span class="hero__label-line"></span>
+        <span class="hero__label-text">СПЕЦИАЛИЗИРАНА ОЧНА ПОМОЩ &nbsp;&middot;&nbsp; РУСЕ</span>
+      </div>
+
+      <!-- Heading -->
+      <h1 class="hero__heading" animateOnScroll="fade-up" [animDelay]="600" [animDuration]="800">
+        Грижа за<br>
+        вашето <em class="hero__heading-accent">зрение</em>
+      </h1>
+
+      <!-- Tagline -->
+      <p class="hero__tagline" animateOnScroll="fade-up" [animDelay]="860" [animDuration]="700">
+        с прецизност и модерна технология
+      </p>
+
+      <!-- Description -->
+      <p class="hero__desc" animateOnScroll="fade-up" [animDelay]="1060" [animDuration]="750">
+        Специализиран очен кабинет с апаратура от последно поколение.
+        Диагностика, профилактика и лечение на широк спектър от очни
+        заболявания &mdash; включително ангио-ОСТ, лазери и Фороптер.
+      </p>
+
+      <!-- Buttons -->
+      <div class="hero__actions" animateOnScroll="fade-up" [animDelay]="1280" [animDuration]="700">
+        <button class="hero__btn hero__btn--primary" (click)="scrollTo('booking')">
+          ЗАПИШЕТЕ СЕ
+        </button>
+        <button class="hero__btn hero__btn--outline" (click)="scrollTo('services')">
+          НАШИТЕ УСЛУГИ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="hero__right">
+
+    <!-- Background decoration -->
+    <div class="hero__bg-art" aria-hidden="true">
+      <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <!-- Concentric arcs centred top-right -->
+        <circle cx="580" cy="60"  r="140" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <circle cx="580" cy="60"  r="220" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        <circle cx="580" cy="60"  r="310" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+        <circle cx="580" cy="60"  r="410" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
+        <!-- Concentric arcs centred bottom-left -->
+        <circle cx="30"  cy="560" r="160" stroke="rgba(91,159,224,0.07)"  stroke-width="1"/>
+        <circle cx="30"  cy="560" r="260" stroke="rgba(91,159,224,0.05)"  stroke-width="1"/>
+        <circle cx="30"  cy="560" r="370" stroke="rgba(91,159,224,0.035)" stroke-width="1"/>
+        <!-- Diagonal rule lines -->
+        <line x1="0"   y1="180" x2="600" y2="420" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+        <line x1="0"   y1="280" x2="600" y2="520" stroke="rgba(255,255,255,0.018)" stroke-width="1"/>
+        <line x1="0"   y1="80"  x2="600" y2="320" stroke="rgba(255,255,255,0.018)" stroke-width="1"/>
+        <!-- Cross-hatch accent near centre -->
+        <line x1="260" y1="0"   x2="260" y2="600" stroke="rgba(255,255,255,0.03)"  stroke-width="1" stroke-dasharray="4 18"/>
+        <line x1="340" y1="0"   x2="340" y2="600" stroke="rgba(255,255,255,0.025)" stroke-width="1" stroke-dasharray="4 18"/>
+        <line x1="0"   y1="260" x2="600" y2="260" stroke="rgba(255,255,255,0.025)" stroke-width="1" stroke-dasharray="4 18"/>
+        <line x1="0"   y1="340" x2="600" y2="340" stroke="rgba(255,255,255,0.02)"  stroke-width="1" stroke-dasharray="4 18"/>
+      </svg>
+    </div>
+
+    <!-- Decorative eye -->
+    <div class="hero__eye" aria-hidden="true">
+      <svg viewBox="0 0 360 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="hero-iris-clip">
+            <circle cx="180" cy="120" r="65"/>
+          </clipPath>
+          <radialGradient id="iris-grad" cx="45%" cy="42%" r="58%">
+            <stop offset="0%"   stop-color="rgba(74,140,210,0.55)"/>
+            <stop offset="45%"  stop-color="rgba(47,111,191,0.35)"/>
+            <stop offset="100%" stop-color="rgba(27,46,75,0.55)"/>
+          </radialGradient>
+          <radialGradient id="pupil-grad" cx="38%" cy="35%" r="65%">
+            <stop offset="0%"   stop-color="rgba(60,80,120,0.90)"/>
+            <stop offset="100%" stop-color="rgba(8,14,30,0.98)"/>
+          </radialGradient>
+        </defs>
+
+        <circle class="eye__ambient eye__ambient--2" cx="180" cy="120" r="100"/>
+        <circle class="eye__ambient eye__ambient--1" cx="180" cy="120" r="86"/>
+        <path class="eye__lid eye__lid--top"    d="M 18,120 C 80,22 280,22 342,120"/>
+        <path class="eye__lid eye__lid--bottom" d="M 18,120 C 80,218 280,218 342,120"/>
+        <circle class="eye__iris-bg" cx="180" cy="120" r="65" fill="url(#iris-grad)"/>
+        <g class="eye__iris-rings" clip-path="url(#hero-iris-clip)">
+          <ellipse cx="180" cy="120" rx="63" ry="61" transform="rotate(12,180,120)"/>
+          <ellipse cx="180" cy="120" rx="55" ry="52" transform="rotate(-8,180,120)"/>
+          <ellipse cx="180" cy="120" rx="47" ry="44" transform="rotate(18,180,120)"/>
+          <ellipse cx="180" cy="120" rx="39" ry="37" transform="rotate(-5,180,120)"/>
+        </g>
+        <circle class="eye__iris-edge" cx="180" cy="120" r="65"/>
+        <g class="eye__layer-2" clip-path="url(#hero-iris-clip)">
+          <ellipse cx="180" cy="120" rx="60" ry="56" transform="rotate(30,180,120)"/>
+          <ellipse cx="180" cy="120" rx="50" ry="46" transform="rotate(-20,180,120)"/>
+          <ellipse cx="180" cy="120" rx="36" ry="33" transform="rotate(10,180,120)"/>
+        </g>
+        <circle class="eye__inner-ring" cx="180" cy="120" r="33"/>
+        <circle class="eye__pupil" cx="180" cy="120" r="20" fill="url(#pupil-grad)"/>
+        <!-- Scan line — clipped to iris -->
+        <line class="eye__scan" x1="115" y1="120" x2="245" y2="120" clip-path="url(#hero-iris-clip)"/>
+
+        <ellipse class="eye__highlight eye__highlight--main" cx="192" cy="109" rx="6" ry="5" transform="rotate(-15,192,109)"/>
+        <circle  class="eye__highlight eye__highlight--sub"  cx="171" cy="131" r="2.5"/>
+      </svg>
+    </div>
+
+    <!-- Card: Апаратура -->
+    <div class="hero__card hero__card--top" animateOnScroll="fade-left" [animDelay]="300">
+      <span class="hero__card-label">АПАРАТУРА</span>
+      <span class="hero__card-title">Лазерна диагностика</span>
+    </div>
+
+    <!-- Card: Технология -->
+    <div class="hero__card hero__card--bottom-left" animateOnScroll="fade-right" [animDelay]="400">
+      <span class="hero__card-label">ТЕХНОЛОГИЯ</span>
+      <span class="hero__card-title">Ангио-ОСТ Скенер</span>
+    </div>
+
+    <!-- Card: Rating -->
+    <div class="hero__card hero__card--rating hero__card--bottom-right" animateOnScroll="fade-left" [animDelay]="480">
+      <div class="hero__card-stars">
+        @for (star of [1,2,3,4,5]; track star) {
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="#F59E0B" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 1L8.545 4.93L12.657 5.257L9.736 7.77L10.657 11.743L7 9.5L3.343 11.743L4.264 7.77L1.343 5.257L5.455 4.93L7 1Z"/>
+          </svg>
+        }
+      </div>
+      <span class="hero__card-rating-value">4.9</span>
+      <span class="hero__card-rating-sub">811 пациента</span>
+    </div>
+
+  </div>
+</section>
