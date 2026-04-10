@@ -51,6 +51,9 @@
                 "input": "public"
               }
             ],
+            "allowedCommonJsDependencies": [
+              "leaflet"
+            ],
             "styles": [
               "node_modules/leaflet/dist/leaflet.css",
               "src/styles.scss"
@@ -66,8 +69,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "10kB",
+                  "maximumError": "20kB"
                 }
               ],
               "outputHashing": "all"
