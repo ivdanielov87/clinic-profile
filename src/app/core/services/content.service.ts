@@ -70,8 +70,7 @@ const FALLBACK: SiteContent = {
     ],
     highlights: [
       { value: '15+',  label: 'Години опит' },
-      { value: '2021', label: 'Специалност очни болести' },
-      { value: '6+',   label: 'Минимална възраст за преглед' },
+      { value: '2021', label: 'Специалност очни болести' }
     ],
     qualifications: [
       'Ехография',

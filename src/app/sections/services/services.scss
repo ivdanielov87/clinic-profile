@@ -15,8 +15,6 @@
   gap: clamp(v.$space-8, 4vw, v.$space-12);
 }
 
-// ─── Header ──────────────────────────────────────────────────────────────────
-
 .services__header {
   display: flex;
   align-items: flex-end;
@@ -80,16 +78,16 @@
   }
 }
 
-// ─── Grid ────────────────────────────────────────────────────────────────────
-
 .services__grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
+  gap: 12px;
   background: #e2eaf3;
   border: 1px solid #e2eaf3;
   border-radius: v.$radius-lg;
   overflow: hidden;
+  box-shadow: 0 24px 54px rgba(27, 46, 75, 0.06);
 
   @include m.below-desktop {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -100,19 +98,72 @@
   }
 }
 
-// ─── Card ────────────────────────────────────────────────────────────────────
-
 .services__card {
   position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   gap: v.$space-5;
   padding: v.$space-8 v.$space-6;
-  background: v.$color-white;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 251, 255, 0.96) 100%);
   overflow: hidden;
-  transition: background v.$transition-base;
+  transition:
+    background 380ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 380ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
 
-  // Left accent bar — draws up from bottom on hover
+  &.animate-on-scroll.fade-up {
+    transform: translateY(56px) scale(0.965);
+  }
+
+  &.animate-on-scroll {
+    .services__card-num-wrap,
+    .services__card-tag-wrap,
+    .services__card-title-wrap,
+    .services__card-desc-wrap {
+      opacity: 0;
+      transform: translateY(18px);
+      transition:
+        opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform, opacity;
+    }
+
+    .services__card-num-wrap {
+      transform: translateY(18px) scale(0.92);
+    }
+  }
+
+  &.animate-on-scroll.animated {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      0 18px 40px rgba(27, 46, 75, 0.05);
+
+    &::before {
+      transform: scaleY(0.38);
+      box-shadow: 2px 0 14px rgba(47, 111, 191, 0.12);
+      transition-delay: 140ms;
+    }
+
+    &::after {
+      width: 62%;
+      transition-delay: 200ms;
+    }
+
+    .services__card-num-wrap,
+    .services__card-tag-wrap,
+    .services__card-title-wrap,
+    .services__card-desc-wrap {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .services__card-num-wrap { transition-delay: 120ms; }
+    .services__card-tag-wrap { transition-delay: 180ms; }
+    .services__card-title-wrap { transition-delay: 250ms; }
+    .services__card-desc-wrap { transition-delay: 330ms; }
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -123,10 +174,11 @@
     background: v.$color-accent;
     transform: scaleY(0);
     transform-origin: bottom;
-    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  // Top accent line — draws in from left on hover
   &::after {
     content: '';
     position: absolute;
@@ -135,19 +187,24 @@
     width: 0;
     height: 2px;
     background: linear-gradient(to right, v.$color-accent, rgba(47, 111, 191, 0.3));
-    transition: width 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 460ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   &:hover {
-    background: #fafcff;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.85),
+      0 24px 48px rgba(27, 46, 75, 0.08);
 
     &::before {
       transform: scaleY(1);
       box-shadow: 2px 0 10px rgba(47, 111, 191, 0.18);
+      transition-delay: 0ms;
     }
 
     &::after {
       width: 100%;
+      transition-delay: 0ms;
     }
 
     .services__card-num {
@@ -160,6 +217,10 @@
     }
   }
 
+  &.animate-on-scroll.animated:hover {
+    transform: translateY(-4px) !important;
+  }
+
   @include m.below-tablet {
     padding: v.$space-6 v.$space-5;
     flex-direction: row;
@@ -168,7 +229,14 @@
   }
 }
 
-// ─── Number ──────────────────────────────────────────────────────────────────
+.services__card-num-wrap {
+  flex-shrink: 0;
+}
+
+.services__card-title-wrap,
+.services__card-desc-wrap {
+  overflow: hidden;
+}
 
 .services__card-num {
   font-size: 2.75rem;
@@ -179,7 +247,7 @@
   flex-shrink: 0;
   transform-origin: left center;
   transition:
-    color     v.$transition-base,
+    color v.$transition-base,
     transform 350ms cubic-bezier(0.34, 1.1, 0.64, 1);
 
   @include m.below-tablet {
@@ -189,12 +257,13 @@
   }
 }
 
-// ─── Body ─────────────────────────────────────────────────────────────────────
-
 .services__card-body {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: v.$space-2;
+  min-width: 0;
 }
 
 .services__card-tag {
@@ -222,10 +291,22 @@
   color: v.$color-text-muted;
 }
 
-// ─── Keyframes ───────────────────────────────────────────────────────────────
+@media (prefers-reduced-motion: reduce) {
+  .services__card,
+  .services__card::before,
+  .services__card::after,
+  .services__card-num-wrap,
+  .services__card-tag-wrap,
+  .services__card-title-wrap,
+  .services__card-desc-wrap,
+  .services__card-num,
+  .services__card-title {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
 
-@keyframes svc-num-arrive {
-  from { transform: scale(0.6) translateY(8px); opacity: 0; }
-  70%  { transform: scale(1.08) translateY(-1px); opacity: 1; }
-  to   { transform: scale(1)   translateY(0);    opacity: 1; }
+  .services__card.animate-on-scroll.animated,
+  .services__card.animate-on-scroll.animated:hover {
+    transform: none !important;
+  }
 }
