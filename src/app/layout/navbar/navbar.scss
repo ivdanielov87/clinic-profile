@@ -183,11 +183,15 @@
 
 .navbar__cta {
   @include m.btn-navy;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   padding: 0.8rem 1.35rem;
   color: v.$color-white;
   font-size: v.$font-size-sm;
   font-weight: v.$font-weight-semibold;
+  text-decoration: none;
   border: none;
   border-radius: m.$btn-radius;
   cursor: pointer;
@@ -324,6 +328,7 @@
   color: v.$color-white;
   font-size: v.$font-size-sm;
   font-weight: v.$font-weight-semibold;
+  text-decoration: none;
   border: none;
   border-radius: m.$btn-radius;
   cursor: pointer;

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
+import { ContentService } from '../../core/services/content.service';
 
 @Component({
   selector: 'app-hero',
@@ -8,12 +9,21 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
 })
-export class Hero {
+export class Hero implements OnInit {
+  private contentService = inject(ContentService);
+
   readonly stats = [
     { value: '15+', label: 'ГОДИНИ ОПИТ' },
     { value: '4.9', label: 'РЕЙТИНГ' },
     { value: '811', label: 'ОЦЕНКИ' },
   ];
+  superDocUrl = signal('https://superdoc.bg/lekar/magdalena-mladenova');
+
+  ngOnInit(): void {
+    this.contentService.getContent().subscribe(c => {
+      this.superDocUrl.set(c.contact.superDocUrl);
+    });
+  }
 
   scrollTo(anchor: string): void {
     const el = document.getElementById(anchor);

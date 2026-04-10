@@ -1,4 +1,5 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
+import { ContentService } from '../../core/services/content.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,12 @@ import { Component, HostListener, signal } from '@angular/core';
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class Navbar {
+export class Navbar implements OnInit {
+  private contentService = inject(ContentService);
+
   scrolled = signal(false);
   menuOpen = signal(false);
+  superDocUrl = signal('https://superdoc.bg/lekar/magdalena-mladenova');
 
   readonly navLinks = [
     { label: 'Услуги', anchor: 'services' },
@@ -19,6 +23,12 @@ export class Navbar {
     { label: 'Мнения', anchor: 'testimonials' },
     { label: 'Контакти', anchor: 'booking' },
   ];
+
+  ngOnInit(): void {
+    this.contentService.getContent().subscribe(c => {
+      this.superDocUrl.set(c.contact.superDocUrl);
+    });
+  }
 
   @HostListener('window:scroll')
   onScroll(): void {

@@ -28,9 +28,9 @@
 
       <!-- Buttons -->
       <div class="hero__actions" animateOnScroll="fade-up" [animDelay]="1280" [animDuration]="700">
-        <button class="hero__btn hero__btn--primary" (click)="scrollTo('booking')">
-          ЗАПИШЕТЕ СЕ
-        </button>
+        <a class="hero__btn hero__btn--primary" [href]="superDocUrl()" target="_blank" rel="noopener noreferrer">
+          ЗАПИШЕТЕ ЧАС
+        </a>
         <button class="hero__btn hero__btn--outline" (click)="scrollTo('services')">
           НАШИТЕ УСЛУГИ
         </button>
@@ -113,7 +113,7 @@
     <!-- Card: Апаратура -->
     <div class="hero__card hero__card--top" animateOnScroll="fade-left" [animDelay]="300">
       <span class="hero__card-label">АПАРАТУРА</span>
-      <span class="hero__card-title">Лазерна диагностика</span>
+      <span class="hero__card-title">Лазерно лечение</span>
     </div>
 
     <!-- Card: Технология -->

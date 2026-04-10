@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
 
 @Component({
@@ -9,6 +9,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
   styleUrl: './environment.scss',
 })
 export class Environment {
+  openFeatureIndexes = signal<Set<number>>(new Set());
+
   readonly features = [
     {
       title: 'Ангио-ОСТ скенер',
@@ -66,4 +68,22 @@ export class Environment {
       desc: 'Чисто, светло и премерено пространство, създадено с внимание към комфорта.',
     },
   ];
+
+  toggleFeature(index: number): void {
+    this.openFeatureIndexes.update(current => {
+      const next = new Set(current);
+
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+
+      return next;
+    });
+  }
+
+  isFeatureOpen(index: number): boolean {
+    return this.openFeatureIndexes().has(index);
+  }
 }

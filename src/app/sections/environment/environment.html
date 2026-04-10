@@ -17,11 +17,24 @@
 
       <ul class="env__features">
         @for (f of features; track f.title; let i = $index) {
-          <li class="env__feature" animateOnScroll="fade-right" [animDelay]="200 + i * 60">
+          <li
+            class="env__feature"
+            animateOnScroll="fade-right"
+            [animDelay]="200 + i * 60"
+            [class.env__feature--open]="isFeatureOpen(i)"
+          >
             <span class="env__feature-dot"></span>
             <div class="env__feature-text">
-              <span class="env__feature-title">{{ f.title }}</span>
-              <span class="env__feature-desc">{{ f.desc }}</span>
+              <button
+                class="env__feature-title"
+                type="button"
+                (click)="toggleFeature(i)"
+                [attr.aria-expanded]="isFeatureOpen(i)"
+              >
+                <span>{{ f.title }}</span>
+                <span class="env__feature-chevron" aria-hidden="true"></span>
+              </button>
+              <span class="env__feature-desc" [class.env__feature-desc--open]="isFeatureOpen(i)">{{ f.desc }}</span>
             </div>
           </li>
         }

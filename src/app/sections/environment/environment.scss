@@ -1,7 +1,9 @@
 @use '../../../styles/variables' as v;
 @use '../../../styles/mixins' as m;
 
-:host { display: block; }
+:host {
+  display: block;
+}
 
 .env {
   background:
@@ -73,6 +75,10 @@
   flex-direction: column;
   gap: 0;
   margin-top: v.$space-3;
+
+  @media (max-width: #{v.$bp-tablet - 1px}) {
+    display: none;
+  }
 }
 
 .env__feature {
@@ -82,7 +88,9 @@
   padding: v.$space-4 0;
   border-bottom: 1px solid #e8eef4;
 
-  &:last-child { border-bottom: none; }
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .env__feature-dot {
@@ -101,10 +109,31 @@
 }
 
 .env__feature-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: v.$space-3;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
   font-size: v.$font-size-base;
   font-weight: v.$font-weight-semibold;
   line-height: v.$line-height-snug;
   color: v.$color-navy;
+}
+
+.env__feature-chevron {
+  display: none;
+  width: 0.7rem;
+  height: 0.7rem;
+  flex-shrink: 0;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  color: v.$color-navy;
+  transform: rotate(45deg);
+  transition: transform v.$transition-base;
 }
 
 .env__feature-desc {
@@ -161,15 +190,23 @@
       to top,
       rgba(10, 18, 32, 0.82) 0%,
       rgba(10, 18, 32, 0.35) 50%,
-      rgba(10, 18, 32, 0.10) 100%
+      rgba(10, 18, 32, 0.1) 100%
     );
     pointer-events: none;
   }
 
-  &--reception { grid-area: reception; }
-  &--ost       { grid-area: ost; }
-  &--diag      { grid-area: diag; }
-  &--waiting   { grid-area: waiting; }
+  &--reception {
+    grid-area: reception;
+  }
+  &--ost {
+    grid-area: ost;
+  }
+  &--diag {
+    grid-area: diag;
+  }
+  &--waiting {
+    grid-area: waiting;
+  }
 }
 
 .env__img-photo {
@@ -224,4 +261,46 @@
   font-size: v.$font-size-xs;
   line-height: v.$line-height-normal;
   color: v.$color-white-80;
+}
+
+@include m.below-tablet {
+  .env__feature {
+    gap: v.$space-3;
+  }
+
+  .env__feature-dot {
+    margin-top: 0.9rem;
+  }
+
+  .env__feature-title {
+    cursor: pointer;
+  }
+
+  .env__feature-chevron {
+    display: block;
+  }
+
+  .env__feature--open {
+    .env__feature-chevron {
+      transform: rotate(225deg);
+    }
+  }
+
+  .env__feature-desc {
+    display: block;
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      max-height 240ms ease,
+      margin-top 240ms ease,
+      opacity 200ms ease;
+  }
+
+  .env__feature-desc--open {
+    max-height: 7rem;
+    margin-top: v.$space-1;
+    opacity: 1;
+  }
 }

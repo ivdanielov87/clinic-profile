@@ -28,9 +28,9 @@
       </ul>
     </nav>
 
-    <button class="navbar__cta" (click)="scrollTo('booking')">
-      ЗАПИШЕТЕ СЕ
-    </button>
+    <a class="navbar__cta" [href]="superDocUrl()" target="_blank" rel="noopener noreferrer">
+      ЗАПИШЕТЕ ЧАС
+    </a>
 
     <button
       class="navbar__hamburger"
@@ -57,8 +57,8 @@
         }
       </ul>
     </nav>
-    <button class="navbar__mobile-cta" (click)="scrollTo('booking')">
-      ЗАПИШЕТЕ СЕ
-    </button>
+    <a class="navbar__mobile-cta" [href]="superDocUrl()" target="_blank" rel="noopener noreferrer">
+      ЗАПИШЕТЕ ЧАС
+    </a>
   </div>
 </header>
