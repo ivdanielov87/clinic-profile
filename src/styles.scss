@@ -22,6 +22,58 @@
 }
 
 .hero {
+  .hero__reveal {
+    opacity: 0;
+    will-change: opacity, transform;
+    animation: hero-copy-reveal var(--hero-duration, 760ms) cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0ms) both;
+  }
+
+  .hero__reveal--label {
+    --hero-delay: 240ms;
+    --hero-duration: 720ms;
+    --hero-x: -30px;
+    --hero-y: 10px;
+    --hero-scale: 0.988;
+  }
+
+  .hero__reveal--heading {
+    --hero-delay: 760ms;
+    --hero-duration: 820ms;
+    --hero-y: 26px;
+  }
+
+  .hero__reveal--tagline {
+    --hero-delay: 1260ms;
+    --hero-duration: 700ms;
+    --hero-y: 22px;
+  }
+
+  .hero__reveal--desc {
+    --hero-delay: 1720ms;
+    --hero-duration: 760ms;
+    --hero-y: 20px;
+  }
+
+  .hero__reveal--actions {
+    --hero-delay: 2280ms;
+    --hero-duration: 700ms;
+    --hero-y: 18px;
+
+    .hero__btn {
+      opacity: 0;
+      transform: translateY(14px) scale(0.99);
+      animation: hero-btn-reveal 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .hero__btn:nth-child(1) {
+      animation-delay: 2420ms;
+    }
+
+    .hero__btn:nth-child(2) {
+      animation-delay: 2520ms;
+    }
+  }
+
   .hero__tagline .hero__tagline-focus {
     position: relative;
     display: inline-block;
@@ -46,8 +98,10 @@
       border-radius: 999px;
       background: linear-gradient(90deg, rgba(90, 157, 224, 0.18), rgba(90, 157, 224, 0.04));
       filter: blur(7px);
-      opacity: 0.65;
+      opacity: 0;
       z-index: -1;
+      transform: scaleX(0.34);
+      animation: hero-focus-halo 920ms cubic-bezier(0.16, 1, 0.3, 1) 1680ms both;
     }
 
     &::after {
@@ -62,109 +116,69 @@
         rgba(47, 111, 191, 0.24) 100%
       );
       box-shadow: 0 6px 18px rgba(47, 111, 191, 0.22);
+      opacity: 0.25;
+      transform: scaleX(0.16);
+      animation: hero-focus-stroke 880ms cubic-bezier(0.16, 1, 0.3, 1) 1740ms both;
     }
-  }
-
-  .hero__label.animate-on-scroll,
-  .hero__heading.animate-on-scroll,
-  .hero__tagline.animate-on-scroll,
-  .hero__desc.animate-on-scroll,
-  .hero__actions.animate-on-scroll {
-    will-change: opacity, transform, filter;
-    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .hero__label.animate-on-scroll {
-    filter: blur(6px);
-    transform: translate3d(-30px, 10px, 0) scale(0.988);
-  }
-
-  .hero__heading.animate-on-scroll,
-  .hero__tagline.animate-on-scroll,
-  .hero__desc.animate-on-scroll {
-    filter: blur(8px);
-    transform: translate3d(0, 26px, 0);
-    transition-property: opacity, transform, filter;
-  }
-
-  .hero__actions.animate-on-scroll {
-    filter: blur(6px);
-    transform: translate3d(0, 22px, 0);
-    transition-property: opacity, transform, filter;
-
-    .hero__btn {
-      opacity: 0;
-      transform: translateY(14px) scale(0.99);
-      transition:
-        opacity 560ms cubic-bezier(0.16, 1, 0.3, 1),
-        transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
-    }
-  }
-
-  .hero__label.animate-on-scroll.animated,
-  .hero__heading.animate-on-scroll.animated,
-  .hero__tagline.animate-on-scroll.animated,
-  .hero__desc.animate-on-scroll.animated,
-  .hero__actions.animate-on-scroll.animated {
-    filter: none;
-  }
-
-  .hero__tagline.animate-on-scroll .hero__tagline-focus::before {
-    transform: scaleX(0.34);
-    opacity: 0;
-    transition:
-      transform 920ms cubic-bezier(0.16, 1, 0.3, 1) 80ms,
-      opacity 600ms ease 40ms;
-  }
-
-  .hero__tagline.animate-on-scroll .hero__tagline-focus::after {
-    transform: scaleX(0.16);
-    opacity: 0.25;
-    transition:
-      transform 880ms cubic-bezier(0.16, 1, 0.3, 1) 120ms,
-      opacity 620ms ease 60ms;
-  }
-
-  .hero__tagline.animate-on-scroll.animated .hero__tagline-focus::before,
-  .hero__tagline.animate-on-scroll.animated .hero__tagline-focus::after {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-
-  .hero__actions.animate-on-scroll.animated .hero__btn {
-    opacity: 1;
-    transform: none;
-  }
-
-  .hero__actions.animate-on-scroll.animated .hero__btn:nth-child(1) {
-    transition-delay: 140ms;
-  }
-
-  .hero__actions.animate-on-scroll.animated .hero__btn:nth-child(2) {
-    transition-delay: 240ms;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero__label.animate-on-scroll,
-    .hero__heading.animate-on-scroll,
-    .hero__tagline.animate-on-scroll,
-    .hero__desc.animate-on-scroll,
-    .hero__actions.animate-on-scroll {
-      filter: none;
-    }
-
-    .hero__tagline.animate-on-scroll .hero__tagline-focus::before,
-    .hero__tagline.animate-on-scroll .hero__tagline-focus::after {
-      transform: none;
-      opacity: 1;
-      transition: none;
-    }
-
-    .hero__actions.animate-on-scroll .hero__btn {
+    .hero__reveal,
+    .hero__reveal--actions .hero__btn,
+    .hero__tagline .hero__tagline-focus::before,
+    .hero__tagline .hero__tagline-focus::after {
       opacity: 1;
       transform: none;
-      transition: none;
+      animation: none;
     }
+  }
+}
+
+@keyframes hero-copy-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--hero-x, 0), var(--hero-y, 24px), 0) scale(var(--hero-scale, 1));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-btn-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-focus-halo {
+  from {
+    opacity: 0;
+    transform: scaleX(0.34);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes hero-focus-stroke {
+  from {
+    opacity: 0.25;
+    transform: scaleX(0.16);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleX(1);
   }
 }
 
