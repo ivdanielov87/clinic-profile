@@ -1,7 +1,9 @@
 @use '../../../styles/variables' as v;
 @use '../../../styles/mixins' as m;
 
-:host { display: block; }
+:host {
+  display: block;
+}
 
 .about {
   background: v.$color-bg-page;
@@ -202,6 +204,10 @@
     font-weight: v.$font-weight-semibold;
     color: v.$color-text-dark;
   }
+
+  @include m.mobile {
+    font-size: v.$font-size-sm;
+  }
 }
 
 // ─── Stats ───────────────────────────────────────────────────────────────────
@@ -221,12 +227,18 @@
   padding: v.$space-5 v.$space-4;
   border-right: 1px solid #dce8f3;
 
-  &:first-child { padding-left: 0; }
-  &:last-child  { border-right: none; }
+  &:first-child {
+    padding-left: 0;
+  }
+  &:last-child {
+    border-right: none;
+  }
 
   @include m.mobile {
     padding: v.$space-3;
-    &:first-child { padding-left: 0; }
+    &:first-child {
+      padding-left: 0;
+    }
   }
 }
 
@@ -350,11 +362,17 @@
     }
   }
 
-  &:nth-last-child(-n+2) { border-bottom: none; }
+  &:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
 
   @include m.below-tablet {
-    &:nth-last-child(-n+2) { border-bottom: 1px solid #e8eef4; }
-    &:last-child { border-bottom: none; }
+    &:nth-last-child(-n + 2) {
+      border-bottom: 1px solid #e8eef4;
+    }
+    &:last-child {
+      border-bottom: none;
+    }
   }
 }
 
