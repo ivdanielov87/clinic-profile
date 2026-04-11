@@ -68,6 +68,10 @@
   font-size: v.$font-size-base;
   line-height: v.$line-height-loose;
   color: v.$color-text-muted;
+
+  @include m.mobile {
+    font-size: v.$font-size-sm;
+  }
 }
 
 .env__features {

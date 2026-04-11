@@ -18,7 +18,13 @@
 
     <div class="services__grid">
       @for (item of items; track item.title; let i = $index) {
-        <div class="services__card" animateOnScroll="fade-up" [animDelay]="i * 90" [animDuration]="760">
+        <div
+          class="services__card"
+          [class.services__card--expanded]="isExpanded(i)"
+          animateOnScroll="fade-up"
+          [animDelay]="i * 90"
+          [animDuration]="760"
+        >
           <div class="services__card-body">
             <div class="services__card-tag-wrap">
               <span class="services__card-tag">{{ item.tag }}</span>
@@ -26,32 +32,48 @@
             <div class="services__card-title-wrap">
               <h3 class="services__card-title">{{ item.title }}</h3>
             </div>
-            <div class="services__card-desc-wrap">
+            <div class="services__card-desc-wrap" [attr.id]="'service-desc-' + i">
               <p class="services__card-desc">{{ item.desc }}</p>
             </div>
+            <button
+              type="button"
+              class="services__card-toggle"
+              [attr.aria-controls]="'service-desc-' + i"
+              [attr.aria-expanded]="isExpanded(i)"
+              (click)="toggleExpanded(i)"
+            >
+              {{ isExpanded(i) ? 'Скрий' : 'Виж още...' }}
+            </button>
           </div>
         </div>
       }
 
       <div
         class="services__card services__card--more"
+        [class.services__card--expanded]="isExpanded('more')"
         animateOnScroll="fade-up"
         [animDelay]="items.length * 90"
         [animDuration]="760"
       >
         <div class="services__card-body">
-          <div class="services__card-plus-wrap" aria-hidden="true">
-            <span class="services__card-plus">+</span>
-          </div>
           <div class="services__card-tag-wrap">
             <span class="services__card-tag">{{ moreCard.tag }}</span>
           </div>
           <div class="services__card-title-wrap">
             <h3 class="services__card-title">{{ moreCard.title }}</h3>
           </div>
-          <div class="services__card-desc-wrap">
+          <div class="services__card-desc-wrap" id="service-desc-more">
             <p class="services__card-desc">{{ moreCard.desc }}</p>
           </div>
+          <button
+            type="button"
+            class="services__card-toggle"
+            aria-controls="service-desc-more"
+            [attr.aria-expanded]="isExpanded('more')"
+            (click)="toggleExpanded('more')"
+          >
+            {{ isExpanded('more') ? 'Скрий' : 'Виж повече...' }}
+          </button>
         </div>
       </div>
     </div>

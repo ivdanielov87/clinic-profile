@@ -16,8 +16,8 @@ export class Navbar implements OnInit {
   superDocUrl = signal('https://superdoc.bg/lekar/magdalena-mladenova');
 
   readonly navLinks = [
-    { label: 'Услуги', anchor: 'services' },
     { label: 'Кабинетът', anchor: 'environment' },
+    { label: 'Услуги', anchor: 'services' },
     { label: 'Лекарят', anchor: 'doctor' },
     { label: 'Цени', anchor: 'prices' },
     { label: 'Мнения', anchor: 'testimonials' },

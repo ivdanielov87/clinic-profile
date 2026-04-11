@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
 
 @Component({
@@ -9,6 +9,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
   styleUrl: './services.scss',
 })
 export class Services {
+  private readonly expandedCards = signal<Set<number | 'more'>>(new Set());
+
   readonly items = [
     {
       tag: 'Консултация',
@@ -47,4 +49,22 @@ export class Services {
     title: 'Допълнителни консултации и проследяване',
     desc: 'Извършваме още контролни прегледи, комбинирани изследвания, второ мнение и индивидуален план според конкретните оплаквания и история.',
   };
+
+  isExpanded(cardKey: number | 'more'): boolean {
+    return this.expandedCards().has(cardKey);
+  }
+
+  toggleExpanded(cardKey: number | 'more'): void {
+    this.expandedCards.update(current => {
+      const next = new Set(current);
+
+      if (next.has(cardKey)) {
+        next.delete(cardKey);
+      } else {
+        next.add(cardKey);
+      }
+
+      return next;
+    });
+  }
 }
