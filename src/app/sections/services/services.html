@@ -24,8 +24,71 @@
           animateOnScroll="fade-up"
           [animDelay]="i * 90"
           [animDuration]="760"
-        >
+      >
+        <div class="services__card-media-wrap" aria-hidden="true">
+          <img class="services__card-media" [src]="item.image" [alt]="item.imageAlt" loading="lazy" decoding="async">
+        </div>
           <div class="services__card-body">
+            <!--
+            <div class="services__card-icon-wrap" aria-hidden="true">
+              <div class="services__card-icon">
+                @switch (item.icon) {
+                  @case ('exam') {
+                    <svg viewBox="0 0 78 56" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 28C17.8 18.5 27.2 13 39 13C50.8 13 60.2 18.5 66 28C60.2 37.5 50.8 43 39 43C27.2 43 17.8 37.5 12 28Z"/>
+                      <circle cx="39" cy="28" r="6.5"/>
+                      <path d="M23 28H55"/>
+                    </svg>
+                  }
+                  @case ('refraction') {
+                    <svg viewBox="0 0 78 56" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="28" cy="28" r="8"/>
+                      <circle cx="50" cy="28" r="8"/>
+                      <path d="M36 28H42"/>
+                      <path d="M39 14V42"/>
+                      <path d="M22 18H34"/>
+                      <path d="M44 18H56"/>
+                    </svg>
+                  }
+                  @case ('pressure') {
+                    <svg viewBox="0 0 78 56" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19 37C19 25.4 27.4 17 39 17C50.6 17 59 25.4 59 37"/>
+                      <path d="M39 37L49 27"/>
+                      <circle cx="39" cy="37" r="2.5"/>
+                      <path d="M24 37H28"/>
+                      <path d="M50 37H54"/>
+                    </svg>
+                  }
+                  @case ('oct') {
+                    <svg viewBox="0 0 78 56" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16 18C22 14.5 29 13 39 13C49 13 56 14.5 62 18"/>
+                      <path d="M16 26H62"/>
+                      <path d="M20 33C25.5 29.5 31 28 39 28C47 28 52.5 29.5 58 33"/>
+                      <path d="M23 40C27.5 37.5 32.5 36.5 39 36.5C45.5 36.5 50.5 37.5 55 40"/>
+                      <path d="M39 13V40"/>
+                    </svg>
+                  }
+                  @case ('laser') {
+                    <svg viewBox="0 0 78 56" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16 18H32"/>
+                      <path d="M32 18L42 28"/>
+                      <circle cx="52" cy="38" r="9"/>
+                      <path d="M47 38H57"/>
+                      <path d="M52 33V43"/>
+                    </svg>
+                  }
+                  @case ('pediatric') {
+                    <svg viewBox="0 0 78 56" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13 29C18.4 20 27.6 15 39 15C50.4 15 59.6 20 65 29C59.6 38 50.4 43 39 43C27.6 43 18.4 38 13 29Z"/>
+                      <circle cx="39" cy="29" r="6"/>
+                      <path d="M55 14H63"/>
+                      <path d="M59 10V18"/>
+                    </svg>
+                  }
+                }
+              </div>
+            </div>
+            -->
             <div class="services__card-tag-wrap">
               <span class="services__card-tag">{{ item.tag }}</span>
             </div>
@@ -49,13 +112,25 @@
       }
 
       <div
-        class="services__card services__card--more"
+        class="services__card services__card--more services__card--no-media"
         [class.services__card--expanded]="isExpanded('more')"
         animateOnScroll="fade-up"
         [animDelay]="items.length * 90"
         [animDuration]="760"
       >
         <div class="services__card-body">
+          <!--
+          <div class="services__card-icon-wrap" aria-hidden="true">
+            <div class="services__card-icon">
+              <svg viewBox="0 0 78 56" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 17H52"/>
+                <path d="M18 28H61"/>
+                <path d="M18 39H46"/>
+                <path d="M52 17L60 25L52 33"/>
+              </svg>
+            </div>
+          </div>
+          -->
           <div class="services__card-tag-wrap">
             <span class="services__card-tag">{{ moreCard.tag }}</span>
           </div>
@@ -72,7 +147,7 @@
             [attr.aria-expanded]="isExpanded('more')"
             (click)="toggleExpanded('more')"
           >
-            {{ isExpanded('more') ? 'Скрий' : 'Виж повече...' }}
+            {{ isExpanded('more') ? 'Скрий' : 'Виж още...' }}
           </button>
         </div>
       </div>
