@@ -34,6 +34,11 @@ export class Testimonials implements OnInit, AfterViewInit {
   @ViewChild('track') private trackRef?: ElementRef<HTMLDivElement>;
   @ViewChildren('cardEl') private cardRefs?: QueryList<ElementRef<HTMLElement>>;
 
+  private dragPointerId: number | null = null;
+  private dragStartX = 0;
+  private dragStartScroll = 0;
+  private dragMoved = false;
+
   ngOnInit(): void {
     this.cardsPerView.set(this.resolveCardsPerView());
     this.contentService.getContent().subscribe(c => {
@@ -125,6 +130,80 @@ export class Testimonials implements OnInit, AfterViewInit {
   private getSlideStartCards(cards: HTMLElement[]): HTMLElement[] {
     const step = Math.max(1, this.cardsPerView());
     return cards.filter((_, index) => index % step === 0);
+  }
+
+  onTrackPointerDown(event: PointerEvent): void {
+    if (event.pointerType !== 'mouse') {
+      return;
+    }
+
+    const track = this.trackRef?.nativeElement;
+
+    if (!track) {
+      return;
+    }
+
+    this.dragPointerId = event.pointerId;
+    this.dragStartX = event.clientX;
+    this.dragStartScroll = track.scrollLeft;
+    this.dragMoved = false;
+    track.classList.add('is-dragging');
+  }
+
+  onTrackPointerMove(event: PointerEvent): void {
+    if (this.dragPointerId === null || event.pointerId !== this.dragPointerId) {
+      return;
+    }
+
+    const track = this.trackRef?.nativeElement;
+
+    if (!track) {
+      return;
+    }
+
+    const delta = event.clientX - this.dragStartX;
+
+    if (!this.dragMoved && Math.abs(delta) > 4) {
+      this.dragMoved = true;
+      try {
+        track.setPointerCapture(event.pointerId);
+      } catch {}
+    }
+
+    if (this.dragMoved) {
+      event.preventDefault();
+      track.scrollLeft = this.dragStartScroll - delta;
+    }
+  }
+
+  onTrackPointerUp(event: PointerEvent): void {
+    if (this.dragPointerId === null || event.pointerId !== this.dragPointerId) {
+      return;
+    }
+
+    const track = this.trackRef?.nativeElement;
+    const wasDragging = this.dragMoved;
+
+    this.dragPointerId = null;
+    this.dragMoved = false;
+
+    if (track) {
+      track.classList.remove('is-dragging');
+      try {
+        track.releasePointerCapture(event.pointerId);
+      } catch {}
+    }
+
+    if (wasDragging) {
+      event.preventDefault();
+    }
+  }
+
+  onTrackClickCapture(event: MouseEvent): void {
+    if (this.dragMoved) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
   }
 
   private resolveCardsPerView(): number {

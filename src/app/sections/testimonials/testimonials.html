@@ -27,7 +27,16 @@
     </div>
 
     <div class="testimonials__carousel">
-      <div class="testimonials__grid" #track (scroll)="onTrackScroll()">
+      <div
+        class="testimonials__grid"
+        #track
+        (scroll)="onTrackScroll()"
+        (pointerdown)="onTrackPointerDown($event)"
+        (pointermove)="onTrackPointerMove($event)"
+        (pointerup)="onTrackPointerUp($event)"
+        (pointercancel)="onTrackPointerUp($event)"
+        (click)="onTrackClickCapture($event)"
+      >
         @for (review of reviews(); track review.name; let i = $index) {
           <article
             #cardEl

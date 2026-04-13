@@ -29,7 +29,7 @@ export class Prices implements OnInit {
       const groups = c.prices.map((g, i) => ({ ...g, icon: GROUP_ICONS[i] ?? GROUP_ICONS[0] }));
 
       this.priceGroups.set(groups);
-      this.openGroupIndexes.set(new Set(groups.map((_, index) => index)));
+      this.openGroupIndexes.set(new Set(groups.length > 0 ? [0] : []));
     });
   }
 
