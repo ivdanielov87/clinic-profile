@@ -1,34 +1,48 @@
 // Colors
 
 // Primary dark backgrounds
-$color-navy:        #1B2E4B;
-$color-navy-light:  #243B55;
-$color-navy-dark:   #122033;
+$color-midnight:    #0A1628;  // deepest, for hero / dramatic areas
+$color-navy:        #122747;  // primary navy
+$color-navy-light:  #1C3560;  // softer navy for gradients
+$color-navy-dark:   #081224;  // near-black navy
 
 // Light backgrounds
-$color-bg-page:     #F0F6FC;
-$color-bg-light:    #EBF3FA;
-$color-bg-section:  #E4EFF9;
+$color-bg-page:     #F4F8FC;
+$color-bg-light:    #EDF3FA;
+$color-bg-section:  #E2ECF7;
 
-// Accent
-$color-accent:      #2F6FBF;
-$color-accent-hover:#1A57A0;
-$color-accent-light:#5B9FE0;
+// Accent — royal blue, more premium & serious
+$color-accent:      #1E5BB8;
+$color-accent-hover:#154290;
+$color-accent-light:#3B7BD4;
+$color-accent-soft: #6FA3E0;
+
+// Cyan highlight — for links, hover, subtle glow
+$color-cyan:        #4FC3F7;
+$color-cyan-soft:   rgba(79, 195, 247, 0.15);
+
+// Gradients
+$gradient-hero:     linear-gradient(135deg, #0A1628 0%, #122747 55%, #1C3560 100%);
+$gradient-accent:   linear-gradient(135deg, #1E5BB8 0%, #3B7BD4 100%);
+$gradient-subtle:   linear-gradient(180deg, #F4F8FC 0%, #E2ECF7 100%);
 
 // Text
 $color-white:       #FFFFFF;
-$color-white-80:    rgba(255, 255, 255, 0.8);
-$color-white-60:    rgba(255, 255, 255, 0.6);
-$color-text-dark:   #1A2A3A;
+$color-white-90:    rgba(255, 255, 255, 0.92);
+$color-white-80:    rgba(255, 255, 255, 0.78);
+$color-white-60:    rgba(255, 255, 255, 0.58);
+$color-text-dark:   #0F1E33;
+$color-text-body:   #3A4A60;
 $color-text-muted:  #6B7A8D;
 $color-text-light:  #A8B8CC;
 
 // Rating / star
-$color-star:        #F59E0B;
+$color-star:        #F5B840;
 
 // Borders
-$color-border:      rgba(255, 255, 255, 0.12);
-$color-border-light:#D1DFEe;
+$color-border:      rgba(255, 255, 255, 0.1);
+$color-border-soft: rgba(255, 255, 255, 0.06);
+$color-border-light:#D6E2F0;
 
 // Typography
 $font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -80,12 +94,15 @@ $radius-xl:   16px;
 $radius-2xl:  24px;
 $radius-full: 9999px;
 
-// Shadows
-$shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
-$shadow-md:    0 4px 16px rgba(0, 0, 0, 0.15);
-$shadow-lg:    0 8px 32px rgba(0, 0, 0, 0.2);
-$shadow-card:  0 2px 12px rgba(27, 46, 75, 0.12);
-$shadow-navy:  0 8px 32px rgba(27, 46, 75, 0.25);
+// Shadows — soft, blue-tinted for a premium medical look
+$shadow-sm:    0 1px 3px rgba(18, 39, 71, 0.08), 0 1px 2px rgba(18, 39, 71, 0.04);
+$shadow-md:    0 6px 24px rgba(18, 39, 71, 0.1);
+$shadow-lg:    0 16px 48px rgba(18, 39, 71, 0.14);
+$shadow-card:  0 4px 20px rgba(18, 39, 71, 0.08);
+$shadow-card-hover: 0 20px 48px rgba(18, 39, 71, 0.16);
+$shadow-navy:  0 24px 64px rgba(10, 22, 40, 0.35);
+$shadow-glow:  0 0 0 1px rgba(79, 195, 247, 0.2), 0 8px 32px rgba(30, 91, 184, 0.2);
+$shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
 // Transitions
 $transition-fast:   150ms ease;

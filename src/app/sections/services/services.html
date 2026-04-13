@@ -20,7 +20,7 @@
       @for (item of items; track item.title; let i = $index) {
         <div
           class="services__card"
-          [class.services__card--expanded]="isExpanded(i)"
+          [class.services__card--hidden-mobile]="i >= visibleMobile()"
           animateOnScroll="fade-up"
           [animDelay]="i * 90"
           [animDuration]="760"
@@ -95,62 +95,31 @@
             <div class="services__card-title-wrap">
               <h3 class="services__card-title">{{ item.title }}</h3>
             </div>
-            <div class="services__card-desc-wrap" [attr.id]="'service-desc-' + i">
+            <div class="services__card-desc-wrap">
               <p class="services__card-desc">{{ item.desc }}</p>
             </div>
-            <button
-              type="button"
-              class="services__card-toggle"
-              [attr.aria-controls]="'service-desc-' + i"
-              [attr.aria-expanded]="isExpanded(i)"
-              (click)="toggleExpanded(i)"
-            >
-              {{ isExpanded(i) ? 'Скрий' : 'Виж още...' }}
-            </button>
           </div>
         </div>
       }
 
-      <div
-        class="services__card services__card--more services__card--no-media"
-        [class.services__card--expanded]="isExpanded('more')"
-        animateOnScroll="fade-up"
-        [animDelay]="items.length * 90"
-        [animDuration]="760"
-      >
-        <div class="services__card-body">
-          <!--
-          <div class="services__card-icon-wrap" aria-hidden="true">
-            <div class="services__card-icon">
-              <svg viewBox="0 0 78 56" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 17H52"/>
-                <path d="M18 28H61"/>
-                <path d="M18 39H46"/>
-                <path d="M52 17L60 25L52 33"/>
-              </svg>
-            </div>
-          </div>
-          -->
-          <div class="services__card-tag-wrap">
-            <span class="services__card-tag">{{ moreCard.tag }}</span>
-          </div>
-          <div class="services__card-title-wrap">
-            <h3 class="services__card-title">{{ moreCard.title }}</h3>
-          </div>
-          <div class="services__card-desc-wrap" id="service-desc-more">
-            <p class="services__card-desc">{{ moreCard.desc }}</p>
-          </div>
-          <button
-            type="button"
-            class="services__card-toggle"
-            aria-controls="service-desc-more"
-            [attr.aria-expanded]="isExpanded('more')"
-            (click)="toggleExpanded('more')"
-          >
-            {{ isExpanded('more') ? 'Скрий' : 'Виж още...' }}
-          </button>
-        </div>
-      </div>
+      @if (hasMoreMobile()) {
+        <button
+          type="button"
+          class="services__show-more"
+          (click)="showMoreMobile()"
+        >
+          <span>Покажи още</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      }
+
+    </div>
+
+    <div class="services__footnote" animateOnScroll="fade-up" [animDelay]="80">
+      <h3 class="services__footnote-title">{{ moreCard.title }}</h3>
+      <p class="services__footnote-desc">{{ moreCard.desc }}</p>
     </div>
   </div>
 </section>

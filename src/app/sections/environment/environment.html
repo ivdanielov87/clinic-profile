@@ -48,12 +48,26 @@
         (touchend)="onGalleryTouchEnd($event)"
         (touchcancel)="onGalleryTouchEnd($event)"
       >
-        <img
-          class="env__gallery-photo"
-          [src]="currentGalleryItem.img"
-          [alt]="currentGalleryItem.title"
-          loading="lazy"
-        />
+        <button
+          type="button"
+          class="env__gallery-zoom-trigger"
+          (click)="openLightbox()"
+          aria-label="Отвори снимката в пълен размер"
+        >
+          <img
+            class="env__gallery-photo"
+            [src]="currentGalleryItem.img"
+            [alt]="currentGalleryItem.title"
+            loading="lazy"
+          />
+          <span class="env__gallery-zoom-hint" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M5 7H9M7 5V9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
 
         <div class="env__gallery-topbar">
           <span class="env__gallery-badge">{{ currentGalleryItem.label }}</span>
@@ -73,9 +87,6 @@
         </div>
 
         <div class="env__gallery-content">
-          <span class="env__gallery-kicker">
-            {{ currentGalleryIndex() + 1 }} / {{ gallery.length }}
-          </span>
           <h3 class="env__gallery-title">{{ currentGalleryItem.title }}</h3>
           <p class="env__gallery-desc">{{ currentGalleryItem.desc }}</p>
         </div>
@@ -125,4 +136,67 @@
       </div>
     </div>
   </div>
+
+  @if (lightboxOpen()) {
+    <div class="env__lightbox" role="dialog" aria-modal="true" aria-label="Преглед на снимка">
+      <button
+        type="button"
+        class="env__lightbox-backdrop"
+        (click)="closeLightbox()"
+        aria-label="Затвори"
+      ></button>
+
+      <div class="env__lightbox-stage">
+        <button
+          type="button"
+          class="env__lightbox-nav env__lightbox-nav--prev"
+          (click)="prevGallery()"
+          aria-label="Предишна снимка"
+        >
+          <svg width="22" height="22" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M10.75 4.5L6.25 9L10.75 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <figure class="env__lightbox-figure">
+          <img
+            class="env__lightbox-image"
+            [src]="currentGalleryItem.img"
+            [alt]="currentGalleryItem.title"
+          />
+          <figcaption class="env__lightbox-caption">
+            <span class="env__lightbox-counter">
+              {{ (currentGalleryIndex() + 1).toString().padStart(2, '0') }}
+              <span class="env__lightbox-counter-sep"></span>
+              {{ gallery.length.toString().padStart(2, '0') }}
+            </span>
+            <h3 class="env__lightbox-title">{{ currentGalleryItem.title }}</h3>
+            <p class="env__lightbox-desc">{{ currentGalleryItem.desc }}</p>
+          </figcaption>
+        </figure>
+
+        <button
+          type="button"
+          class="env__lightbox-nav env__lightbox-nav--next"
+          (click)="nextGallery()"
+          aria-label="Следваща снимка"
+        >
+          <svg width="22" height="22" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M7.25 4.5L11.75 9L7.25 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="env__lightbox-close"
+        (click)="closeLightbox()"
+        aria-label="Затвори прегледа"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  }
 </section>

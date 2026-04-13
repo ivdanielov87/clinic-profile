@@ -9,7 +9,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
   styleUrl: './services.scss',
 })
 export class Services {
-  private readonly expandedCards = signal<Set<number | 'more'>>(new Set());
+  private static readonly MOBILE_PAGE_SIZE = 3;
+  readonly visibleMobile = signal(Services.MOBILE_PAGE_SIZE);
 
   readonly items = [
     {
@@ -66,24 +67,16 @@ export class Services {
     tag: 'И още...',
     title: 'Допълнителни консултации и проследяване',
     icon: 'followup',
-    desc: 'Извършваме още контролни прегледи, комбинирани изследвания, второ мнение и индивидуален план според конкретните оплаквания и история.',
+    desc: 'Извършваме още: контролни прегледи, комбинирани изследвания, второ мнение и индивидуален план според конкретните оплаквания и история.',
   };
 
-  isExpanded(cardKey: number | 'more'): boolean {
-    return this.expandedCards().has(cardKey);
+  hasMoreMobile(): boolean {
+    return this.visibleMobile() < this.items.length;
   }
 
-  toggleExpanded(cardKey: number | 'more'): void {
-    this.expandedCards.update(current => {
-      const next = new Set(current);
-
-      if (next.has(cardKey)) {
-        next.delete(cardKey);
-      } else {
-        next.add(cardKey);
-      }
-
-      return next;
-    });
+  showMoreMobile(): void {
+    this.visibleMobile.update(count =>
+      Math.min(count + Services.MOBILE_PAGE_SIZE, this.items.length),
+    );
   }
 }

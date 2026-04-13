@@ -114,14 +114,23 @@
 $btn-radius: 8px;
 
 @mixin btn-navy {
+  position: relative;
   background:
-    radial-gradient(ellipse at 30% 50%, rgba(47, 111, 191, 0.22) 0%, transparent 70%),
-    linear-gradient(135deg, #1B2E4B 0%, #243B55 60%, #162540 100%);
+    radial-gradient(ellipse at 30% 0%, rgba(79, 195, 247, 0.22) 0%, transparent 60%),
+    linear-gradient(135deg, #0A1628 0%, #122747 55%, #081224 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 0 1px rgba(79, 195, 247, 0.1),
+    0 10px 30px rgba(10, 22, 40, 0.35);
 
   &:hover {
     background:
-      radial-gradient(ellipse at 30% 50%, rgba(74, 140, 220, 0.30) 0%, transparent 70%),
-      linear-gradient(135deg, #243B55 0%, #2A4466 60%, #1B3050 100%);
+      radial-gradient(ellipse at 30% 0%, rgba(79, 195, 247, 0.32) 0%, transparent 60%),
+      linear-gradient(135deg, #122747 0%, #1C3560 55%, #0A1628 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 0 0 1px rgba(79, 195, 247, 0.22),
+      0 16px 40px rgba(10, 22, 40, 0.45);
   }
 }
 

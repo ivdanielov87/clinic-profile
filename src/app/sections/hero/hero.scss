@@ -25,10 +25,28 @@
 // ─── Left ─────────────────────────────────────────────────────────────────────
 
 .hero__left {
+  position: relative;
   background:
-    radial-gradient(circle at top right, rgba(91, 159, 224, 0.1), transparent 46%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(244, 249, 255, 0.97) 100%);
+    radial-gradient(circle at top right, rgba(30, 91, 184, 0.08), transparent 48%),
+    radial-gradient(ellipse at bottom left, rgba(79, 195, 247, 0.05), transparent 55%),
+    linear-gradient(180deg, #FFFFFF 0%, #F4F8FC 100%);
   display: flex;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(30, 91, 184, 0.12) 20%, rgba(30, 91, 184, 0.12) 80%, transparent);
+    pointer-events: none;
+
+    @media (max-width: #{v.$bp-laptop - 1px}) {
+      display: none;
+    }
+  }
+
   align-items: center;
   padding-block: v.$space-20;
 
@@ -87,21 +105,22 @@
 
 .hero__label-line {
   display: block;
-  width: 28px;
+  width: 32px;
   height: 1.5px;
-  background: v.$color-accent;
+  background: linear-gradient(90deg, v.$color-accent, rgba(30, 91, 184, 0.3));
   flex-shrink: 0;
 
   @include m.mobile {
-    width: 20px;
+    width: 22px;
   }
 }
 
 .hero__label-text {
   font-size: v.$font-size-xs;
   font-weight: v.$font-weight-semibold;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   color: v.$color-accent;
+  text-transform: uppercase;
 
   @include m.mobile {
     font-size: 0.6rem;
@@ -111,10 +130,11 @@
 // ─── Heading ─────────────────────────────────────────────────────────────────
 
 .hero__heading {
-  font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+  font-size: clamp(2.4rem, 4.5vw, 3.75rem);
   font-weight: v.$font-weight-bold;
-  line-height: 1.1;
-  color: v.$color-navy;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: v.$color-navy-dark;
   margin: 0;
 
   @include m.mobile {
@@ -123,7 +143,15 @@
 }
 
 .hero__heading-accent {
+  position: relative;
+  display: inline-block;
   font-style: italic;
+  padding-right: 0.12em;
+  margin-right: -0.04em;
+  background: linear-gradient(135deg, v.$color-accent 0%, v.$color-accent-light 60%, v.$color-cyan 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: v.$color-accent;
 }
 
@@ -174,23 +202,24 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.5rem;
+  padding: 0.9rem 1.75rem;
   font-size: v.$font-size-sm;
   font-weight: v.$font-weight-semibold;
   text-decoration: none;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.08em;
   border-radius: m.$btn-radius;
   cursor: pointer;
   border: none;
   transition:
-    background v.$transition-fast,
-    transform v.$transition-fast,
-    box-shadow v.$transition-fast;
+    background v.$transition-base,
+    transform v.$transition-base,
+    box-shadow v.$transition-base,
+    border-color v.$transition-base;
 
   @include m.mobile {
     width: 100%;
     text-align: center;
-    padding: 0.75rem 1.25rem;
+    padding: 0.85rem 1.25rem;
   }
 
   &:active {
@@ -203,19 +232,21 @@
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(27, 46, 75, 0.35);
     }
   }
 
   &--outline {
-    background: v.$color-white;
+    background: transparent;
     color: v.$color-navy;
-    border: 1.5px solid rgba(27, 46, 75, 0.4);
+    border: 1.5px solid rgba(18, 39, 71, 0.22);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 
     &:hover {
-      background: rgba(27, 46, 75, 0.05);
-      border-color: v.$color-navy;
+      background: rgba(18, 39, 71, 0.04);
+      border-color: v.$color-accent;
+      color: v.$color-accent;
       transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(18, 39, 71, 0.1);
     }
   }
 }
@@ -225,12 +256,23 @@
 .hero__right {
   position: relative;
   background:
-    radial-gradient(ellipse at 30% 60%, rgba(47, 111, 191, 0.28) 0%, transparent 65%),
-    radial-gradient(ellipse at 80% 20%, rgba(74, 140, 220, 0.18) 0%, transparent 55%),
-    radial-gradient(ellipse at 60% 90%, rgba(27, 46, 75, 0.4) 0%, transparent 60%),
-    linear-gradient(145deg, #1b2e4b 0%, #162540 55%, #0e1b30 100%);
+    radial-gradient(ellipse at 30% 60%, rgba(30, 91, 184, 0.35) 0%, transparent 62%),
+    radial-gradient(ellipse at 80% 15%, rgba(79, 195, 247, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 60% 95%, rgba(8, 18, 36, 0.6) 0%, transparent 60%),
+    linear-gradient(145deg, #0A1628 0%, #122747 50%, #050C18 100%);
   overflow: hidden;
   min-height: 480px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 80%, rgba(79, 195, 247, 0.08), transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
 
   @include m.below-tablet {
     min-height: 340px;
@@ -675,10 +717,10 @@
 
 .hero__card {
   position: absolute;
-  background: rgba(255, 255, 255, 0.07);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
   border-radius: v.$radius-lg;
   padding: v.$space-4 v.$space-5;
   display: flex;
@@ -686,7 +728,11 @@
   gap: v.$space-1;
   color: v.$color-white;
   min-width: 170px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 20px 48px rgba(8, 18, 36, 0.4),
+    0 0 0 1px rgba(79, 195, 247, 0.04);
+  z-index: 2;
 
   @include m.below-tablet {
     display: none;
@@ -718,12 +764,16 @@
 .hero__card--rating {
   bottom: v.$space-8;
   right: v.$space-8;
-  background: v.$color-white;
-  border-color: transparent;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4F8FC 100%);
+  border-color: rgba(255, 255, 255, 0.6);
   align-items: center;
   min-width: 130px;
   padding: v.$space-4;
   gap: v.$space-2;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 20px 48px rgba(8, 18, 36, 0.5),
+    0 0 0 1px rgba(30, 91, 184, 0.08);
 }
 
 .hero__card-stars {

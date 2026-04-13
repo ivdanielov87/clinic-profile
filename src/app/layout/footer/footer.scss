@@ -4,52 +4,41 @@
 :host { display: block; }
 
 .footer {
-  background: v.$color-navy-dark;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-block: v.$space-5;
+  position: relative;
+  background:
+    radial-gradient(ellipse at top, rgba(30, 91, 184, 0.14), transparent 55%),
+    linear-gradient(180deg, #081224 0%, #050C18 100%);
+  padding-block: v.$space-6 v.$space-6;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(88%, 900px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(79, 195, 247, 0.35), transparent);
+  }
 }
 
 .footer__container {
   @include m.container;
-  @include m.flex-between;
-  gap: v.$space-6;
-
-  @include m.mobile {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: v.$space-3;
-  }
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
 .footer__copy {
-  font-size: v.$font-size-xs;
-  color: v.$color-white-60;
   margin: 0;
-  line-height: v.$line-height-normal;
-  word-break: break-word;
-}
-
-.footer__links {
-  display: flex;
-  align-items: center;
-  gap: v.$space-4;
-  flex-shrink: 0;
-}
-
-.footer__link {
+  max-width: 60ch;
   font-size: v.$font-size-xs;
+  line-height: v.$line-height-normal;
+  letter-spacing: 0.02em;
   color: v.$color-white-60;
-  text-decoration: none;
-  transition: color v.$transition-fast;
 
-  &:hover {
-    color: v.$color-white;
+  @include m.mobile {
+    font-size: 11px;
   }
-}
-
-.footer__divider {
-  display: block;
-  width: 1px;
-  height: 12px;
-  background: rgba(255, 255, 255, 0.2);
 }

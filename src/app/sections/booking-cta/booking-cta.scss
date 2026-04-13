@@ -6,14 +6,41 @@
 }
 
 .booking {
+  position: relative;
   background:
-    radial-gradient(circle at top left, rgba(91, 159, 224, 0.18), transparent 26%),
-    linear-gradient(160deg, #1b2e4b 0%, #162540 58%, #0f1a2d 100%);
+    radial-gradient(ellipse at top left, rgba(79, 195, 247, 0.18), transparent 38%),
+    radial-gradient(ellipse at bottom right, rgba(30, 91, 184, 0.28), transparent 50%),
+    linear-gradient(160deg, #0A1628 0%, #122747 50%, #050C18 100%);
   @include m.section-padding;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(92%, 1200px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(79, 195, 247, 0.4), transparent);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100%;
+    background: radial-gradient(ellipse at top right, rgba(79, 195, 247, 0.06), transparent 60%);
+    pointer-events: none;
+  }
 }
 
 .booking__container {
   @include m.container;
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
   gap: clamp(v.$space-8, 5vw, v.$space-16);
@@ -41,26 +68,27 @@
 
 .booking__label-line {
   display: block;
-  width: 28px;
+  width: 32px;
   height: 1.5px;
-  background: v.$color-accent-light;
+  background: linear-gradient(90deg, v.$color-cyan, rgba(79, 195, 247, 0.2));
   flex-shrink: 0;
 }
 
 .booking__label-text {
   font-size: v.$font-size-xs;
   font-weight: v.$font-weight-semibold;
-  letter-spacing: 0.12em;
-  color: v.$color-accent-light;
+  letter-spacing: 0.14em;
+  color: v.$color-cyan;
   text-transform: uppercase;
 }
 
 .booking__title {
   margin: 0;
   max-width: 11ch;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2rem, 4vw, 3.25rem);
   font-weight: v.$font-weight-bold;
   line-height: v.$line-height-tight;
+  letter-spacing: -0.02em;
   color: v.$color-white;
 }
 
@@ -69,7 +97,7 @@
   max-width: 54ch;
   font-size: v.$font-size-base;
   line-height: v.$line-height-loose;
-  color: v.$color-white-60;
+  color: v.$color-white-80;
 }
 
 .booking__btn {
@@ -77,19 +105,26 @@
   align-items: center;
   gap: v.$space-3;
   width: fit-content;
-  padding: 0.95rem 1.45rem;
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  padding: 1.05rem 1.75rem;
+  border: 1.5px solid rgba(79, 195, 247, 0.4);
   border-radius: m.$btn-radius;
-  background: rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(79, 195, 247, 0.14), rgba(30, 91, 184, 0.18));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: v.$color-white;
   font-size: v.$font-size-base;
   font-weight: v.$font-weight-semibold;
+  letter-spacing: 0.04em;
   text-decoration: none;
   cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 12px 32px rgba(10, 22, 40, 0.4);
   transition:
-    border-color v.$transition-fast,
-    background v.$transition-fast,
-    transform v.$transition-fast;
+    border-color v.$transition-base,
+    background v.$transition-base,
+    transform v.$transition-base,
+    box-shadow v.$transition-base;
 
   @media (max-width: #{v.$bp-laptop - 1px}) {
     width: 100%;
@@ -97,9 +132,12 @@
   }
 
   &:hover {
-    border-color: v.$color-white;
-    background: rgba(255, 255, 255, 0.08);
+    border-color: v.$color-cyan;
+    background: linear-gradient(135deg, rgba(79, 195, 247, 0.24), rgba(30, 91, 184, 0.28));
     transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 20px 48px rgba(79, 195, 247, 0.25);
   }
 
   &:active {
@@ -130,14 +168,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   margin-top: 2px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: v.$color-white-60;
+  background: linear-gradient(135deg, rgba(79, 195, 247, 0.14), rgba(30, 91, 184, 0.12));
+  border: 1px solid rgba(79, 195, 247, 0.2);
+  color: v.$color-cyan;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .booking__contact-body {
@@ -149,8 +188,8 @@
 .booking__contact-label {
   font-size: v.$font-size-xs;
   font-weight: v.$font-weight-semibold;
-  letter-spacing: 0.12em;
-  color: v.$color-white-60;
+  letter-spacing: 0.14em;
+  color: v.$color-cyan;
   text-transform: uppercase;
 }
 
@@ -160,11 +199,60 @@
   color: v.$color-white;
 }
 
+.booking__contact-phone-row {
+  display: inline-flex;
+  align-items: center;
+  gap: v.$space-2;
+}
+
+.booking__contact-line--link {
+  text-decoration: none;
+  transition: color v.$transition-fast;
+
+  &:hover {
+    color: v.$color-cyan;
+  }
+}
+
+.booking__copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  color: v.$color-white-60;
+  cursor: pointer;
+  transition:
+    border-color v.$transition-fast,
+    background v.$transition-fast,
+    color v.$transition-fast;
+
+  &:hover {
+    border-color: rgba(79, 195, 247, 0.4);
+    background: rgba(79, 195, 247, 0.08);
+    color: v.$color-cyan;
+  }
+
+  &--success {
+    border-color: rgba(79, 195, 247, 0.5);
+    background: rgba(79, 195, 247, 0.12);
+    color: v.$color-cyan;
+  }
+}
+
 .booking__map {
   overflow: hidden;
   border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(79, 195, 247, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 64px rgba(10, 22, 40, 0.4),
+    0 0 0 1px rgba(79, 195, 247, 0.06);
   z-index: 1;
 
   // Desktop: stretch to match left column height, with a sensible floor

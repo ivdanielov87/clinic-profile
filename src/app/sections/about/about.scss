@@ -6,8 +6,22 @@
 }
 
 .about {
-  background: v.$color-bg-page;
+  position: relative;
+  background:
+    radial-gradient(ellipse at top right, rgba(30, 91, 184, 0.04), transparent 50%),
+    linear-gradient(180deg, #FFFFFF 0%, v.$color-bg-page 100%);
   @include m.section-padding;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(92%, 1200px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(30, 91, 184, 0.15), transparent);
+  }
 }
 
 .about__container {
@@ -45,9 +59,13 @@
   overflow: hidden;
   border-radius: v.$radius-xl;
   background:
-    linear-gradient(180deg, rgba(47, 111, 191, 0.12) 0%, rgba(255, 255, 255, 0) 28%),
-    linear-gradient(180deg, #1c2f4b 0%, #15243c 100%);
-  box-shadow: 0 20px 60px rgba(27, 46, 75, 0.18);
+    radial-gradient(ellipse at top, rgba(79, 195, 247, 0.14), transparent 50%),
+    linear-gradient(180deg, rgba(30, 91, 184, 0.18) 0%, rgba(10, 22, 40, 0) 32%),
+    linear-gradient(160deg, #122747 0%, #0A1628 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 0 1px rgba(79, 195, 247, 0.06),
+    0 30px 80px rgba(10, 22, 40, 0.25);
 
   @media (max-width: #{v.$bp-laptop - 1px}) {
     position: static;
@@ -66,14 +84,26 @@
   background: v.$color-navy-light;
   max-height: 100vw;
 
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: radial-gradient(ellipse at top, rgba(79, 195, 247, 0.18), transparent 65%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
   &::after {
     content: '';
     position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
-    height: 60px;
-    background: linear-gradient(to top, v.$color-navy, transparent);
+    height: 80px;
+    background: linear-gradient(to top, #0A1628, transparent);
     pointer-events: none;
   }
 
@@ -157,16 +187,16 @@
 
 .about__label-line {
   display: block;
-  width: 28px;
+  width: 32px;
   height: 1.5px;
-  background: v.$color-accent;
+  background: linear-gradient(90deg, v.$color-accent, rgba(30, 91, 184, 0.3));
   flex-shrink: 0;
 }
 
 .about__label-text {
   font-size: v.$font-size-xs;
   font-weight: v.$font-weight-semibold;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: v.$color-accent;
   text-transform: uppercase;
 }
@@ -176,7 +206,8 @@
   font-size: clamp(1.75rem, 4vw, 3rem);
   font-weight: v.$font-weight-bold;
   line-height: v.$line-height-tight;
-  color: v.$color-navy;
+  letter-spacing: -0.015em;
+  color: v.$color-navy-dark;
 }
 
 // ─── Bio ─────────────────────────────────────────────────────────────────────
@@ -186,7 +217,8 @@
   flex-direction: column;
   gap: v.$space-4;
   padding-left: v.$space-5;
-  border-left: 2px solid #d6e4f3;
+  border-left: 2px solid;
+  border-image: linear-gradient(180deg, v.$color-accent, rgba(30, 91, 184, 0.1)) 1;
 
   @include m.mobile {
     padding-left: 0;
@@ -198,11 +230,11 @@
   margin: 0;
   font-size: v.$font-size-base;
   line-height: v.$line-height-loose;
-  color: v.$color-text-muted;
+  color: v.$color-text-body;
 
   strong {
     font-weight: v.$font-weight-semibold;
-    color: v.$color-text-dark;
+    color: v.$color-navy-dark;
   }
 
   @include m.mobile {
@@ -215,17 +247,40 @@
 .about__stats {
   display: flex;
   gap: 0;
-  border-top: 1px solid #dce8f3;
-  border-bottom: 1px solid #dce8f3;
+  padding: v.$space-2 0;
+  border-top: 1px solid v.$color-border-light;
+  border-bottom: 1px solid v.$color-border-light;
+  background: linear-gradient(180deg, rgba(30, 91, 184, 0.02), transparent);
 }
 
 .about__stat {
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: v.$space-1;
   padding: v.$space-5 v.$space-4;
-  border-right: 1px solid #dce8f3;
+  border-right: 1px solid v.$color-border-light;
+  transition: transform v.$transition-base;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(90deg, v.$color-accent, v.$color-cyan);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover {
+    &::before {
+      transform: scaleX(1);
+    }
+  }
 
   &:first-child {
     padding-left: 0;
@@ -246,7 +301,11 @@
   font-size: v.$font-size-xl;
   font-weight: v.$font-weight-bold;
   line-height: 1;
-  color: v.$color-navy;
+  background: linear-gradient(135deg, v.$color-navy-dark 0%, v.$color-accent 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: v.$color-navy-dark;
 
   @include m.mobile {
     font-size: v.$font-size-lg;
@@ -283,10 +342,23 @@
 }
 
 .about__quals-list {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 0;
+  padding-left: v.$space-5;
   overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    border-radius: v.$radius-full;
+    background: linear-gradient(180deg, v.$color-accent, rgba(79, 195, 247, 0.35));
+  }
 
   &.animate-on-scroll {
     filter: blur(0px);
@@ -304,6 +376,7 @@
 
   @include m.below-tablet {
     grid-template-columns: 1fr;
+    padding-left: v.$space-4;
   }
 }
 
@@ -323,23 +396,6 @@
     background v.$transition-base,
     box-shadow v.$transition-base;
 
-  &::before {
-    content: '';
-    position: absolute;
-    left: -0.65rem;
-    top: 0.8rem;
-    bottom: 0.8rem;
-    width: 2px;
-    border-radius: v.$radius-full;
-    background: linear-gradient(180deg, rgba(47, 111, 191, 0.16), rgba(47, 111, 191, 0.82));
-    opacity: 0;
-    transform: scaleY(0.22);
-    transform-origin: top center;
-    transition:
-      opacity 420ms ease,
-      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
   &.animate-on-scroll {
     transform: translateX(-18px);
     transition:
@@ -352,24 +408,10 @@
 
   &.animate-on-scroll.animated {
     transform: none !important;
-
-    &::before {
-      opacity: 1;
-      transform: scaleY(1);
-    }
   }
 
-  &:nth-last-child(-n + 2) {
+  &:last-child {
     border-bottom: none;
-  }
-
-  @include m.below-tablet {
-    &:nth-last-child(-n + 2) {
-      border-bottom: 1px solid #e8eef4;
-    }
-    &:last-child {
-      border-bottom: none;
-    }
   }
 }
 

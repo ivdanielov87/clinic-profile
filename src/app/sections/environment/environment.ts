@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
 
 @Component({
@@ -11,6 +11,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 export class Environment {
   openFeatureIndexes = signal<Set<number>>(new Set());
   currentGalleryIndex = signal(0);
+  lightboxOpen = signal(false);
   private touchStartX: number | null = null;
   private touchStartY: number | null = null;
 
@@ -148,5 +149,28 @@ export class Environment {
   private resetTouchState(): void {
     this.touchStartX = null;
     this.touchStartY = null;
+  }
+
+  openLightbox(): void {
+    this.lightboxOpen.set(true);
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeLightbox(): void {
+    this.lightboxOpen.set(false);
+    document.body.style.overflow = '';
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent): void {
+    if (this.lightboxOpen()) {
+      if (event.key === 'Escape') {
+        this.closeLightbox();
+      } else if (event.key === 'ArrowLeft') {
+        this.prevGallery();
+      } else if (event.key === 'ArrowRight') {
+        this.nextGallery();
+      }
+    }
   }
 }

@@ -4,8 +4,23 @@
 :host { display: block; }
 
 .testimonials {
-  background: linear-gradient(180deg, rgba(235, 243, 250, 0.85) 0%, rgba(240, 246, 252, 0.25) 100%);
+  position: relative;
+  background:
+    radial-gradient(ellipse at top right, rgba(79, 195, 247, 0.08), transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(30, 91, 184, 0.06), transparent 55%),
+    linear-gradient(180deg, #EDF3FA 0%, #F4F8FC 100%);
   @include m.section-padding;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(92%, 1200px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(30, 91, 184, 0.15), transparent);
+  }
 }
 
 .testimonials__container {
@@ -42,16 +57,16 @@
 
 .testimonials__label-line {
   display: block;
-  width: 28px;
+  width: 32px;
   height: 1.5px;
-  background: v.$color-accent;
+  background: linear-gradient(90deg, v.$color-accent, rgba(30, 91, 184, 0.3));
   flex-shrink: 0;
 }
 
 .testimonials__label-text {
   font-size: v.$font-size-xs;
   font-weight: v.$font-weight-semibold;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: v.$color-accent;
   text-transform: uppercase;
 }
@@ -59,8 +74,11 @@
 .testimonials__title {
   margin: 0;
   max-width: 16ch;
-  color: v.$color-navy;
+  color: v.$color-navy-dark;
   font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: v.$font-weight-bold;
+  letter-spacing: -0.015em;
+  line-height: v.$line-height-tight;
 }
 
 .testimonials__rating {
@@ -70,9 +88,14 @@
   flex-shrink: 0;
   padding: v.$space-4 v.$space-5;
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(27, 46, 75, 0.08);
-  box-shadow: 0 14px 34px rgba(27, 46, 75, 0.06);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4F8FC 100%);
+  border: 1px solid rgba(30, 91, 184, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 20px 48px rgba(18, 39, 71, 0.08),
+    0 0 0 1px rgba(79, 195, 247, 0.04);
 
   @include m.below-tablet {
     align-self: flex-start;
@@ -83,7 +106,12 @@
   font-size: 4rem;
   font-weight: v.$font-weight-bold;
   line-height: 1;
-  color: v.$color-navy;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, v.$color-navy-dark 0%, v.$color-accent 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: v.$color-navy-dark;
 
   @include m.mobile {
     font-size: 2.5rem;
@@ -127,12 +155,12 @@
 
   &::before {
     left: 0;
-    background: linear-gradient(90deg, rgba(235, 243, 250, 0.98), rgba(235, 243, 250, 0));
+    background: linear-gradient(90deg, rgba(237, 243, 250, 0.98), rgba(237, 243, 250, 0));
   }
 
   &::after {
     right: 0;
-    background: linear-gradient(270deg, rgba(240, 246, 252, 0.98), rgba(240, 246, 252, 0));
+    background: linear-gradient(270deg, rgba(244, 248, 252, 0.98), rgba(244, 248, 252, 0));
   }
 
   @include m.below-tablet {
@@ -186,26 +214,33 @@
 }
 
 .testimonials__card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: v.$space-3;
   min-height: 100%;
   padding: v.$space-6;
-  background: v.$color-white;
-  border: 1px solid #e4edf6;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAFCFE 100%);
+  border: 1px solid v.$color-border-light;
   border-radius: 24px;
-  box-shadow: 0 16px 36px rgba(27, 46, 75, 0.07);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 20px 48px rgba(18, 39, 71, 0.08);
   scroll-snap-align: start;
-  transition: transform v.$transition-base, box-shadow v.$transition-base;
+  transition: transform v.$transition-base, box-shadow v.$transition-base, border-color v.$transition-base;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: v.$shadow-card;
+    border-color: rgba(30, 91, 184, 0.16);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 28px 56px rgba(18, 39, 71, 0.14),
+      0 0 0 1px rgba(79, 195, 247, 0.08);
   }
 
   @include m.below-tablet {
     scroll-snap-stop: always;
-    box-shadow: 0 12px 34px rgba(27, 46, 75, 0.08);
+    box-shadow: 0 16px 40px rgba(18, 39, 71, 0.1);
 
     &.animate-on-scroll,
     &.animate-on-scroll.animated {
@@ -224,18 +259,22 @@
 }
 
 .testimonials__avatar {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: v.$color-navy;
+  background: linear-gradient(135deg, v.$color-navy 0%, v.$color-midnight 100%);
   font-size: v.$font-size-sm;
   font-weight: v.$font-weight-bold;
   letter-spacing: 0.02em;
   color: v.$color-white;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 8px 20px rgba(10, 22, 40, 0.3),
+    0 0 0 3px rgba(30, 91, 184, 0.1);
 }
 
 .testimonials__card-meta {
@@ -247,7 +286,7 @@
 .testimonials__card-name {
   font-size: v.$font-size-base;
   font-weight: v.$font-weight-semibold;
-  color: v.$color-navy;
+  color: v.$color-navy-dark;
 }
 
 .testimonials__card-date {
@@ -264,8 +303,8 @@
   flex: 1;
   margin: 0;
   font-size: v.$font-size-sm;
-  line-height: v.$line-height-normal;
-  color: v.$color-text-muted;
+  line-height: v.$line-height-loose;
+  color: v.$color-text-body;
 }
 
 .testimonials__card-source {
@@ -293,10 +332,14 @@
   gap: v.$space-4;
   width: fit-content;
   padding: 0.75rem 1rem;
-  border: 1px solid rgba(27, 46, 75, 0.08);
+  border: 1px solid rgba(30, 91, 184, 0.1);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 14px 34px rgba(27, 46, 75, 0.06);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4F8FC 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 16px 36px rgba(18, 39, 71, 0.08);
 
   @include m.below-tablet {
     width: 100%;
@@ -311,11 +354,13 @@
   width: 2.75rem;
   height: 2.75rem;
   flex-shrink: 0;
-  border: 1px solid rgba(27, 46, 75, 0.12);
+  border: 1px solid rgba(30, 91, 184, 0.14);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.86);
-  color: v.$color-navy;
-  box-shadow: 0 8px 22px rgba(27, 46, 75, 0.08);
+  background: v.$color-white;
+  color: v.$color-navy-dark;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 8px 20px rgba(18, 39, 71, 0.08);
   transition:
     transform v.$transition-fast,
     background v.$transition-fast,
@@ -323,9 +368,11 @@
     color v.$transition-fast;
 
   &:hover:not(:disabled) {
-    transform: translateY(-1px);
-    background: v.$color-white;
-    border-color: rgba(27, 46, 75, 0.2);
+    transform: translateY(-2px);
+    background: v.$color-accent;
+    border-color: v.$color-accent;
+    color: v.$color-white;
+    box-shadow: 0 16px 32px rgba(30, 91, 184, 0.25);
   }
 
   &:disabled {
@@ -348,15 +395,15 @@
   padding: 0;
   border: 0;
   border-radius: 999px;
-  background: rgba(27, 46, 75, 0.18);
+  background: rgba(18, 39, 71, 0.18);
   transition:
     width 220ms ease,
     background 220ms ease,
     transform 220ms ease;
 
   &.is-active {
-    width: 1.65rem;
-    background: v.$color-accent;
+    width: 1.75rem;
+    background: linear-gradient(90deg, v.$color-accent, v.$color-cyan);
   }
 }
 
