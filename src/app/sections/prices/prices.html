@@ -5,7 +5,9 @@
         <span class="prices__label-line"></span>
         <span class="prices__label-text">Ценоразпис</span>
       </div>
-      <h2 class="prices__title">Цени на медицинските услуги</h2>
+      <h2 class="prices__title" animateOnScroll="clip-reveal" [animDelay]="80" [animDuration]="900">
+        Цени на медицинските услуги
+      </h2>
       <p class="prices__subtitle">
         Всички цени са посочени в евро{{ showBgn ? ' и лева' : '' }}. При въпроси за комбинации
         от изследвания или последващ преглед можете да се свържете с нас.

@@ -214,6 +214,31 @@
   }
 }
 
+.booking__phone-write {
+  display: inline-flex;
+  align-items: baseline;
+  letter-spacing: 0.01em;
+}
+
+.booking__phone-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--char-i, 0) * 55ms + 80ms);
+
+  &--space {
+    width: 0.3em;
+  }
+
+  .animated & {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .booking__copy {
   display: inline-flex;
   align-items: center;

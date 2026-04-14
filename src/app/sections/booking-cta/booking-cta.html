@@ -73,7 +73,21 @@
             <div class="booking__contact-body">
               <span class="booking__contact-label">Телефон</span>
               <span class="booking__contact-phone-row">
-                <a [href]="'tel:' + contact()!.phone.replace(/\\s+/g, '')" class="booking__contact-line booking__contact-line--link">{{ contact()!.phone }}</a>
+                <a
+                  [href]="'tel:' + contact()!.phone.replace(/\\s+/g, '')"
+                  class="booking__contact-line booking__contact-line--link booking__phone-write"
+                  animateOnScroll="fade"
+                  [animDelay]="0"
+                  [attr.aria-label]="contact()!.phone"
+                >
+                  @for (ch of phoneChars(); track $index; let idx = $index) {
+                    <span
+                      class="booking__phone-char"
+                      [class.booking__phone-char--space]="ch === ' '"
+                      [style.--char-i]="idx"
+                    >{{ ch === ' ' ? '\u00A0' : ch }}</span>
+                  }
+                </a>
                 <button
                   type="button"
                   class="booking__copy"

@@ -16,9 +16,9 @@
   &.fade { transform: none; }
 
   &.clip-reveal {
-    transform: none;
-    clip-path: inset(0 0 100% 0);
-    opacity: 1;
+    transform: translateY(32px) scale(0.985);
+    filter: blur(6px);
+    will-change: transform, opacity, filter;
   }
 
   &.blur-in {
@@ -30,10 +30,6 @@
     opacity: 1;
     transform: none !important;
     filter: none !important;
-
-    &.clip-reveal {
-      clip-path: inset(0 0 0 0) !important;
-    }
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
 import { ContentService, ContactContent } from '../../core/services/content.service';
 import { ClinicMap } from '../../shared/clinic-map/clinic-map';
@@ -16,6 +16,11 @@ export class BookingCta implements OnInit {
 
   contact = signal<ContactContent | null>(null);
   phoneCopied = signal(false);
+
+  phoneChars = computed(() => {
+    const phone = this.contact()?.phone ?? '';
+    return phone.split('');
+  });
 
   ngOnInit(): void {
     this.contentService.getContent().subscribe(c => this.contact.set(c.contact));
