@@ -33,6 +33,7 @@ export interface ContactContent {
   mapLat: number;
   mapLng: number;
   mapZoom: number;
+  mapCid?: string;
   phone: string;
   email: string | null;
   addressLines: string[];
@@ -88,6 +89,7 @@ const FALLBACK: SiteContent = {
     mapLat: 43.8498366,
     mapLng: 25.9523384,
     mapZoom: 17,
+    mapCid: '10325353796603747108',
     phone: '0688 222 484',
     email: null,
     addressLines: ['ул. „Църковна независимост" 5', '7000 Русе'],
