@@ -7,7 +7,15 @@ import {
   Renderer2,
 } from '@angular/core';
 
-export type AnimationType = 'fade-up' | 'fade-down' | 'fade-right' | 'fade-left' | 'zoom-in' | 'fade';
+export type AnimationType =
+  | 'fade-up'
+  | 'fade-down'
+  | 'fade-right'
+  | 'fade-left'
+  | 'zoom-in'
+  | 'fade'
+  | 'clip-reveal'
+  | 'blur-in';
 
 @Directive({
   selector: '[animateOnScroll]',

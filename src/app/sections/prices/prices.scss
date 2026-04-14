@@ -158,10 +158,17 @@
   border-top: 0;
   background: linear-gradient(180deg, rgba(30, 91, 184, 0.04), rgba(30, 91, 184, 0.1));
   text-align: left;
-  cursor: pointer;
+  cursor: default;
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
   transition:
     background v.$transition-base,
     border-color v.$transition-base;
+
+  @include m.below-tablet {
+    cursor: pointer;
+    pointer-events: auto;
+  }
 }
 
 .prices__card-icon {
@@ -226,6 +233,7 @@
 }
 
 .prices__item {
+  position: relative;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -234,11 +242,54 @@
   border-bottom: 1px solid #F0F5FA;
   transition: background v.$transition-fast;
 
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 22%;
+    bottom: 22%;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, v.$color-accent, v.$color-cyan);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
   &:last-child {
     border-bottom: none;
   }
   &:hover {
     background: linear-gradient(90deg, rgba(30, 91, 184, 0.04), rgba(30, 91, 184, 0));
+
+    &::before {
+      transform: scaleY(1);
+    }
+
+    .prices__item-eur {
+      transform: translateX(-2px);
+    }
+  }
+}
+
+.prices__card--open .prices__list--open .prices__item {
+  animation: price-item-in 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @for $i from 1 through 8 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{80 + $i * 55}ms;
+    }
+  }
+}
+
+@keyframes price-item-in {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -263,6 +314,7 @@
   font-weight: v.$font-weight-bold;
   white-space: nowrap;
   color: v.$color-navy-dark;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .prices__item-bgn {

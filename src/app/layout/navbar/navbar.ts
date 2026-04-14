@@ -1,4 +1,13 @@
-import { Component, ElementRef, HostListener, OnInit, inject, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  inject,
+  signal,
+} from '@angular/core';
 import { ContentService } from '../../core/services/content.service';
 
 @Component({
@@ -8,11 +17,13 @@ import { ContentService } from '../../core/services/content.service';
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class Navbar implements OnInit {
+export class Navbar implements OnInit, AfterViewInit, OnDestroy {
   private contentService = inject(ContentService);
   private hostRef = inject(ElementRef<HTMLElement>);
 
   scrolled = signal(false);
+  scrollProgress = signal(0);
+  activeSection = signal<string | null>(null);
   menuOpen = signal(false);
   phoneOpen = signal(false);
   phoneCopied = signal(false);
@@ -21,6 +32,7 @@ export class Navbar implements OnInit {
   phoneHref = signal('');
 
   private copyTimer: ReturnType<typeof setTimeout> | null = null;
+  private sectionObserver: IntersectionObserver | null = null;
 
   readonly navLinks = [
     { label: 'Кабинетът', anchor: 'environment' },
@@ -39,9 +51,46 @@ export class Navbar implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    if (typeof IntersectionObserver === 'undefined') {
+      return;
+    }
+
+    const sections = this.navLinks
+      .map(link => document.getElementById(link.anchor))
+      .filter((el): el is HTMLElement => !!el);
+
+    this.sectionObserver = new IntersectionObserver(
+      entries => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible) {
+          this.activeSection.set(visible.target.id);
+        }
+      },
+      { rootMargin: '-40% 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+
+    sections.forEach(s => this.sectionObserver!.observe(s));
+  }
+
+  ngOnDestroy(): void {
+    this.sectionObserver?.disconnect();
+    if (this.copyTimer) {
+      clearTimeout(this.copyTimer);
+    }
+  }
+
   @HostListener('window:scroll')
   onScroll(): void {
-    this.scrolled.set(window.scrollY > 10);
+    const y = window.scrollY;
+    this.scrolled.set(y > 10);
+
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+    this.scrollProgress.set(progress);
   }
 
   @HostListener('document:click', ['$event'])

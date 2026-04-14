@@ -6,7 +6,7 @@
           <span class="testimonials__label-line"></span>
           <span class="testimonials__label-text">Мнения на пациентите</span>
         </div>
-        <h2 class="testimonials__title" animateOnScroll="fade-up" [animDelay]="80">
+        <h2 class="testimonials__title" animateOnScroll="clip-reveal" [animDelay]="80" [animDuration]="900">
           Доверие, което личи в отзивите
         </h2>
       </div>
@@ -43,6 +43,8 @@
             class="testimonials__card"
             animateOnScroll="fade-up"
             [animDelay]="i * 80"
+            (pointermove)="onCardTilt($event)"
+            (pointerleave)="onCardTiltReset($event)"
           >
             <div class="testimonials__card-top">
               <div class="testimonials__avatar">{{ review.initials }}</div>

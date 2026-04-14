@@ -33,7 +33,7 @@
       <!-- Content -->
       <div class="about__content">
 
-        <h2 class="about__title" animateOnScroll="fade-up" [animDelay]="160" [animDuration]="750">
+        <h2 class="about__title" animateOnScroll="clip-reveal" [animDelay]="160" [animDuration]="950">
           Опит, последователност<br>и грижа
         </h2>
 
@@ -45,10 +45,10 @@
         </div>
 
         <!-- Stats row -->
-        <div class="about__stats" animateOnScroll="fade-up" [animDelay]="380" [animDuration]="700">
-          @for (h of about()!.highlights; track h.label) {
+        <div #statsRow class="about__stats" animateOnScroll="fade-up" [animDelay]="380" [animDuration]="700">
+          @for (h of about()!.highlights; track h.label; let i = $index) {
             <div class="about__stat">
-              <span class="about__stat-value">{{ h.value }}</span>
+              <span class="about__stat-value">{{ displayValues()[i] || h.value }}</span>
               <span class="about__stat-label">{{ h.label }}</span>
             </div>
           }

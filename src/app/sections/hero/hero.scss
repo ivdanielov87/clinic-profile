@@ -148,11 +148,37 @@
   font-style: italic;
   padding-right: 0.12em;
   margin-right: -0.04em;
-  background: linear-gradient(135deg, v.$color-accent 0%, v.$color-accent-light 60%, v.$color-cyan 100%);
+  background: linear-gradient(
+    115deg,
+    v.$color-accent 0%,
+    v.$color-accent-light 28%,
+    v.$color-cyan 45%,
+    #ffffff 50%,
+    v.$color-cyan 55%,
+    v.$color-accent-light 72%,
+    v.$color-accent 100%
+  );
+  background-size: 260% 100%;
+  background-position: 100% 50%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: v.$color-accent;
+  animation: hero-accent-shimmer 7.5s cubic-bezier(0.4, 0, 0.2, 1) 4800ms infinite;
+}
+
+@keyframes hero-accent-shimmer {
+  0%,
+  18% {
+    background-position: 100% 50%;
+  }
+  50%,
+  68% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
 
 // ─── Tagline ─────────────────────────────────────────────────────────────────
@@ -698,6 +724,81 @@
   }
   50% {
     transform: scale(1.1);
+  }
+}
+
+// ─── Radial pulse wave ───────────────────────────────────────────────────────
+
+.eye__pulse {
+  fill: none;
+  stroke: rgba(121, 187, 241, 0.55);
+  stroke-width: 1.2;
+  transform-origin: 180px 120px;
+  transform: scale(0);
+  opacity: 0;
+  filter: drop-shadow(0 0 4px rgba(91, 159, 224, 0.6));
+
+  &--1 {
+    animation: eye-pulse 4.2s cubic-bezier(0.22, 1, 0.36, 1) 4800ms infinite;
+  }
+  &--2 {
+    animation: eye-pulse 4.2s cubic-bezier(0.22, 1, 0.36, 1) 6900ms infinite;
+  }
+}
+
+@keyframes eye-pulse {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+    stroke-width: 1.8;
+  }
+  12% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+    stroke-width: 0.6;
+  }
+}
+
+// ─── HUD corner brackets ─────────────────────────────────────────────────────
+
+.eye__hud {
+  opacity: 0;
+  animation:
+    hud-appear 520ms cubic-bezier(0.22, 1, 0.36, 1) 4500ms both,
+    hud-breathe 3.6s ease-in-out 5400ms infinite;
+}
+
+.eye__hud-corner {
+  fill: none;
+  stroke: rgba(121, 187, 241, 0.75);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 3px rgba(91, 159, 224, 0.45));
+}
+
+@keyframes hud-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+    transform-origin: 180px 120px;
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    transform-origin: 180px 120px;
+  }
+}
+
+@keyframes hud-breathe {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
   }
 }
 

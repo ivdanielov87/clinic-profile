@@ -123,6 +123,9 @@
   gap: v.$space-5;
   padding: v.$space-8 v.$space-6;
   border-radius: v.$radius-lg;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  cursor: default;
   background:
     radial-gradient(circle at top right, rgba(79, 195, 247, 0.08), transparent 50%),
     linear-gradient(180deg, #FFFFFF 0%, #F8FBFD 100%);

@@ -191,6 +191,34 @@
       transform: translateX(-50%) scale(1);
     }
   }
+
+  &--active {
+    color: v.$color-navy;
+
+    &::after {
+      transform: translateX(-50%) scale(1);
+    }
+  }
+}
+
+.navbar__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: linear-gradient(
+    90deg,
+    rgba(74, 158, 232, 0.1) 0%,
+    v.$color-accent 45%,
+    rgba(27, 46, 75, 0.85) 100%
+  );
+  box-shadow: 0 0 10px rgba(74, 158, 232, 0.45);
+  pointer-events: none;
+  will-change: transform;
+  transition: transform 120ms linear;
 }
 
 .navbar__cta {
@@ -520,6 +548,16 @@
   &:hover {
     color: v.$color-navy;
     background: rgba(47, 111, 191, 0.05);
+  }
+
+  &--active {
+    color: v.$color-navy;
+    background: linear-gradient(
+      90deg,
+      rgba(74, 158, 232, 0.12),
+      rgba(74, 158, 232, 0) 80%
+    );
+    box-shadow: inset 3px 0 0 v.$color-accent;
   }
 
   // Staggered reveal when menu opens

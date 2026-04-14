@@ -206,6 +206,35 @@ export class Testimonials implements OnInit, AfterViewInit {
     }
   }
 
+  onCardTilt(event: PointerEvent): void {
+    if (event.pointerType !== 'mouse' || this.dragMoved) {
+      return;
+    }
+
+    const card = event.currentTarget as HTMLElement;
+    const rect = card.getBoundingClientRect();
+    const px = (event.clientX - rect.left) / rect.width; // 0..1
+    const py = (event.clientY - rect.top) / rect.height;
+    const maxTilt = 6;
+    const rotY = (px - 0.5) * 2 * maxTilt;
+    const rotX = (0.5 - py) * 2 * maxTilt;
+    const glareX = px * 100;
+    const glareY = py * 100;
+
+    card.style.setProperty('--tilt-x', `${rotX.toFixed(2)}deg`);
+    card.style.setProperty('--tilt-y', `${rotY.toFixed(2)}deg`);
+    card.style.setProperty('--glare-x', `${glareX.toFixed(1)}%`);
+    card.style.setProperty('--glare-y', `${glareY.toFixed(1)}%`);
+    card.classList.add('is-tilting');
+  }
+
+  onCardTiltReset(event: PointerEvent): void {
+    const card = event.currentTarget as HTMLElement;
+    card.style.setProperty('--tilt-x', '0deg');
+    card.style.setProperty('--tilt-y', '0deg');
+    card.classList.remove('is-tilting');
+  }
+
   private resolveCardsPerView(): number {
     if (typeof window === 'undefined') {
       return 3;

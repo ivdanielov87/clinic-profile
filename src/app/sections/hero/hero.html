@@ -149,6 +149,18 @@
         <!-- Scan line clipped to iris -->
         <line class="eye__scan" x1="115" y1="120" x2="245" y2="120" clip-path="url(#hero-iris-clip)"/>
 
+        <!-- Radial pulse wave (loops after assembly) -->
+        <circle class="eye__pulse eye__pulse--1" cx="180" cy="120" r="24"/>
+        <circle class="eye__pulse eye__pulse--2" cx="180" cy="120" r="24"/>
+
+        <!-- HUD corner brackets (appear after assembly) -->
+        <g class="eye__hud">
+          <path class="eye__hud-corner eye__hud-corner--tl" d="M 48 94 L 48 80 L 62 80"/>
+          <path class="eye__hud-corner eye__hud-corner--tr" d="M 298 80 L 312 80 L 312 94"/>
+          <path class="eye__hud-corner eye__hud-corner--bl" d="M 48 146 L 48 160 L 62 160"/>
+          <path class="eye__hud-corner eye__hud-corner--br" d="M 298 160 L 312 160 L 312 146"/>
+        </g>
+
         <ellipse class="eye__highlight eye__highlight--main" cx="192" cy="109" rx="6" ry="5" transform="rotate(-15,192,109)"/>
         <circle class="eye__highlight eye__highlight--sub" cx="171" cy="131" r="2.5"/>
       </svg>

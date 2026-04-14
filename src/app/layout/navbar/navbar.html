@@ -20,7 +20,11 @@
       <ul class="navbar__links">
         @for (link of navLinks; track link.anchor) {
           <li>
-            <button class="navbar__link" (click)="scrollTo(link.anchor)">
+            <button
+              class="navbar__link"
+              [class.navbar__link--active]="activeSection() === link.anchor"
+              (click)="scrollTo(link.anchor)"
+            >
               {{ link.label }}
             </button>
           </li>
@@ -105,12 +109,22 @@
     </button>
   </div>
 
+  <span
+    class="navbar__progress"
+    [style.transform]="'scaleX(' + scrollProgress() + ')'"
+    aria-hidden="true"
+  ></span>
+
   <div class="navbar__mobile" [class.navbar__mobile--open]="menuOpen()">
     <nav>
       <ul class="navbar__mobile-links">
         @for (link of navLinks; track link.anchor) {
           <li>
-            <button class="navbar__mobile-link" (click)="scrollTo(link.anchor)">
+            <button
+              class="navbar__mobile-link"
+              [class.navbar__mobile-link--active]="activeSection() === link.anchor"
+              (click)="scrollTo(link.anchor)"
+            >
               {{ link.label }}
             </button>
           </li>

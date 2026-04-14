@@ -5,8 +5,8 @@
 // Animation classes used by AnimateOnScrollDirective
 .animate-on-scroll {
   opacity: 0;
-  transition-property: opacity, transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: opacity, transform, clip-path, filter;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 
   &.fade-up { transform: translateY(40px); }
   &.fade-down { transform: translateY(-40px); }
@@ -15,9 +15,25 @@
   &.zoom-in { transform: scale(0.88); }
   &.fade { transform: none; }
 
+  &.clip-reveal {
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+    opacity: 1;
+  }
+
+  &.blur-in {
+    transform: translateY(14px);
+    filter: blur(14px);
+  }
+
   &.animated {
     opacity: 1;
     transform: none !important;
+    filter: none !important;
+
+    &.clip-reveal {
+      clip-path: inset(0 0 0 0) !important;
+    }
   }
 }
 
