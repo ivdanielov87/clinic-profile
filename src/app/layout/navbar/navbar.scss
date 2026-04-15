@@ -82,8 +82,12 @@
   align-items: center;
   gap: v.$space-3;
   cursor: pointer;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
+
+  @media (max-width: #{v.$bp-desktop - 1px}) {
+    flex: 1 1 auto;
+  }
   user-select: none;
   padding: 0;
   text-align: left;
@@ -113,8 +117,11 @@
   color: v.$color-navy;
   letter-spacing: -0.03em;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+  @media (max-width: #{v.$bp-desktop - 1px}) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   @include m.mobile {
     font-size: 0.82rem;
@@ -128,8 +135,11 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+  @media (max-width: #{v.$bp-desktop - 1px}) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   @include m.mobile {
     font-size: 0.58rem;
@@ -207,6 +217,7 @@
   right: 0;
   bottom: -1px;
   height: 2px;
+  contain: layout paint;
   transform-origin: left center;
   transform: scaleX(0);
   background: linear-gradient(
@@ -253,55 +264,141 @@
   }
 }
 
-.navbar__phone-wrap {
-  position: relative;
-  display: flex;
+// Desktop inline phone (icon + number) — visible only at ≥desktop
+.navbar__phone-inline {
+  display: inline-flex;
   align-items: center;
-  flex-shrink: 0;
+  gap: v.$space-2;
+  flex: 0 0 auto;
+  padding: 0.55rem 0.9rem;
+  border-radius: v.$radius-full;
+  color: v.$color-navy-dark;
+  font-size: v.$font-size-sm;
+  font-weight: v.$font-weight-semibold;
+  text-decoration: none;
+  letter-spacing: -0.005em;
+  transition:
+    color v.$transition-fast,
+    background v.$transition-fast;
+
+  &:hover {
+    color: v.$color-accent;
+    background: rgba(30, 91, 184, 0.06);
+  }
+
+  @media (max-width: #{v.$bp-desktop - 1px}) {
+    display: none;
+  }
 }
 
-.navbar__phone-btn {
+.navbar__phone-inline-icon {
+  display: inline-flex;
+  color: v.$color-accent;
+}
+
+.navbar__phone-inline-number {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+// Invisible placeholder reserves width so layout never shifts
+.navbar__phone-inline-placeholder {
+  visibility: hidden;
+}
+
+// Real chars overlay the placeholder, animated in with a stagger
+.navbar__phone-inline-chars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navbar__phone-inline-char {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0;
+  animation: navbar-phone-char-in 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--char-i, 0) * 40ms);
+}
+
+@keyframes navbar-phone-char-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+// Mobile/tablet floating sticky phone button — visible only below desktop
+.navbar__phone-float {
+  position: fixed;
+  right: v.$space-4;
+  bottom: v.$space-4;
+  z-index: v.$z-overlay;
+  display: none;
+
+  @media (max-width: #{v.$bp-desktop - 1px}) {
+    display: block;
+  }
+}
+
+.navbar__phone-float-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   padding: 0;
-  border: 1px solid rgba(30, 91, 184, 0.16);
+  border: none;
   border-radius: 50%;
-  background: linear-gradient(180deg, #FFFFFF 0%, #F4F8FC 100%);
-  color: v.$color-navy-dark;
+  background: v.$gradient-accent;
+  color: v.$color-white;
   cursor: pointer;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    0 6px 14px rgba(18, 39, 71, 0.08);
+    0 10px 28px rgba(30, 91, 184, 0.38),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14);
   transition:
     transform v.$transition-fast,
-    border-color v.$transition-fast,
-    background v.$transition-fast,
-    color v.$transition-fast,
-    box-shadow v.$transition-fast;
+    box-shadow v.$transition-fast,
+    background v.$transition-fast;
 
-  &:hover {
-    transform: translateY(-1px);
-    border-color: rgba(30, 91, 184, 0.28);
-    background: linear-gradient(180deg, #FFFFFF 0%, #EBF3FB 100%);
-    color: v.$color-accent;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 1),
-      0 10px 22px rgba(30, 91, 184, 0.16);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(79, 195, 247, 0.55);
+    opacity: 0;
+    transform: scale(0.85);
+    animation: navbar-phone-float-pulse 2.4s ease-out infinite;
+    pointer-events: none;
   }
 
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 14px 34px rgba(30, 91, 184, 0.46),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  }
+
+  &:active { transform: translateY(0); }
+
   &--open {
-    border-color: v.$color-accent;
-    background: linear-gradient(180deg, #FFFFFF 0%, #E6F0FA 100%);
-    color: v.$color-accent;
+    background: linear-gradient(135deg, v.$color-navy 0%, v.$color-navy-light 100%);
+    &::before { animation: none; opacity: 0; }
   }
 
   @include m.mobile {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
   }
+}
+
+@keyframes navbar-phone-float-pulse {
+  0% { opacity: 0.7; transform: scale(0.85); }
+  70% { opacity: 0; transform: scale(1.3); }
+  100% { opacity: 0; transform: scale(1.3); }
 }
 
 .navbar__phone-pop {
@@ -312,7 +409,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
-  width: clamp(15rem, 78vw, 17.5rem);
+  width: clamp(13rem, 78vw, 15rem);
   padding: v.$space-3 v.$space-4 v.$space-4;
   border-radius: v.$radius-lg;
   border: 1px solid rgba(30, 91, 184, 0.12);
@@ -338,12 +435,34 @@
     transform: rotate(45deg);
   }
 
-  @include m.mobile {
-    width: min(18rem, calc(100vw - #{v.$space-6}));
-    right: calc(#{v.$space-2} * -1);
+  // Floating variant: pop appears ABOVE the button, arrow points down from bottom-left
+  &--float {
+    top: auto;
+    left: auto;
+    bottom: calc(100% + 0.75rem);
+    right: 0;
+    width: min(15rem, calc(100vw - #{v.$space-6}));
 
     &::before {
-      right: calc(14px + #{v.$space-2});
+      top: auto;
+      left: auto;
+      bottom: -6px;
+      right: 16px;
+      border-top: none;
+      border-left: none;
+      border-bottom: 1px solid rgba(30, 91, 184, 0.12);
+      border-right: 1px solid rgba(30, 91, 184, 0.12);
+    }
+  }
+
+  @include m.mobile {
+    &:not(.navbar__phone-pop--float) {
+      width: min(18rem, calc(100vw - #{v.$space-6}));
+      right: calc(#{v.$space-2} * -1);
+
+      &::before {
+        right: calc(14px + #{v.$space-2});
+      }
     }
   }
 }
@@ -414,13 +533,6 @@
     background: rgba(79, 195, 247, 0.14);
     color: v.$color-accent;
   }
-}
-
-.navbar__phone-pop-text {
-  margin: 0;
-  font-size: 0.7rem;
-  line-height: v.$line-height-normal;
-  color: v.$color-text-muted;
 }
 
 .navbar__phone-pop-link {

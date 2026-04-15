@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, of, shareReplay } from 'rxjs';
 
@@ -27,25 +27,36 @@ const EMPTY: LiveSuperDocData = {
   scrapedAt: '',
 };
 
+const DEV_MOCK: LiveSuperDocData = {
+  earliestSlot: {
+    date: '2026-04-27',
+    time: '09:45',
+    text: '27 април 09:45',
+  },
+  rating: 4.9,
+  ratingCount: 127,
+  scrapedAt: new Date().toISOString(),
+};
+
 @Injectable({ providedIn: 'root' })
 export class LiveContentService {
   private http = inject(HttpClient);
 
-  private data$: Observable<LiveSuperDocData> = this.http
-    .get<LiveSuperDocResponse>('/api/superdoc')
-    .pipe(
-      map(response => {
-        if (response.error) return EMPTY;
-        return {
-          earliestSlot: response.earliestSlot ?? null,
-          rating: response.rating ?? null,
-          ratingCount: response.ratingCount ?? null,
-          scrapedAt: response.scrapedAt ?? '',
-        };
-      }),
-      catchError(() => of(EMPTY)),
-      shareReplay(1),
-    );
+  private data$: Observable<LiveSuperDocData> = isDevMode()
+    ? of(DEV_MOCK).pipe(shareReplay(1))
+    : this.http.get<LiveSuperDocResponse>('/api/superdoc').pipe(
+        map(response => {
+          if (response.error) return EMPTY;
+          return {
+            earliestSlot: response.earliestSlot ?? null,
+            rating: response.rating ?? null,
+            ratingCount: response.ratingCount ?? null,
+            scrapedAt: response.scrapedAt ?? '',
+          };
+        }),
+        catchError(() => of(EMPTY)),
+        shareReplay(1),
+      );
 
   getLiveData(): Observable<LiveSuperDocData> {
     return this.data$;

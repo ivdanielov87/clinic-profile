@@ -14,7 +14,6 @@ export type AnimationType =
   | 'fade-left'
   | 'zoom-in'
   | 'fade'
-  | 'clip-reveal'
   | 'blur-in';
 
 @Directive({

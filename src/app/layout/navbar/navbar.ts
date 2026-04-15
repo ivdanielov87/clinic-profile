@@ -5,6 +5,7 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
+  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -30,6 +31,7 @@ export class Navbar implements OnInit, AfterViewInit, OnDestroy {
   superDocUrl = signal('https://superdoc.bg/lekar/magdalena-mladenova');
   phone = signal('');
   phoneHref = signal('');
+  phoneChars = computed(() => this.phone().split(''));
 
   private copyTimer: ReturnType<typeof setTimeout> | null = null;
   private sectionObserver: IntersectionObserver | null = null;
@@ -39,9 +41,11 @@ export class Navbar implements OnInit, AfterViewInit, OnDestroy {
     { label: 'Услуги', anchor: 'services' },
     { label: 'Лекарят', anchor: 'doctor' },
     { label: 'Цени', anchor: 'prices' },
-    { label: 'Мнения', anchor: 'testimonials' },
+    { label: 'Мнения', anchor: 'testimonials', mobileOnly: true },
     { label: 'Контакти', anchor: 'booking' },
   ];
+
+  readonly desktopNavLinks = this.navLinks.filter(l => !l.mobileOnly);
 
   ngOnInit(): void {
     this.contentService.getContent().subscribe(c => {

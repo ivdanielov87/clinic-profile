@@ -18,7 +18,7 @@
 
     <nav class="navbar__nav" aria-label="Основна навигация">
       <ul class="navbar__links">
-        @for (link of navLinks; track link.anchor) {
+        @for (link of desktopNavLinks; track link.anchor) {
           <li>
             <button
               class="navbar__link"
@@ -32,16 +32,13 @@
       </ul>
     </nav>
 
-    <div class="navbar__phone-wrap">
-      <button
-        type="button"
-        class="navbar__phone-btn"
-        [class.navbar__phone-btn--open]="phoneOpen()"
-        (click)="togglePhone()"
-        aria-label="Телефон за връзка"
-        [attr.aria-expanded]="phoneOpen()"
-      >
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+    <a
+      class="navbar__phone-inline"
+      [href]="phoneHref()"
+      [attr.aria-label]="'Телефон ' + phone()"
+    >
+      <span class="navbar__phone-inline-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
           <path
             d="M3.5 2.5H6.5L8 6L6 7.25C6.9 9.15 8.85 11.1 10.75 12L12 10L15.5 11.5V14.5C15.5 15.328 14.828 16 14 16C7.65 16 2 10.35 2 4C2 3.172 2.672 2.5 3.5 2.5Z"
             stroke="currentColor"
@@ -49,48 +46,16 @@
             stroke-linejoin="round"
           />
         </svg>
-      </button>
-
-      @if (phoneOpen()) {
-        <div class="navbar__phone-pop" role="dialog" aria-label="Контакт по телефон">
-          <span class="navbar__phone-pop-label">Телефон за връзка</span>
-          <span class="navbar__phone-pop-number-row">
-            <a class="navbar__phone-pop-number" [href]="phoneHref()">{{ phone() }}</a>
-            <button
-              type="button"
-              class="navbar__phone-pop-copy"
-              [class.navbar__phone-pop-copy--success]="phoneCopied()"
-              (click)="copyPhone()"
-              [attr.aria-label]="phoneCopied() ? 'Копирано' : 'Копирай телефона'"
-            >
-              @if (phoneCopied()) {
-                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M3 8.5L6.5 12L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              } @else {
-                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
-                  <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2H3.5A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5" stroke="currentColor" stroke-width="1.3"/>
-                </svg>
-              }
-            </button>
-          </span>
-          <p class="navbar__phone-pop-text">
-            Обадете се за въпроси, уточнение на час или консултация.
-          </p>
-          <button
-            type="button"
-            class="navbar__phone-pop-link"
-            (click)="scrollTo('booking')"
-          >
-            Всички контакти
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <path d="M3.5 2.5L7 6L3.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
-      }
-    </div>
+      </span>
+      <span class="navbar__phone-inline-number" [attr.aria-label]="phone()">
+        <span class="navbar__phone-inline-placeholder" aria-hidden="true">0000 000 000</span>
+        <span class="navbar__phone-inline-chars" aria-hidden="true">
+          @for (ch of phoneChars(); track $index; let idx = $index) {
+            <span class="navbar__phone-inline-char" [style.--char-i]="idx">{{ ch === ' ' ? '\u00A0' : ch }}</span>
+          }
+        </span>
+      </span>
+    </a>
 
     <a class="navbar__cta" [href]="superDocUrl()" target="_blank" rel="noopener noreferrer">
       ЗАПИШЕТЕ ЧАС
@@ -136,3 +101,60 @@
     </a>
   </div>
 </header>
+
+<div class="navbar__phone-float">
+  @if (phoneOpen()) {
+    <div class="navbar__phone-pop navbar__phone-pop--float" role="dialog" aria-label="Контакт по телефон">
+      <span class="navbar__phone-pop-label">Телефон за връзка</span>
+      <span class="navbar__phone-pop-number-row">
+        <a class="navbar__phone-pop-number" [href]="phoneHref()">{{ phone() }}</a>
+        <button
+          type="button"
+          class="navbar__phone-pop-copy"
+          [class.navbar__phone-pop-copy--success]="phoneCopied()"
+          (click)="copyPhone()"
+          [attr.aria-label]="phoneCopied() ? 'Копирано' : 'Копирай телефона'"
+        >
+          @if (phoneCopied()) {
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 8.5L6.5 12L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          } @else {
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2H3.5A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+          }
+        </button>
+      </span>
+      <button
+        type="button"
+        class="navbar__phone-pop-link"
+        (click)="scrollTo('booking')"
+      >
+        Всички контакти
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M3.5 2.5L7 6L3.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  }
+
+  <button
+    type="button"
+    class="navbar__phone-float-btn"
+    [class.navbar__phone-float-btn--open]="phoneOpen()"
+    (click)="togglePhone()"
+    aria-label="Телефон за връзка"
+    [attr.aria-expanded]="phoneOpen()"
+  >
+    <svg width="22" height="22" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path
+        d="M3.5 2.5H6.5L8 6L6 7.25C6.9 9.15 8.85 11.1 10.75 12L12 10L15.5 11.5V14.5C15.5 15.328 14.828 16 14 16C7.65 16 2 10.35 2 4C2 3.172 2.672 2.5 3.5 2.5Z"
+        stroke="currentColor"
+        stroke-width="1.4"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </button>
+</div>
