@@ -1,6 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
 import { ContentService, ContactContent } from '../../core/services/content.service';
+import { LiveContentService } from '../../core/services/live-content.service';
 import { ClinicMap } from '../../shared/clinic-map/clinic-map';
 
 @Component({
@@ -12,10 +13,12 @@ import { ClinicMap } from '../../shared/clinic-map/clinic-map';
 })
 export class BookingCta implements OnInit {
   private contentService = inject(ContentService);
+  private liveContent = inject(LiveContentService);
   private copyTimer: ReturnType<typeof setTimeout> | null = null;
 
   contact = signal<ContactContent | null>(null);
   phoneCopied = signal(false);
+  earliestSlotText = signal<string | null>(null);
 
   phoneChars = computed(() => {
     const phone = this.contact()?.phone ?? '';
@@ -24,6 +27,9 @@ export class BookingCta implements OnInit {
 
   ngOnInit(): void {
     this.contentService.getContent().subscribe(c => this.contact.set(c.contact));
+    this.liveContent.getLiveData().subscribe(data => {
+      this.earliestSlotText.set(this.liveContent.formatSlot(data.earliestSlot));
+    });
   }
 
   async copyPhone(): Promise<void> {

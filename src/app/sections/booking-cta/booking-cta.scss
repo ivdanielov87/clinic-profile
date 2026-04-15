@@ -100,6 +100,52 @@
   color: v.$color-white-80;
 }
 
+.booking__slot-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: v.$space-2;
+  width: fit-content;
+  margin-top: v.$space-2;
+  padding: v.$space-2 v.$space-4;
+  border: 1px solid rgba(79, 195, 247, 0.28);
+  border-radius: v.$radius-full;
+  background: rgba(79, 195, 247, 0.08);
+  font-size: v.$font-size-sm;
+  color: v.$color-white-90;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 0 1px rgba(79, 195, 247, 0.06), 0 6px 20px rgba(10, 22, 40, 0.3);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: v.$color-cyan;
+    box-shadow: 0 0 0 0 rgba(79, 195, 247, 0.6);
+    animation: booking-slot-pulse 2.2s ease-out infinite;
+  }
+}
+
+.booking__slot-badge-icon {
+  display: inline-flex;
+  color: v.$color-cyan;
+}
+
+.booking__slot-badge-label {
+  color: v.$color-white-80;
+}
+
+.booking__slot-badge-value {
+  font-weight: v.$font-weight-semibold;
+  color: v.$color-white;
+}
+
+@keyframes booking-slot-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(79, 195, 247, 0.55); }
+  70% { box-shadow: 0 0 0 8px rgba(79, 195, 247, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(79, 195, 247, 0); }
+}
+
 .booking__btn {
   display: inline-flex;
   align-items: center;

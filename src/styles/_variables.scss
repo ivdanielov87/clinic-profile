@@ -1,127 +1,136 @@
 // Colors
 
 // Primary dark backgrounds
-$color-midnight:    #0A1628;  // deepest, for hero / dramatic areas
-$color-navy:        #122747;  // primary navy
-$color-navy-light:  #1C3560;  // softer navy for gradients
-$color-navy-dark:   #0E1D38;  // deep navy with blue tint
+$color-midnight: #0a1628; // deepest, for hero / dramatic areas
+$color-navy: #122747; // primary navy
+$color-navy-light: #1c3560; // softer navy for gradients
+$color-navy-dark: #0e1d38; // deep navy with blue tint
 
 // Light backgrounds
-$color-bg-page:     #F4F8FC;
-$color-bg-light:    #EDF3FA;
-$color-bg-section:  #E2ECF7;
+$color-bg-page: #f4f8fc;
+$color-bg-light: #edf3fa;
+$color-bg-section: #e2ecf7;
 
 // Accent — royal blue, more premium & serious
-$color-accent:      #1E5BB8;
-$color-accent-hover:#154290;
-$color-accent-light:#3B7BD4;
-$color-accent-soft: #6FA3E0;
+$color-accent: #1e5bb8;
+$color-accent-hover: #154290;
+$color-accent-light: #3b7bd4;
+$color-accent-soft: #6fa3e0;
 
 // Cyan highlight — for links, hover, subtle glow
-$color-cyan:        #4FC3F7;
-$color-cyan-soft:   rgba(79, 195, 247, 0.15);
+$color-cyan: #4fc3f7;
+$color-cyan-soft: rgba(79, 195, 247, 0.15);
 
 // Gradients
-$gradient-hero:     linear-gradient(135deg, #0A1628 0%, #122747 55%, #1C3560 100%);
-$gradient-accent:   linear-gradient(135deg, #1E5BB8 0%, #3B7BD4 100%);
-$gradient-subtle:   linear-gradient(180deg, #F4F8FC 0%, #E2ECF7 100%);
+$gradient-hero: linear-gradient(135deg, #0a1628 0%, #122747 55%, #1c3560 100%);
+$gradient-accent: linear-gradient(135deg, #1e5bb8 0%, #3b7bd4 100%);
+$gradient-subtle: linear-gradient(180deg, #f4f8fc 0%, #e2ecf7 100%);
 
 // Text
-$color-white:       #FFFFFF;
-$color-white-90:    rgba(255, 255, 255, 0.92);
-$color-white-80:    rgba(255, 255, 255, 0.78);
-$color-white-60:    rgba(255, 255, 255, 0.58);
-$color-text-dark:   #0F1E33;
-$color-text-body:   #3A4A60;
-$color-text-muted:  #6B7A8D;
-$color-text-light:  #A8B8CC;
+$color-white: #ffffff;
+$color-white-90: rgba(255, 255, 255, 0.92);
+$color-white-80: rgba(255, 255, 255, 0.78);
+$color-white-60: rgba(255, 255, 255, 0.58);
+$color-text-dark: #0f1e33;
+$color-text-body: #3a4a60;
+$color-text-muted: #6b7a8d;
+$color-text-light: #a8b8cc;
 
 // Rating / star
-$color-star:        #F5B840;
+$color-star: #f5b840;
 
 // Borders
-$color-border:      rgba(255, 255, 255, 0.1);
+$color-border: rgba(255, 255, 255, 0.1);
 $color-border-soft: rgba(255, 255, 255, 0.06);
-$color-border-light:#D6E2F0;
+$color-border-light: #d6e2f0;
 
 // Typography
-$font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+$font-family:
+  'Inter',
+  'Segoe UI',
+  system-ui,
+  -apple-system,
+  sans-serif;
 
-$font-size-xs:   0.75rem;   // 12px
-$font-size-sm:   0.875rem;  // 14px
-$font-size-base: 1rem;      // 16px
-$font-size-md:   1.125rem;  // 18px
-$font-size-lg:   1.25rem;   // 20px
-$font-size-xl:   1.5rem;    // 24px
-$font-size-2xl:  2rem;      // 32px
-$font-size-3xl:  2.5rem;    // 40px
-$font-size-4xl:  3rem;      // 48px
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-md: 1.125rem; // 18px
+$font-size-lg: 1.25rem; // 20px
+$font-size-xl: 1.5rem; // 24px
+$font-size-2xl: 2rem; // 32px
+$font-size-3xl: 2.5rem; // 40px
+$font-size-4xl: 3rem; // 48px
 $font-size-hero: clamp(2.25rem, 5vw, 3.5rem);
 
 $font-weight-regular: 400;
-$font-weight-medium:  500;
+$font-weight-medium: 500;
 $font-weight-semibold: 600;
-$font-weight-bold:    700;
+$font-weight-bold: 700;
 
-$line-height-tight:  1.2;
-$line-height-snug:   1.4;
+$line-height-tight: 1.2;
+$line-height-snug: 1.4;
 $line-height-normal: 1.6;
-$line-height-loose:  1.75;
+$line-height-loose: 1.75;
 
 // Spacing
-$space-1:   0.25rem;   // 4px
-$space-2:   0.5rem;    // 8px
-$space-3:   0.75rem;   // 12px
-$space-4:   1rem;      // 16px
-$space-5:   1.25rem;   // 20px
-$space-6:   1.5rem;    // 24px
-$space-8:   2rem;      // 32px
-$space-10:  2.5rem;    // 40px
-$space-12:  3rem;      // 48px
-$space-16:  4rem;      // 64px
-$space-20:  5rem;      // 80px
-$space-24:  6rem;      // 96px
+$space-1: 0.25rem; // 4px
+$space-2: 0.5rem; // 8px
+$space-3: 0.75rem; // 12px
+$space-4: 1rem; // 16px
+$space-5: 1.25rem; // 20px
+$space-6: 1.5rem; // 24px
+$space-8: 2rem; // 32px
+$space-10: 2.5rem; // 40px
+$space-12: 3rem; // 48px
+$space-16: 4rem; // 64px
+$space-20: 5rem; // 80px
+$space-24: 6rem; // 96px
 
-$section-padding-y:   $space-20;
-$section-padding-x:   $space-6;
+$section-padding-y: $space-20;
+$section-padding-x: $space-6;
 $container-max-width: 1200px;
 
 // Border Radius
-$radius-sm:   4px;
-$radius-md:   8px;
-$radius-lg:   12px;
-$radius-xl:   16px;
-$radius-2xl:  24px;
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+$radius-2xl: 24px;
 $radius-full: 9999px;
 
 // Shadows — soft, blue-tinted for a premium medical look
-$shadow-sm:    0 1px 3px rgba(18, 39, 71, 0.08), 0 1px 2px rgba(18, 39, 71, 0.04);
-$shadow-md:    0 6px 24px rgba(18, 39, 71, 0.1);
-$shadow-lg:    0 16px 48px rgba(18, 39, 71, 0.14);
-$shadow-card:  0 4px 20px rgba(18, 39, 71, 0.08);
+$shadow-sm:
+  0 1px 3px rgba(18, 39, 71, 0.08),
+  0 1px 2px rgba(18, 39, 71, 0.04);
+$shadow-md: 0 6px 24px rgba(18, 39, 71, 0.1);
+$shadow-lg: 0 16px 48px rgba(18, 39, 71, 0.14);
+$shadow-card: 0 4px 20px rgba(18, 39, 71, 0.08);
 $shadow-card-hover: 0 20px 48px rgba(18, 39, 71, 0.16);
-$shadow-navy:  0 24px 64px rgba(10, 22, 40, 0.35);
-$shadow-glow:  0 0 0 1px rgba(79, 195, 247, 0.2), 0 8px 32px rgba(30, 91, 184, 0.2);
+$shadow-navy: 0 24px 64px rgba(10, 22, 40, 0.35);
+$shadow-glow:
+  0 0 0 1px rgba(79, 195, 247, 0.2),
+  0 8px 32px rgba(30, 91, 184, 0.2);
 $shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
 // Transitions
-$transition-fast:   150ms ease;
-$transition-base:   250ms ease;
-$transition-slow:   400ms ease;
+$transition-fast: 150ms ease;
+$transition-base: 250ms ease;
+$transition-slow: 400ms ease;
 $transition-smooth: 600ms cubic-bezier(0.4, 0, 0.2, 1);
 
 // Z-index
-$z-navbar:   100;
-$z-overlay:  200;
-$z-modal:    300;
+$z-navbar: 100;
+$z-overlay: 200;
+$z-modal: 300;
 
 // Breakpoints
-$bp-mobile:  576px;
-$bp-tablet:  768px;
-$bp-laptop:  992px;
+$bp-mobile: 576px;
+$bp-tablet: 768px;
+$bp-laptop: 992px;
 $bp-desktop: 1200px;
-$bp-wide:    1440px;
+$bp-wide: 1440px;
 
 // Navbar
-$navbar-height:         72px;
-$navbar-height-mobile:  60px;
+$navbar-height: 72px;
+$navbar-height-mobile: 60px;
