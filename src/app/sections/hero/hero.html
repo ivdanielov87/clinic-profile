@@ -187,8 +187,8 @@
           </svg>
         }
       </div>
-      <span class="hero__card-rating-value">4.9</span>
-      <span class="hero__card-rating-sub">811 пациента</span>
+      <span class="hero__card-rating-value">{{ ratingDisplay() }}</span>
+      <span class="hero__card-rating-sub">{{ liveRatingCount() ?? 811 }} пациента</span>
     </div>
 
   </div>

@@ -12,7 +12,7 @@
       </div>
 
       <div class="testimonials__rating" animateOnScroll="fade-left" [animDelay]="100">
-        <span class="testimonials__rating-score">4.9</span>
+        <span class="testimonials__rating-score">{{ ratingDisplay() }}</span>
         <div class="testimonials__rating-right">
           <div class="testimonials__rating-stars">
             @for (s of stars; track s) {
@@ -21,7 +21,7 @@
               </svg>
             }
           </div>
-          <p class="testimonials__rating-sub">811 потвърдени оценки от SuperDoc</p>
+          <p class="testimonials__rating-sub">{{ liveRatingCount() ?? 811 }} потвърдени оценки от SuperDoc</p>
         </div>
       </div>
     </div>

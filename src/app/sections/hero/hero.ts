@@ -1,6 +1,7 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
 import { ContentService } from '../../core/services/content.service';
+import { LiveContentService } from '../../core/services/live-content.service';
 
 @Component({
   selector: 'app-hero',
@@ -11,17 +12,20 @@ import { ContentService } from '../../core/services/content.service';
 })
 export class Hero implements OnInit {
   private contentService = inject(ContentService);
+  private liveContent = inject(LiveContentService);
 
-  readonly stats = [
-    { value: '15+', label: 'ГОДИНИ ОПИТ' },
-    { value: '4.9', label: 'РЕЙТИНГ' },
-    { value: '811', label: 'ОЦЕНКИ' },
-  ];
   superDocUrl = signal('https://superdoc.bg/lekar/magdalena-mladenova');
+  liveRating = signal<number | null>(null);
+  liveRatingCount = signal<number | null>(null);
+  ratingDisplay = computed(() => (this.liveRating() ?? 4.9).toFixed(1));
 
   ngOnInit(): void {
     this.contentService.getContent().subscribe(c => {
       this.superDocUrl.set(c.contact.superDocUrl);
+    });
+    this.liveContent.getLiveData().subscribe(data => {
+      if (data.rating !== null) this.liveRating.set(data.rating);
+      if (data.ratingCount !== null) this.liveRatingCount.set(data.ratingCount);
     });
   }
 

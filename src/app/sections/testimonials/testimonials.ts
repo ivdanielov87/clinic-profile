@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
 import { ContentService, Testimonial } from '../../core/services/content.service';
+import { LiveContentService, LiveReview } from '../../core/services/live-content.service';
 
 @Component({
   selector: 'app-testimonials',
@@ -23,8 +24,16 @@ import { ContentService, Testimonial } from '../../core/services/content.service
 })
 export class Testimonials implements OnInit, AfterViewInit {
   private contentService = inject(ContentService);
+  private liveContent = inject(LiveContentService);
 
-  reviews = signal<Testimonial[]>([]);
+  private fallbackReviews = signal<Testimonial[]>([]);
+  private liveReviews = signal<Testimonial[]>([]);
+  liveRating = signal<number | null>(null);
+  liveRatingCount = signal<number | null>(null);
+  ratingDisplay = computed(() => (this.liveRating() ?? 4.9).toFixed(1));
+  reviews = computed<Testimonial[]>(() =>
+    this.liveReviews().length > 0 ? this.liveReviews() : this.fallbackReviews(),
+  );
   currentSlide = signal(0);
   cardsPerView = signal(3);
   totalSlides = computed(() => Math.ceil(this.reviews().length / this.cardsPerView()));
@@ -42,9 +51,35 @@ export class Testimonials implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.cardsPerView.set(this.resolveCardsPerView());
     this.contentService.getContent().subscribe(c => {
-      this.reviews.set(c.testimonials);
+      this.fallbackReviews.set(c.testimonials);
       setTimeout(() => this.goToSlide(0, 'auto'));
     });
+    this.liveContent.getLiveData().subscribe(data => {
+      if (data.rating !== null) this.liveRating.set(data.rating);
+      if (data.ratingCount !== null) this.liveRatingCount.set(data.ratingCount);
+      if (data.reviews.length > 0) {
+        this.liveReviews.set(data.reviews.map(r => this.toTestimonial(r)));
+        setTimeout(() => this.goToSlide(0, 'auto'));
+      }
+    });
+  }
+
+  private toTestimonial(r: LiveReview): Testimonial {
+    return {
+      initials: this.deriveInitials(r.author),
+      name: r.author,
+      date: r.date,
+      stars: Math.round(r.rating),
+      text: r.text,
+    };
+  }
+
+  private deriveInitials(author: string): string {
+    const parts = author.trim().split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return '??';
+    const first = parts[0][0] ?? '';
+    const second = parts[1]?.[0] ?? parts[0][1] ?? '';
+    return (first + second).toUpperCase();
   }
 
   ngAfterViewInit(): void {

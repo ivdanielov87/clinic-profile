@@ -8,16 +8,25 @@ interface EarliestSlot {
   text: string;
 }
 
+interface Review {
+  author: string;
+  date: string;
+  rating: number;
+  text: string;
+}
+
 interface SuperDocData {
   earliestSlot: EarliestSlot | null;
   rating: number | null;
   ratingCount: number | null;
+  reviews: Review[];
   scrapedAt: string;
 }
 
 const SOURCE_URL = 'https://superdoc.bg/lekar/magdalena-mladenova';
 const CACHE_SECONDS = 15 * 60;
 const STALE_SECONDS = 60 * 60;
+const MAX_REVIEWS = 6;
 
 function extractEarliestSlot(html: string): EarliestSlot | null {
   const match = html.match(/"earliestSlot"\s*:\s*(\{[^}]+\})/);
@@ -36,38 +45,76 @@ function extractEarliestSlot(html: string): EarliestSlot | null {
   return null;
 }
 
-function extractRating(html: string): number | null {
-  // SuperDoc renders the aggregate rating as <h3>4.9</h3> in the reviews block.
-  // Also try JSON-LD / data-rating fallbacks.
-  const ldMatch = html.match(/"ratingValue"\s*:\s*"?(\d+(?:[.,]\d+)?)"?/);
-  if (ldMatch) {
-    const value = parseFloat(ldMatch[1].replace(',', '.'));
-    if (!Number.isNaN(value) && value >= 0 && value <= 5) return value;
-  }
+// Extracts the aggregate rating from the microdata block:
+// <div itemprop="aggregateRating" ...>
+//   <meta itemprop="ratingValue" content="4.94">
+//   <meta itemprop="ratingCount" content="824">
+// </div>
+function extractAggregate(html: string): { rating: number | null; ratingCount: number | null } {
+  const blockMatch = html.match(/itemprop="aggregateRating"[\s\S]{0,600}?<\/div>/);
+  if (!blockMatch) return { rating: null, ratingCount: null };
+  const block = blockMatch[0];
 
-  const h3Match = html.match(/<h3[^>]*>\s*(\d(?:[.,]\d)?)\s*<\/h3>/);
-  if (h3Match) {
-    const value = parseFloat(h3Match[1].replace(',', '.'));
-    if (!Number.isNaN(value) && value >= 0 && value <= 5) return value;
-  }
+  const ratingMatch = block.match(/itemprop="ratingValue"\s+content="([^"]+)"/);
+  const countMatch = block.match(/itemprop="ratingCount"\s+content="(\d+)"/);
 
-  return null;
+  const ratingRaw = ratingMatch ? parseFloat(ratingMatch[1].replace(',', '.')) : NaN;
+  const countRaw = countMatch ? parseInt(countMatch[1], 10) : NaN;
+
+  return {
+    rating: !Number.isNaN(ratingRaw) && ratingRaw >= 0 && ratingRaw <= 5 ? ratingRaw : null,
+    ratingCount: !Number.isNaN(countRaw) && countRaw >= 0 ? countRaw : null,
+  };
 }
 
-function extractRatingCount(html: string): number | null {
-  const ldMatch = html.match(/"reviewCount"\s*:\s*"?(\d+)"?/);
-  if (ldMatch) {
-    const value = parseInt(ldMatch[1], 10);
-    if (!Number.isNaN(value)) return value;
+function decodeHtml(s: string): string {
+  return s
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&nbsp;/g, ' ');
+}
+
+function stripTags(s: string): string {
+  return decodeHtml(s.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
+}
+
+// Each review on SuperDoc is rendered as:
+// <div class="review" itemprop="reviews" itemscope itemtype="http://schema.org/Review">
+//   <span itemprop="name">AUTHOR</span>
+//   <span itemprop="datePublished">DATE</span>
+//   <div itemprop="reviewRating">
+//     <meta itemprop="ratingValue" content="5">
+//   </div>
+//   <div class="content">REVIEW TEXT</div>
+// </div>
+function extractReviews(html: string, limit: number): Review[] {
+  const reviewRegex = /<div\s+class="review"\s+itemprop="reviews"[\s\S]*?<div class="content">([\s\S]*?)<\/div>/g;
+  const reviews: Review[] = [];
+  let match: RegExpExecArray | null;
+
+  while ((match = reviewRegex.exec(html)) !== null && reviews.length < limit) {
+    const block = match[0];
+    const text = stripTags(match[1]);
+    if (!text) continue;
+
+    const authorMatch = block.match(/<span itemprop="name">([^<]+)<\/span>/);
+    const dateMatch = block.match(/itemprop="datePublished"[^>]*>([^<]+)</);
+    const ratingMatch = block.match(/itemprop="reviewRating"[\s\S]*?itemprop="ratingValue"\s+content="(\d+(?:\.\d+)?)"/);
+
+    if (!authorMatch) continue;
+
+    reviews.push({
+      author: stripTags(authorMatch[1]),
+      date: dateMatch ? stripTags(dateMatch[1]) : '',
+      rating: ratingMatch ? parseFloat(ratingMatch[1]) : 5,
+      text,
+    });
   }
 
-  const textMatch = html.match(/(\d{1,6})\s*оценки/);
-  if (textMatch) {
-    const value = parseInt(textMatch[1], 10);
-    if (!Number.isNaN(value)) return value;
-  }
-
-  return null;
+  return reviews;
 }
 
 async function fetchSuperDoc(): Promise<SuperDocData> {
@@ -85,11 +132,13 @@ async function fetchSuperDoc(): Promise<SuperDocData> {
   }
 
   const html = await response.text();
+  const { rating, ratingCount } = extractAggregate(html);
 
   return {
     earliestSlot: extractEarliestSlot(html),
-    rating: extractRating(html),
-    ratingCount: extractRatingCount(html),
+    rating,
+    ratingCount,
+    reviews: extractReviews(html, MAX_REVIEWS),
     scrapedAt: new Date().toISOString(),
   };
 }

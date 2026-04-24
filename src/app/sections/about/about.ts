@@ -11,6 +11,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
 import { ContentService, AboutContent } from '../../core/services/content.service';
+import { LiveContentService } from '../../core/services/live-content.service';
 
 interface ParsedHighlight {
   prefix: string;
@@ -29,9 +30,12 @@ interface ParsedHighlight {
 })
 export class About implements OnInit, AfterViewInit, OnDestroy {
   private contentService = inject(ContentService);
+  private liveContent = inject(LiveContentService);
 
   about = signal<AboutContent | null>(null);
   displayValues = signal<string[]>([]);
+  liveRating = signal<number | null>(null);
+  liveRatingCount = signal<number | null>(null);
 
   private parsed: ParsedHighlight[] = [];
   private statsObserver: IntersectionObserver | null = null;
@@ -57,6 +61,10 @@ export class About implements OnInit, AfterViewInit, OnDestroy {
         this.parsed.map(p => `${p.prefix}${p.from}${p.suffix}`),
       );
       this.setupObserver();
+    });
+    this.liveContent.getLiveData().subscribe(data => {
+      if (data.rating !== null) this.liveRating.set(data.rating);
+      if (data.ratingCount !== null) this.liveRatingCount.set(data.ratingCount);
     });
   }
 
